@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "77773841145",
+    "project_id": "speaktoinput",
+    "storage_bucket": "speaktoinput.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77773841145:android:86c7fa9f90da04af5af828",
+        "android_client_info": {
+          "package_name": "net.devemperor.dictate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw4pIf3P4PM2DrQDEZkn-cbAG-SKQof84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
