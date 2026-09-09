@@ -20,8 +20,13 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Grant Execute Permission to Gradlew
-        run: chmod +x gradlew
+      - name: Grant Execute Permissions
+        run: |
+          chmod +x gradlew
+          chmod +x tools/fetch-sherpa-onnx.sh
+
+      - name: Fetch Sherpa ONNX Libraries
+        run: ./tools/fetch-sherpa-onnx.sh
 
       - name: Build APK
         run: ./gradlew assembleDebug
