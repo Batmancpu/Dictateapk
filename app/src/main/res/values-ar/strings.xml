@@ -1132,6 +1132,7 @@
     <string name="dictate__error_text_size_limit">النص أطول من أن يُعاد صياغته</string>
     <string name="dictate__error_format_not_supported">تنسيق الصوت غير مدعوم</string>
     <string name="dictate__error_timeout">انتهت مهلة الطلب</string>
+    <string name="dictate__error_timeout_on_device">النسخ على الجهاز بطيء جدًا</string>
     <string name="dictate__error_network">لا يوجد اتصال بالإنترنت</string>
     <string name="dictate__error_server">المزوّد غير متاح – أعد المحاولة</string>
     <string name="dictate__error_try_on_device">لا يوجد اتصال – جرّب على الجهاز</string>
@@ -1185,6 +1186,7 @@
     <string name="dictate__providers_cap_chat">إعادة الصياغة</string>
     <string name="dictate__providers_add_custom">إضافة خادمك الخاص</string>
     <string name="dictate__providers_add_custom_summary">مستضاف ذاتيًا أو أي نقطة نهاية متوافقة مع OpenAI — للتعرّف على الكلام وإعادة الصياغة</string>
+    <string name="dictate__providers_azure_endpoint">تظهر نقطة النهاية بجوار المفتاح في صفحة «Keys and Endpoint» في البوابة. يعمل MAI-Transcribe فقط في East US وWest US وWest US 2 وNorth Europe وSoutheast Asia وCentral India.</string>
     <string name="dictate__providers_ollama_no_stt">لا يوفّر Ollama نقطة نهاية للتعرّف على الكلام، لذا يمكنه إعادة الصياغة فقط. للإملاء عبر خادم خاص بك، شغّل خادم تعرّف على الكلام (مثل Speaches أو faster-whisper-server أو whisper.cpp) وأضفه من “إضافة خادمك الخاص” — أو استخدم المحرّك على الجهاز، الذي لا يحتاج إلى خادم إطلاقًا.</string>
     <string name="dictate__providers_custom_title">خادم مخصّص</string>
     <string name="dictate__providers_field_name">الاسم</string>
@@ -1249,7 +1251,10 @@
     <string name="dictate__paragraph_split_off">إيقاف</string>
     <string name="dictate__paragraph_split_value">بعد {n} كلمة</string>
     <string name="dictate__realtime_title">النسخ الفوري</string>
-    <string name="dictate__realtime_summary">أظهِر النص مباشرةً أثناء التحدث، للمزوّدين الذين يدعمونه</string>
+    <string name="dictate__realtime_summary">يُفرِّغ الكلام أثناء التحدث بدلاً من الانتظار حتى التوقف، للمزوّدين الذين يدعمون ذلك</string>
+    <string name="dictate__realtime_mode_off">إيقاف</string>
+    <string name="dictate__realtime_mode_live">إظهار النص أثناء التحدث</string>
+    <string name="dictate__realtime_mode_at_end">إظهار النص عند التوقف فقط</string>
     <string name="dictate__longform_title">الإملاء الطويل</string>
     <string name="dictate__longform_summary">فرّغ الإملاءات الطويلة في الخلفية جزءًا بجزء بينما تواصل التحدث — انقر على «التالي» أثناء التسجيل لإرسال الجزء الحالي، حتى لا يكون هناك انتظار طويل في النهاية.</string>
     <string name="dictate__longform_autosplit_title">تقسيم تلقائي ذكي</string>

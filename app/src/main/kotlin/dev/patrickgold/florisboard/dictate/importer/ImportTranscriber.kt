@@ -14,6 +14,7 @@ import android.content.Context
 import android.util.Log
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.dictate.DictateLanguages
+import dev.patrickgold.florisboard.dictate.TranscriptJoin
 import dev.patrickgold.florisboard.dictate.audio.AudioConvert
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import dev.patrickgold.florisboard.dictate.audio.AudioWav
@@ -26,6 +27,7 @@ import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionRequest
+import dev.patrickgold.florisboard.dictate.transcriptTighteningSymbols
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -157,7 +159,13 @@ object ImportTranscriber {
             // it for playback and for the history entry.
             for (piece in pieces) if (piece != audio) piece.delete()
         }
-        val joined = parts.joinToString(" ").trim()
+        // A cut runs through the middle of a sentence, so the next chunk can perfectly well open with the
+        // mark that closes the previous one (issue #356).
+        val tightening = appContext.transcriptTighteningSymbols()
+        val joined = parts
+            .fold(StringBuilder()) { acc, part -> TranscriptJoin.appendPiece(acc, part, tightening) }
+            .toString()
+            .trim()
         if (joined.isEmpty()) throw NoSpeechException()
         joined
     }
@@ -300,8 +308,17 @@ object ImportTranscriber {
             ),
         )
         return if (onDevice) {
-            LocalTranscriptionProvider(LocalTranscriptionProvider.modelDir(appContext, model))
-                .transcribe(request).text.trim()
+            LocalTranscriptionProvider(
+                LocalTranscriptionProvider.modelDir(appContext, model),
+                // Bounded like every other on-device decode (#354), on the same upwards-only terms as the
+                // cloud branch below: a piece of a shared file is a bigger job than a dictation, so the
+                // default two minutes would cut short work that is going perfectly well.
+                timeoutMillis = maxOf(
+                    IMPORT_CALL_TIMEOUT_SECONDS,
+                    prefs.dictate.requestTimeout.get().toLong(),
+                ) * 1000L,
+                tighteningSymbols = appContext.transcriptTighteningSymbols(),
+            ).transcribe(request).text.trim()
         } else {
             OpenAiCompatibleClient.from(
                 preset,

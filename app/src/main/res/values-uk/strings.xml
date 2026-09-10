@@ -1119,6 +1119,7 @@
     <string name="dictate__error_text_size_limit">Текст задовгий для перефразування</string>
     <string name="dictate__error_format_not_supported">Аудіоформат не підтримується</string>
     <string name="dictate__error_timeout">Час очікування запиту вичерпано</string>
+    <string name="dictate__error_timeout_on_device">Локальна транскрипція надто повільна</string>
     <string name="dictate__error_network">Немає підключення до інтернету</string>
     <string name="dictate__error_server">Постачальник недоступний — повторіть спробу</string>
     <string name="dictate__error_try_on_device">Немає зв\'язку — спробуйте на пристрої</string>
@@ -1172,6 +1173,7 @@
     <string name="dictate__providers_cap_chat">Переформулювання</string>
     <string name="dictate__providers_add_custom">Додати власний сервер</string>
     <string name="dictate__providers_add_custom_summary">Власний хостинг або будь-яка кінцева точка, сумісна з OpenAI — для розпізнавання мовлення та переформулювання</string>
+    <string name="dictate__providers_azure_endpoint">Endpoint указано поряд із ключем на сторінці «Keys and Endpoint» у порталі. MAI-Transcribe працює лише в регіонах East US, West US, West US 2, North Europe, Southeast Asia та Central India.</string>
     <string name="dictate__providers_ollama_no_stt">В Ollama немає кінцевої точки розпізнавання мовлення, тож він уміє лише переформульовувати. Щоб диктувати через власний сервер, запустіть мовленнєвий сервер (наприклад, Speaches, faster-whisper-server або whisper.cpp) і додайте його через «Додати власний сервер» — або скористайтеся розпізнаванням на пристрої, якому сервер не потрібен зовсім.</string>
     <string name="dictate__providers_custom_title">Власний сервер</string>
     <string name="dictate__providers_field_name">Назва</string>
@@ -1236,7 +1238,10 @@
     <string name="dictate__paragraph_split_off">Вимк.</string>
     <string name="dictate__paragraph_split_value">Після {n} слів</string>
     <string name="dictate__realtime_title">Транскрипція в реальному часі</string>
-    <string name="dictate__realtime_summary">Показує текст наживо під час мовлення для провайдерів, які це підтримують</string>
+    <string name="dictate__realtime_summary">Розшифровує вже під час мовлення, а не після зупинки, для провайдерів, які це підтримують</string>
+    <string name="dictate__realtime_mode_off">Вимкнено</string>
+    <string name="dictate__realtime_mode_live">Показувати текст під час мовлення</string>
+    <string name="dictate__realtime_mode_at_end">Показувати текст лише після зупинки</string>
     <string name="dictate__longform_title">Довга диктовка</string>
     <string name="dictate__longform_summary">Транскрибуйте довгі диктування у фоні, частина за частиною, поки ви говорите — натисніть «Далі» під час запису, щоб надіслати поточну частину, аби наприкінці не було довгого очікування.</string>
     <string name="dictate__longform_autosplit_title">Розумне авторозділення</string>

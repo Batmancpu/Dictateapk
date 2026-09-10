@@ -1214,6 +1214,7 @@
     <string name="dictate__error_text_size_limit">Teksts pārāk garš pārformulēšanai</string>
     <string name="dictate__error_format_not_supported">Audio formāts netiek atbalstīts</string>
     <string name="dictate__error_timeout">Pieprasījuma noildze</string>
+    <string name="dictate__error_timeout_on_device">Ierīcē veiktā transkripcija ir pārāk lēna</string>
     <string name="dictate__error_network">Nav interneta savienojuma</string>
     <string name="dictate__error_server">Pakalpojuma sniedzējs nav pieejams – mēģiniet vēlreiz</string>
     <string name="dictate__error_try_on_device">Nav savienojuma – mēģiniet ierīcē</string>
@@ -1267,6 +1268,7 @@
     <string name="dictate__providers_cap_chat">Pārformulēšana</string>
     <string name="dictate__providers_add_custom">Pievienot savu serveri</string>
     <string name="dictate__providers_add_custom_summary">Pašmitināts vai jebkurš ar OpenAI saderīgs galapunkts — runas atpazīšanai un pārfrāzēšanai</string>
+    <string name="dictate__providers_azure_endpoint">Galapunkts ir blakus atslēgai portāla lapā “Keys and Endpoint”. MAI-Transcribe darbojas tikai reģionos East US, West US, West US 2, North Europe, Southeast Asia un Central India.</string>
     <string name="dictate__providers_ollama_no_stt">Ollama nav runas atpazīšanas galapunkta, tāpēc tas var tikai pārfrāzēt. Lai diktētu caur savu serveri, palaidiet runas serveri (piemēram, Speaches, faster-whisper-server vai whisper.cpp) un pievienojiet to sadaļā “Pievienot savu serveri” — vai izmantojiet atpazīšanu ierīcē, kurai serveris nav vajadzīgs vispār.</string>
     <string name="dictate__providers_custom_title">Pielāgots serveris</string>
     <string name="dictate__providers_field_name">Nosaukums</string>
@@ -1331,7 +1333,10 @@
     <string name="dictate__paragraph_split_off">Izslēgts</string>
     <string name="dictate__paragraph_split_value">Pēc {n} vārdiem</string>
     <string name="dictate__realtime_title">Reāllaika transkripcija</string>
-    <string name="dictate__realtime_summary">Rāda tekstu tiešraidē, kamēr runājat, pakalpojumiem, kas to atbalsta</string>
+    <string name="dictate__realtime_summary">Atšifrē jau runāšanas laikā, nevis pēc apturēšanas, pakalpojumiem, kas to atbalsta</string>
+    <string name="dictate__realtime_mode_off">Izslēgts</string>
+    <string name="dictate__realtime_mode_live">Rādīt tekstu runāšanas laikā</string>
+    <string name="dictate__realtime_mode_at_end">Rādīt tekstu tikai pēc apturēšanas</string>
     <string name="dictate__longform_title">Gara diktēšana</string>
     <string name="dictate__longform_summary">Transkribē garus diktātus fonā, daļu pa daļai, kamēr turpini runāt — ierakstīšanas laikā pieskaries Tālāk, lai nosūtītu pašreizējo daļu, tā beigās nav ilgi jāgaida.</string>
     <string name="dictate__longform_autosplit_title">Vieda automātiskā dalīšana</string>

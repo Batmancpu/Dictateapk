@@ -22,6 +22,7 @@ import com.k2fsa.sherpa.onnx.OfflineWhisperModelConfig
 import com.k2fsa.sherpa.onnx.SileroVadModelConfig
 import com.k2fsa.sherpa.onnx.Vad
 import com.k2fsa.sherpa.onnx.VadModelConfig
+import dev.patrickgold.florisboard.dictate.TranscriptJoin
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -53,10 +54,52 @@ import java.util.concurrent.TimeUnit
 class LocalTranscriptionProvider(
     private val modelDir: File,
     private val numThreads: Int = 2,
+    /**
+     * How long the whole decode may take before it counts as failed, in milliseconds; 0 means no limit
+     * (issue #354). Fed from the same "Request timeout" setting the cloud providers use, so the user has
+     * one number for "how long am I willing to wait" whichever engine happens to be doing the work.
+     *
+     * Enforced cooperatively rather than with [kotlinx.coroutines.withTimeout]: a sherpa-onnx decode is a
+     * blocking native call with no suspension point inside it, so a coroutine timeout would only land
+     * once the pass it was meant to interrupt had finished anyway — and its
+     * [kotlinx.coroutines.TimeoutCancellationException] is a `CancellationException`, which the dictation
+     * flow deliberately reads as "the user pressed stop, discard quietly". A checked deadline instead
+     * ends in a [DictateApiException] the existing failure handling already understands: the error chip,
+     * the kept recording, the resend button, the history entry that still holds the audio.
+     */
+    private val timeoutMillis: Long = 0L,
+    /**
+     * The marks that bind to the word in front of them, used when a multi-pass decode joins its pieces
+     * back together (issue #356). Handed in rather than looked up: which marks those are belongs to the
+     * active punctuation rule, and a provider has no keyboard to ask. The default is the conservative
+     * one, which is what the callers with no field in sight (Wear, tests) want anyway.
+     */
+    private val tighteningSymbols: String = TranscriptJoin.DEFAULT_TIGHTENING_SYMBOLS,
 ) : TranscriptionProvider {
+
+    /** When the current decode started, as a [System.nanoTime] stamp. Set once per [transcribe] call. */
+    private var startedNanos: Long = 0L
+
+    /**
+     * Throws once the budget is spent. Called between decode passes — never inside one, because a native
+     * pass cannot be interrupted — so the effective granularity is a single piece of at most
+     * [MAX_SEGMENT_SAMPLES] (~29 s of audio), which is the unit this engine works in regardless.
+     *
+     * Compares elapsed time rather than a precomputed deadline: `nanoTime`'s origin is arbitrary, so
+     * adding to it is the one form of this that can overflow.
+     */
+    private fun checkDeadline() {
+        if (timeoutMillis <= 0L) return
+        if (System.nanoTime() - startedNanos < timeoutMillis * 1_000_000L) return
+        throw DictateApiException(
+            DictateApiException.Kind.TIMEOUT,
+            "On-device transcription exceeded the ${timeoutMillis / 1000} s budget",
+        )
+    }
 
     override suspend fun transcribe(request: TranscriptionRequest): TranscriptionResult =
         withContext(Dispatchers.Default) {
+            startedNanos = System.nanoTime()
             // What "installed" means depends on the model: Whisper wants an encoder/decoder pair, a
             // transducer adds a joiner, SenseVoice has a single model file. The catalog entry says which.
             val missing = requiredFiles(modelDir.name).filterNot { File(modelDir, it).exists() }
@@ -130,15 +173,12 @@ class LocalTranscriptionProvider(
             val stream = recognizer.createStream()
             val parts = StringBuilder()
             fun collect() {
-                val text = recognizer.getResult(stream).text.trim()
-                if (text.isNotEmpty()) {
-                    if (parts.isNotEmpty()) parts.append(' ')
-                    parts.append(text)
-                }
+                TranscriptJoin.appendPiece(parts, recognizer.getResult(stream).text, tighteningSymbols)
             }
             try {
                 var offset = 0
                 while (offset < samples.size) {
+                    checkDeadline()
                     val end = minOf(offset + STREAM_CHUNK, samples.size)
                     stream.acceptWaveform(samples.copyOfRange(offset, end), AudioDecode.TARGET_SAMPLE_RATE)
                     offset = end
@@ -204,6 +244,7 @@ class LocalTranscriptionProvider(
             val window = FloatArray(VAD_WINDOW)
             var i = 0
             while (i < samples.size) {
+                checkDeadline()
                 val end = minOf(i + VAD_WINDOW, samples.size)
                 val chunk = if (end - i == VAD_WINDOW) {
                     samples.copyInto(window, destinationOffset = 0, startIndex = i, endIndex = end)
@@ -238,13 +279,10 @@ class LocalTranscriptionProvider(
     private fun appendDecoded(recognizer: OfflineRecognizer, samples: FloatArray, out: StringBuilder) {
         var offset = 0
         while (offset < samples.size) {
+            checkDeadline()
             val end = minOf(offset + MAX_SEGMENT_SAMPLES, samples.size)
             val piece = if (offset == 0 && end == samples.size) samples else samples.copyOfRange(offset, end)
-            val text = decodeOnce(recognizer, piece).trim()
-            if (text.isNotEmpty()) {
-                if (out.isNotEmpty()) out.append(' ')
-                out.append(text)
-            }
+            TranscriptJoin.appendPiece(out, decodeOnce(recognizer, piece), tighteningSymbols)
             offset = end
         }
     }

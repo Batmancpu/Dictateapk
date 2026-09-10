@@ -1286,6 +1286,7 @@
     <string name="dictate__error_text_size_limit">Text je příliš dlouhý na přeformulování</string>
     <string name="dictate__error_format_not_supported">Nepodporovaný formát zvuku</string>
     <string name="dictate__error_timeout">Vypršel časový limit požadavku</string>
+    <string name="dictate__error_timeout_on_device">Přepis v zařízení je příliš pomalý</string>
     <string name="dictate__error_network">Žádné připojení k internetu</string>
     <string name="dictate__error_server">Poskytovatel není dostupný – zkuste to znovu</string>
     <string name="dictate__error_try_on_device">Bez připojení – zkuste v zařízení</string>
@@ -1339,6 +1340,7 @@
     <string name="dictate__providers_cap_chat">Přeformulování</string>
     <string name="dictate__providers_add_custom">Přidat vlastní server</string>
     <string name="dictate__providers_add_custom_summary">Vlastní hosting nebo jakýkoli koncový bod kompatibilní s OpenAI — pro rozpoznávání řeči i přeformulování</string>
+    <string name="dictate__providers_azure_endpoint">Endpoint najdete vedle klíče na stránce „Keys and Endpoint“ v portálu. MAI-Transcribe běží jen v regionech East US, West US, West US 2, North Europe, Southeast Asia a Central India.</string>
     <string name="dictate__providers_ollama_no_stt">Ollama nemá koncový bod pro rozpoznávání řeči, umí tedy jen přeformulovat. Pro diktování přes vlastní server spusťte řečový server (například Speaches, faster-whisper-server nebo whisper.cpp) a přidejte ho přes „Přidat vlastní server“ — nebo použijte rozpoznávání v zařízení, které žádný server nepotřebuje.</string>
     <string name="dictate__providers_custom_title">Vlastní server</string>
     <string name="dictate__providers_field_name">Název</string>
@@ -1403,7 +1405,10 @@
     <string name="dictate__paragraph_split_off">Vypnuto</string>
     <string name="dictate__paragraph_split_value">Po {n} slovech</string>
     <string name="dictate__realtime_title">Přepis v reálném čase</string>
-    <string name="dictate__realtime_summary">Zobrazuje text živě během mluvení u poskytovatelů, kteří to podporují</string>
+    <string name="dictate__realtime_summary">Přepisuje už během mluvení, ne až po zastavení, u poskytovatelů, kteří to podporují</string>
+    <string name="dictate__realtime_mode_off">Vypnuto</string>
+    <string name="dictate__realtime_mode_live">Zobrazovat text během mluvení</string>
+    <string name="dictate__realtime_mode_at_end">Zobrazit text až po zastavení</string>
     <string name="dictate__longform_title">Dlouhé diktování</string>
     <string name="dictate__longform_summary">Přepisuj dlouhá diktování na pozadí, část po části, zatímco mluvíš dál — během nahrávání klepni na Další pro odeslání aktuální části, takže na konci není dlouhé čekání.</string>
     <string name="dictate__longform_autosplit_title">Chytré automatické dělení</string>

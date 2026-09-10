@@ -1248,6 +1248,7 @@
     <string name="dictate__error_text_size_limit">Metin yeniden ifade edilemeyecek kadar uzun</string>
     <string name="dictate__error_format_not_supported">Ses formatı desteklenmiyor</string>
     <string name="dictate__error_timeout">İstek zaman aşımına uğradı</string>
+    <string name="dictate__error_timeout_on_device">Cihazdaki yazıya dökme çok yavaş</string>
     <string name="dictate__error_network">İnternet bağlantısı yok</string>
     <string name="dictate__error_server">Sağlayıcı kullanılamıyor – tekrar deneyin</string>
     <string name="dictate__error_try_on_device">Bağlantı yok – cihazda deneyin</string>
@@ -1301,6 +1302,7 @@
     <string name="dictate__providers_cap_chat">Yeniden ifade etme</string>
     <string name="dictate__providers_add_custom">Kendi sunucunuzu ekleyin</string>
     <string name="dictate__providers_add_custom_summary">Kendi barındırdığınız ya da OpenAI uyumlu herhangi bir uç nokta — konuşma tanıma ve yeniden yazma için</string>
+    <string name="dictate__providers_azure_endpoint">Endpoint, portaldaki “Keys and Endpoint” sayfasında anahtarın yanında durur. MAI-Transcribe yalnızca East US, West US, West US 2, North Europe, Southeast Asia ve Central India bölgelerinde çalışır.</string>
     <string name="dictate__providers_ollama_no_stt">Ollama\'nın konuşma tanıma uç noktası yoktur, bu yüzden yalnızca yeniden yazabilir. Kendi sunucunuzla dikte etmek için bir konuşma sunucusu çalıştırın (örneğin Speaches, faster-whisper-server veya whisper.cpp) ve “Kendi sunucunuzu ekleyin” altından ekleyin — ya da hiç sunucu gerektirmeyen cihaz üzerindeki motoru kullanın.</string>
     <string name="dictate__providers_custom_title">Özel sunucu</string>
     <string name="dictate__providers_field_name">Ad</string>
@@ -1365,7 +1367,10 @@
     <string name="dictate__paragraph_split_off">Kapalı</string>
     <string name="dictate__paragraph_split_value">{n} kelimeden sonra</string>
     <string name="dictate__realtime_title">Gerçek zamanlı transkripsiyon</string>
-    <string name="dictate__realtime_summary">Bunu destekleyen sağlayıcılarda konuşurken metni canlı gösterir</string>
+    <string name="dictate__realtime_summary">Bunu destekleyen sağlayıcılarda, durdurduktan sonra değil konuşurken yazıya döker</string>
+    <string name="dictate__realtime_mode_off">Kapalı</string>
+    <string name="dictate__realtime_mode_live">Metni konuşurken göster</string>
+    <string name="dictate__realtime_mode_at_end">Metni yalnızca durdurunca göster</string>
     <string name="dictate__longform_title">Uzun dikte</string>
     <string name="dictate__longform_summary">Uzun dikteleri arka planda, konuşmaya devam ederken parça parça yazıya dök — kayıt sırasında geçerli parçayı göndermek için İleri\'ye dokun, böylece sonda uzun bir bekleme olmaz.</string>
     <string name="dictate__longform_autosplit_title">Akıllı otomatik bölme</string>

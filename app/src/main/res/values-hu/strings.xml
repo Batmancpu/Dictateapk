@@ -1268,6 +1268,7 @@
     <string name="dictate__error_text_size_limit">A szöveg túl hosszú az átfogalmazáshoz</string>
     <string name="dictate__error_format_not_supported">A hangformátum nem támogatott</string>
     <string name="dictate__error_timeout">A kérés időtúllépést okozott</string>
+    <string name="dictate__error_timeout_on_device">Az eszközön futó átírás túl lassú</string>
     <string name="dictate__error_network">Nincs internetkapcsolat</string>
     <string name="dictate__error_server">A szolgáltató nem érhető el – próbálja újra</string>
     <string name="dictate__error_try_on_device">Nincs kapcsolat – próbálja eszközön</string>
@@ -1321,6 +1322,7 @@
     <string name="dictate__providers_cap_chat">Átfogalmazás</string>
     <string name="dictate__providers_add_custom">Saját szerver hozzáadása</string>
     <string name="dictate__providers_add_custom_summary">Saját üzemeltetésű vagy bármilyen OpenAI-kompatibilis végpont — beszédfelismeréshez és újrafogalmazáshoz</string>
+    <string name="dictate__providers_azure_endpoint">A végpont a portál „Keys and Endpoint” oldalán a kulcs mellett áll. A MAI-Transcribe csak az East US, West US, West US 2, North Europe, Southeast Asia és Central India régiókban fut.</string>
     <string name="dictate__providers_ollama_no_stt">Az Ollamának nincs beszédfelismerő végpontja, ezért csak újrafogalmazni tud. Ha saját szerverrel szeretne diktálni, indítson egy beszédszervert (például Speaches, faster-whisper-server vagy whisper.cpp), és adja hozzá a „Saját szerver hozzáadása” alatt — vagy használja a készüléken futó felismerést, amelyhez egyáltalán nem kell szerver.</string>
     <string name="dictate__providers_custom_title">Egyéni szerver</string>
     <string name="dictate__providers_field_name">Név</string>
@@ -1385,7 +1387,10 @@
     <string name="dictate__paragraph_split_off">Ki</string>
     <string name="dictate__paragraph_split_value">{n} szó után</string>
     <string name="dictate__realtime_title">Valós idejű átírás</string>
-    <string name="dictate__realtime_summary">Élőben mutatja a szöveget beszéd közben az ezt támogató szolgáltatóknál</string>
+    <string name="dictate__realtime_summary">Már beszéd közben átírja a szöveget, nem csak a leállítás után, az ezt támogató szolgáltatóknál</string>
+    <string name="dictate__realtime_mode_off">Ki</string>
+    <string name="dictate__realtime_mode_live">Szöveg megjelenítése beszéd közben</string>
+    <string name="dictate__realtime_mode_at_end">Szöveg megjelenítése csak leállításkor</string>
     <string name="dictate__longform_title">Hosszú diktálás</string>
     <string name="dictate__longform_summary">Írd át a hosszú diktálásokat a háttérben, részenként, miközben tovább beszélsz — felvétel közben koppints a Tovább gombra az aktuális rész elküldéséhez, így a végén nincs hosszú várakozás.</string>
     <string name="dictate__longform_autosplit_title">Okos automatikus felosztás</string>

@@ -1169,6 +1169,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__error_text_size_limit">Tekst te lang om te herformuleren</string>
     <string name="dictate__error_format_not_supported">Audioformaat niet ondersteund</string>
     <string name="dictate__error_timeout">Time-out van verzoek</string>
+    <string name="dictate__error_timeout_on_device">Transcriptie op apparaat te traag</string>
     <string name="dictate__error_network">Geen internetverbinding</string>
     <string name="dictate__error_server">Aanbieder niet beschikbaar – probeer het opnieuw</string>
     <string name="dictate__error_try_on_device">Geen verbinding – probeer op apparaat</string>
@@ -1222,6 +1223,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__providers_cap_chat">Herformulering</string>
     <string name="dictate__providers_add_custom">Je eigen server toevoegen</string>
     <string name="dictate__providers_add_custom_summary">Zelf gehost of elk OpenAI-compatibel endpoint — voor spraakherkenning en herformuleren</string>
+    <string name="dictate__providers_azure_endpoint">Het endpoint staat naast de sleutel op de pagina ‘Keys and Endpoint’ in de portal. MAI-Transcribe draait alleen in East US, West US, West US 2, North Europe, Southeast Asia en Central India.</string>
     <string name="dictate__providers_ollama_no_stt">Ollama heeft geen endpoint voor spraakherkenning en kan dus alleen herformuleren. Wil je dicteren via een eigen server, draai dan een spraakserver (zoals Speaches, faster-whisper-server of whisper.cpp) en voeg die toe via “Je eigen server toevoegen” — of gebruik de herkenning op het toestel, waarvoor helemaal geen server nodig is.</string>
     <string name="dictate__providers_custom_title">Aangepaste server</string>
     <string name="dictate__providers_field_name">Naam</string>
@@ -1286,7 +1288,10 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__paragraph_split_off">Uit</string>
     <string name="dictate__paragraph_split_value">Na {n} woorden</string>
     <string name="dictate__realtime_title">Realtime-transcriptie</string>
-    <string name="dictate__realtime_summary">Toont tekst live terwijl je spreekt, voor providers die dit ondersteunen</string>
+    <string name="dictate__realtime_summary">Transcribeert al tijdens het spreken in plaats van pas na het stoppen, voor providers die dit ondersteunen</string>
+    <string name="dictate__realtime_mode_off">Uit</string>
+    <string name="dictate__realtime_mode_live">Tekst tonen tijdens het spreken</string>
+    <string name="dictate__realtime_mode_at_end">Tekst pas tonen bij stoppen</string>
     <string name="dictate__longform_title">Lange dictaten</string>
     <string name="dictate__longform_summary">Transcribeer lange dictaten op de achtergrond, deel voor deel terwijl je blijft praten — tik tijdens het opnemen op Volgende om het huidige deel te versturen, zodat er aan het eind geen lange wachttijd is.</string>
     <string name="dictate__longform_autosplit_title">Slim automatisch splitsen</string>

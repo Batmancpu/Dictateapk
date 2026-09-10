@@ -1145,6 +1145,7 @@
     <string name="dictate__error_text_size_limit">Text massa llarg per reformular</string>
     <string name="dictate__error_format_not_supported">Format d\'àudio no compatible</string>
     <string name="dictate__error_timeout">La sol·licitud ha excedit el temps d\'espera</string>
+    <string name="dictate__error_timeout_on_device">Transcripció al dispositiu massa lenta</string>
     <string name="dictate__error_network">Sense connexió a internet</string>
     <string name="dictate__error_server">Proveïdor no disponible – torna-ho a provar</string>
     <string name="dictate__error_try_on_device">Sense connexió – prova al dispositiu</string>
@@ -1198,6 +1199,7 @@
     <string name="dictate__providers_cap_chat">Reformulació</string>
     <string name="dictate__providers_add_custom">Afegeix el teu propi servidor</string>
     <string name="dictate__providers_add_custom_summary">Autoallotjat o qualsevol endpoint compatible amb OpenAI: per a reconeixement de veu i reformulació</string>
+    <string name="dictate__providers_azure_endpoint">L\'endpoint és al costat de la clau a la pàgina «Keys and Endpoint» del portal. MAI-Transcribe només funciona a East US, West US, West US 2, North Europe, Southeast Asia i Central India.</string>
     <string name="dictate__providers_ollama_no_stt">L\'Ollama no té cap endpoint de reconeixement de veu, així que només pot reformular. Per dictar a través d\'un servidor teu, engega un servidor de veu (com ara Speaches, faster-whisper-server o whisper.cpp) i afegeix-lo a «Afegeix el teu propi servidor» — o fes servir el motor al dispositiu, que no necessita cap servidor.</string>
     <string name="dictate__providers_custom_title">Servidor personalitzat</string>
     <string name="dictate__providers_field_name">Nom</string>
@@ -1262,7 +1264,10 @@
     <string name="dictate__paragraph_split_off">Desactivat</string>
     <string name="dictate__paragraph_split_value">Després de {n} paraules</string>
     <string name="dictate__realtime_title">Transcripció en temps real</string>
-    <string name="dictate__realtime_summary">Mostra el text en directe mentre parles, per als proveïdors que ho admeten</string>
+    <string name="dictate__realtime_summary">Transcriu mentre parles en lloc de fer-ho en aturar, per als proveïdors que ho admeten</string>
+    <string name="dictate__realtime_mode_off">Desactivat</string>
+    <string name="dictate__realtime_mode_live">Mostra el text mentre parlo</string>
+    <string name="dictate__realtime_mode_at_end">Mostra el text només en aturar</string>
     <string name="dictate__longform_title">Dictat llarg</string>
     <string name="dictate__longform_summary">Transcriu dictats llargs en segon pla, part a part mentre continues parlant: toca Següent durant l\'enregistrament per enviar la part actual, així no hi ha una llarga espera al final.</string>
     <string name="dictate__longform_autosplit_title">Divisió automàtica intel·ligent</string>

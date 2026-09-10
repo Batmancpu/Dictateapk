@@ -51,7 +51,7 @@
     <string name="prefs__media__sticker_confirm_before_insert__summary" comment="Preference summary">Tap a sticker once to select it, again to send. A quick double tap sends straight away</string>
     <string name="prefs__media__sticker_pinned_reset" comment="Preference title">Clear favourite stickers</string>
     <string name="prefs__media__sticker_history_reset" comment="Preference title">Clear recently used stickers</string>
-    <string name="sticker__title" comment="Title of the sticker panel">Stickers</string>
+    <string name="sticker__title" comment="Name of the sticker panel, shown on the legacy layout's action">Stickers</string>
     <string name="sticker__category_all" comment="Tab holding the files that are not in a subfolder">All</string>
     <string name="sticker__section_favorites" comment="Section heading above pinned stickers">Favourites</string>
     <string name="sticker__section_recent" comment="Section heading above recently used stickers">Recently used</string>
@@ -62,7 +62,7 @@
     <string name="sticker__reorder_hint" comment="Header text while a favourite is being moved with the arrows">Move with the arrows</string>
     <string name="sticker__reorder_earlier" comment="Screen reader label for the arrow that moves a favourite towards the start">Move towards the start</string>
     <string name="sticker__reorder_later" comment="Screen reader label for the arrow that moves a favourite towards the end">Move towards the end</string>
-    <string name="sticker__search" comment="Screen reader label for the button that opens the sticker search">Search stickers</string>
+    <string name="sticker__search" comment="Label inside the sticker panel's search field, and what a screen reader announces for it">Search stickers</string>
     <string name="sticker__search_placeholder" comment="Hint inside the sticker search field">Search by file name</string>
     <string name="sticker__search_no_results" comment="Shown when no file name matches what was typed">No sticker with that name</string>
     <string name="sticker__setup_needed" comment="Empty state when no folder has been chosen">Choose a folder to use your own stickers</string>
@@ -1799,6 +1799,7 @@
     <string name="dictate__error_text_size_limit" comment="Short error: a text was too long to reword — distinct from an over-long audio recording">Text too long to reword</string>
     <string name="dictate__error_format_not_supported" comment="Short error: the provider rejected the audio format">Audio format not supported</string>
     <string name="dictate__error_timeout" comment="Short error: the request timed out">Request timed out</string>
+    <string name="dictate__error_timeout_on_device" comment="Short error replacing the timeout headline when the on-device engine, not a provider, ran out of the configured time budget. Nothing was requested from a server here, so avoid the word 'request'. Keep it short – it has one line on the keyboard.">On-device transcription too slow</string>
     <string name="dictate__error_network" comment="Short error: no network connection reached the provider">No internet connection</string>
     <string name="dictate__error_server" comment="Short error: the provider returned a 5xx server error">Provider unavailable – try again</string>
     <string name="dictate__error_try_on_device" comment="Short error replacing the timeout/no-connection headline when the recording never reached the provider and on-device transcription is not set up yet. Keep it short – it has one line on the keyboard.">No connection – try on-device</string>
@@ -1857,6 +1858,7 @@
     <string name="dictate__custom_server_title" comment="Group title for custom server settings">Custom server</string>
     <string name="dictate__base_url_title" comment="Label for the custom server base URL field">Base URL</string>
     <string name="dictate__base_url_placeholder" translatable="false">https://your-server/v1/</string>
+    <string name="dictate__base_url_placeholder_azure" translatable="false">https://my-speech.cognitiveservices.azure.com/</string>
     <string name="dictate__base_url_required" comment="Summary shown when the custom base URL is not yet set">Required for the custom provider</string>
     <string name="dictate__value_not_set" comment="Generic summary for an unset text setting">Not set</string>
 
@@ -1877,6 +1879,7 @@
          their speech goes has no reason to open something called "custom endpoint" (issue #273). -->
     <string name="dictate__providers_add_custom" comment="Button to add a user-defined OpenAI-compatible endpoint">Add your own server</string>
     <string name="dictate__providers_add_custom_summary" comment="Summary under the add-your-own-server button">Self-hosted or any OpenAI-compatible endpoint — for speech-to-text and rewording</string>
+    <string name="dictate__providers_azure_endpoint" comment="Note at the top of the Azure provider editor: where the endpoint comes from, and the only regions that host the model">The endpoint is next to the key on the portal’s “Keys and Endpoint” page. MAI-Transcribe runs only in East US, West US, West US 2, North Europe, Southeast Asia and Central India.</string>
     <string name="dictate__providers_ollama_no_stt" comment="Note at the top of the Ollama provider editor; Ollama serves no transcription endpoint">Ollama has no speech-to-text endpoint, so it can only reword. To dictate through a server of your own, run a speech server (such as Speaches, faster-whisper-server or whisper.cpp) and add it under “Add your own server” — or use the on-device engine, which needs no server at all.</string>
     <string name="dictate__providers_custom_title" comment="Dialog title when editing a custom endpoint">Custom server</string>
     <string name="dictate__providers_field_name" comment="Label for the custom endpoint display name field">Name</string>
@@ -2064,7 +2067,10 @@
     <string name="dictate__paragraph_split_value" comment="Slider value label: after how many words a paragraph break may start. {n} is the word count">After {n} words</string>
 
     <string name="dictate__realtime_title" comment="Setting: real-time streaming transcription">Real-time transcription</string>
-    <string name="dictate__realtime_summary" comment="Summary for the real-time transcription setting">Show text live while you speak, for providers that support it</string>
+    <string name="dictate__realtime_summary" comment="Explanation shown inside the real-time transcription dialog">Transcribes while you speak instead of after you stop, for providers that support it</string>
+    <string name="dictate__realtime_mode_off" comment="Real-time transcription: the feature is switched off">Off</string>
+    <string name="dictate__realtime_mode_live" comment="Real-time transcription: the streamed words appear in the text field as they arrive">Show the text while I speak</string>
+    <string name="dictate__realtime_mode_at_end" comment="Real-time transcription: the words are transcribed while speaking but only inserted once the recording is stopped">Show the text only when I stop</string>
     <string name="dictate__providers_field_realtime_model" comment="Label for the real-time streaming model picker">Real-time model</string>
     <string name="dictate__providers_custom_realtime" comment="Switch label: a self-hosted server that supports realtime streaming (#249)">Real-time streaming</string>
     <string name="dictate__providers_custom_realtime_summary" comment="Explains what the server must support for realtime streaming">This server speaks the OpenAI realtime protocol at /v1/realtime</string>

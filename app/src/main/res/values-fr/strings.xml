@@ -1147,6 +1147,7 @@
     <string name="dictate__error_text_size_limit">Texte trop long pour être reformulé</string>
     <string name="dictate__error_format_not_supported">Format audio non pris en charge</string>
     <string name="dictate__error_timeout">Délai d\'attente dépassé</string>
+    <string name="dictate__error_timeout_on_device">Transcription locale trop lente</string>
     <string name="dictate__error_network">Pas de connexion internet</string>
     <string name="dictate__error_server">Fournisseur indisponible – réessayez</string>
     <string name="dictate__error_try_on_device">Pas de connexion – essayez en local</string>
@@ -1200,6 +1201,7 @@
     <string name="dictate__providers_cap_chat">Reformulation</string>
     <string name="dictate__providers_add_custom">Ajouter votre propre serveur</string>
     <string name="dictate__providers_add_custom_summary">Auto-hébergé ou n\'importe quel endpoint compatible OpenAI — pour la transcription et la reformulation</string>
+    <string name="dictate__providers_azure_endpoint">L\'endpoint figure à côté de la clé sur la page « Keys and Endpoint » du portail. MAI-Transcribe ne fonctionne que dans les régions East US, West US, West US 2, North Europe, Southeast Asia et Central India.</string>
     <string name="dictate__providers_ollama_no_stt">Ollama ne propose pas d\'endpoint de reconnaissance vocale : il ne peut donc que reformuler. Pour dicter via un serveur à vous, lancez un serveur vocal (par exemple Speaches, faster-whisper-server ou whisper.cpp) et ajoutez-le via « Ajouter votre propre serveur » — ou utilisez le moteur sur l\'appareil, qui ne nécessite aucun serveur.</string>
     <string name="dictate__providers_custom_title">Serveur personnalisé</string>
     <string name="dictate__providers_field_name">Nom</string>
@@ -1264,7 +1266,10 @@
     <string name="dictate__paragraph_split_off">Désactivé</string>
     <string name="dictate__paragraph_split_value">Après {n} mots</string>
     <string name="dictate__realtime_title">Transcription en temps réel</string>
-    <string name="dictate__realtime_summary">Affiche le texte en direct pendant que vous parlez, pour les fournisseurs compatibles</string>
+    <string name="dictate__realtime_summary">Transcrit pendant que vous parlez au lieu d\'attendre l\'arrêt, pour les fournisseurs compatibles</string>
+    <string name="dictate__realtime_mode_off">Désactivé</string>
+    <string name="dictate__realtime_mode_live">Afficher le texte pendant que je parle</string>
+    <string name="dictate__realtime_mode_at_end">Afficher le texte seulement à l\'arrêt</string>
     <string name="dictate__longform_title">Dictée longue</string>
     <string name="dictate__longform_summary">Transcrivez les longues dictées en arrière-plan, partie par partie pendant que vous continuez à parler — appuyez sur Suivant pendant l\'enregistrement pour envoyer la partie en cours, afin d\'éviter une longue attente à la fin.</string>
     <string name="dictate__longform_autosplit_title">Découpage auto intelligent</string>
