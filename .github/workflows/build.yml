@@ -16,6 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
 
       - name: Set up JDK 17
@@ -34,9 +35,10 @@ jobs:
               -dname "CN=Android Debug,O=Android,C=US"
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add signing.keystore
+            git add -f signing.keystore
             git commit -m "Add permanent debug keystore [skip ci]"
-            git push origin main
+            git pull --rebase origin ${{ github.ref_name }} || true
+            git push origin HEAD:${{ github.ref_name }}
           fi
           mkdir -p ~/.android
           cp signing.keystore ~/.android/debug.keystore
@@ -59,6 +61,7 @@ jobs:
           name: Dictate Build #${{ github.run_number }}
           draft: false
           prerelease: false
-          files: app/build/outputs/apk/**/*.apk
+          files: app/build/outputs/apk/debug/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
