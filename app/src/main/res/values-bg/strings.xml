@@ -146,6 +146,8 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавяне на подредба</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Управление на инсталираните езикови пакети</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Разширения, добавящи метод на въвеждане: китайски пинин и методите по форма.</string>
+    <string name="settings__localization__subtype_download_title">Езикови данни</string>
+    <string name="settings__localization__subtype_download_message">Добавянето на {language_name} изтегля {size} списъци с думи и контекстни данни. Предложенията и автокоригирането се нуждаят от тях. Изтеглянето започва веднага и може да използва мобилни данни.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Променяне на подредба</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Основен език</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Подсказки</string>
@@ -324,6 +326,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Интелигентна лента, контейнер с кандидати</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Интелигентна лента, пиктограма на контейнер с кандидати</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Интелигентна лента, текст на контейнер с кандидати</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Бутон за отхвърляне на кандидата от клипборда в интелигентната лента</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Интелигентна лента, разделител на кандидати</string>
     <string name="snygg__rule_element__subtype_panel">Панел с подвидове</string>
     <string name="snygg__rule_element__subtype_panel_header">Заглавие на панела с подвидове</string>

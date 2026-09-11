@@ -139,6 +139,8 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Pievienot apakšveidu</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Pārvaldīt uzstādītās valodas</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Paplašinājumi, kas pievieno ievades metodi: ķīniešu piņjiņ un uz apveidu balstītās metodes.</string>
+    <string name="settings__localization__subtype_download_title">Valodas dati</string>
+    <string name="settings__localization__subtype_download_message">Pievienojot valodu {language_name}, tiks lejupielādēti {size} vārdu sarakstu un konteksta datu. Ieteikumiem un automātiskajai labošanai tie ir nepieciešami. Lejupielāde sākas uzreiz un var izmantot mobilos datus.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Labot apakšveidu</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Galvenā valoda</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Uznirstošo lodziņu kartēšana</string>
@@ -292,6 +294,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Viedjoslas ieteikumu starpliktuves vienums</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Viedjoslas ieteikumu starpliktuves vienuma ikona</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Viedjoslas ieteikumu starpliktuves vienuma teksts</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Viedjoslas starpliktuves ieteikuma aizvēršanas poga</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Viedjoslas ieteikumu atdalītājs</string>
     <string name="snygg__rule_element__subtype_panel_list">Apakšveida paneļu saraksts</string>
     <string name="snygg__rule_element__subtype_panel_list_item">Apakšveida paneļu saraksta vienums</string>

@@ -139,6 +139,8 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Indeling toevoegen</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Geïnstalleerde taalpakketten beheren</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Extensies die een invoermethode toevoegen: Chinees pinyin en de vormgebaseerde methoden.</string>
+    <string name="settings__localization__subtype_download_title">Taalgegevens</string>
+    <string name="settings__localization__subtype_download_message">{language_name} toevoegen downloadt {size} aan woordenlijsten en contextgegevens. Suggesties en autocorrectie hebben ze nodig. De download start meteen en kan mobiele data gebruiken.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Indeling bewerken</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Voorkeurstaal</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Popup-indeling</string>
@@ -258,6 +260,7 @@
     <string name="snygg__rule_element__smartbar_candidates_row">Smartbar kandidatenrij</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar kandidaat woord</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar kandidaat clip</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Sluitknop van klembordsuggestie in de smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar kandidaat spacer</string>
     <string name="snygg__rule_selector__pressed">ingedrukt</string>
     <string name="snygg__rule_selector__focus">Gefocust</string>

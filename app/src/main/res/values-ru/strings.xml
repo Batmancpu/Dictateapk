@@ -144,6 +144,8 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавить раскладку</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Установленные языковые пакеты</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Расширения, добавляющие метод ввода: китайский пиньинь и методы по форме.</string>
+    <string name="settings__localization__subtype_download_title">Языковые данные</string>
+    <string name="settings__localization__subtype_download_message">Добавление языка {language_name} загрузит {size} списков слов и контекстных данных. Они нужны подсказкам и автозамене. Загрузка начнётся сразу и может использовать мобильный интернет.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Изменить раскладку</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Основной язык</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Отображение всплывающих окон</string>
@@ -318,6 +320,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Запись-предложение умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Значок клипа кандидата на Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Текст клипа кандидата на Smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Кнопка закрытия предложения из буфера обмена на Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-предложение умной панели</string>
     <string name="snygg__rule_element__subtype_panel">Панель раскладок</string>
     <string name="snygg__rule_element__subtype_panel_header">Заголовок панели раскладок</string>

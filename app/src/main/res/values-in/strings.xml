@@ -142,6 +142,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Tambah subtipe</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Atur paket bahasa yang terinstal</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Ekstensi yang menambahkan metode masukan: pinyin Tionghoa dan metode berbasis bentuk.</string>
+    <string name="settings__localization__subtype_download_title">Data bahasa</string>
+    <string name="settings__localization__subtype_download_message">Menambahkan {language_name} akan mengunduh {size} daftar kata dan data konteks. Saran dan koreksi otomatis membutuhkannya. Unduhan dimulai segera dan bisa memakai data seluler.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edit subtipe</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Bahasa utama</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Pemetaan munculan</string>
@@ -310,6 +312,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Calon klip smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Ikon kandidat klip smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Teks kandidat klip smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Tombol tutup kandidat klip smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Calon pembelah smartbar</string>
     <string name="snygg__rule_element__subtype_panel">Panel subtipe</string>
     <string name="snygg__rule_element__subtype_panel_header">Judul panel subtipe</string>

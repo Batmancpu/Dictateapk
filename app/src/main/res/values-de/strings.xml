@@ -137,6 +137,8 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Stil hinzufügen</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Installierte Sprachpakete verwalten</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Erweiterungen, die eine Eingabemethode hinzufügen: chinesisches Pinyin und die strichbasierten Methoden.</string>
+    <string name="settings__localization__subtype_download_title">Sprachdaten</string>
+    <string name="settings__localization__subtype_download_message">{language_name} hinzuzufügen lädt {size} an Wortlisten und Wortkontextdaten. Vorschläge und Autokorrektur brauchen sie. Der Download startet sofort und kann Mobilfunkdaten verbrauchen.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Benutzerdefinierten Eingabestil bearbeiten</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Primäre Sprache</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Pop-up-Anordnung</string>
@@ -261,6 +263,7 @@
     <string name="snygg__rule_element__smartbar_candidates_row">Smartbar Kandidatenzeile</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar Wortkandidat</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar Kandidatenclip</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Verwerfen-Schaltfläche des Smartbar-Zwischenablage-Vorschlags</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar Kandidaten-Abstandshalter</string>
     <string name="snygg__rule_selector__pressed">Gedrückt</string>
     <string name="snygg__rule_selector__focus">Fokussiert</string>

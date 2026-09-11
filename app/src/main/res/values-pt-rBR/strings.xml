@@ -136,6 +136,8 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Adicionar formato de digitação</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Gerenciar pacotes de linguagem instalados</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Extensões que adicionam um método de entrada: pinyin chinês e os métodos baseados em formas.</string>
+    <string name="settings__localization__subtype_download_title">Dados de idioma</string>
+    <string name="settings__localization__subtype_download_message">Adicionar {language_name} baixa {size} de listas de palavras e dados de contexto. As sugestões e a correção automática precisam deles. O download começa imediatamente e pode usar dados móveis.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar formato de digitação</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Idioma principal</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mapeamento de popup</string>
@@ -247,6 +249,7 @@
     <string name="snygg__rule_element__smartbar_candidates_row">Linha candidata a barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Palavra candidata da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Fixado candidato da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Botão de dispensar do candidato da área de transferência da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espaçador candidato de barra inteligente</string>
     <string name="snygg__rule_selector__pressed">Pressionado</string>
     <string name="snygg__rule_selector__focus">Focado</string>

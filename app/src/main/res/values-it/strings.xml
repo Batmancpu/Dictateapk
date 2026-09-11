@@ -139,6 +139,8 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aggiungi stile input</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Gestisci pacchetti di lingua installati</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Estensioni che aggiungono un metodo di input: pinyin cinese e i metodi basati sulla forma.</string>
+    <string name="settings__localization__subtype_download_title">Dati della lingua</string>
+    <string name="settings__localization__subtype_download_message">Aggiungere {language_name} scarica {size} di elenchi di parole e dati di contesto. I suggerimenti e la correzione automatica ne hanno bisogno. Il download parte subito e può usare i dati mobili.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Modifica stile di input</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Lingua principale</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mappatura popup</string>
@@ -260,6 +262,7 @@
     <string name="snygg__rule_element__smartbar_candidates_row">Riga candidati della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Parola candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidata della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Pulsante di chiusura degli appunti suggeriti nella barra intelligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Spaziatore candidato della Smartbar</string>
     <string name="snygg__rule_selector__pressed">Premuto</string>
     <string name="snygg__rule_selector__focus">Focalizzato</string>

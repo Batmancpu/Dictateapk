@@ -146,6 +146,8 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Altípus hozzáadása</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Telepített nyelvi csomagok kezelése</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Kiegészítők, amelyek beviteli módot adnak hozzá: kínai pinjin és a forma-alapú módok.</string>
+    <string name="settings__localization__subtype_download_title">Nyelvi adatok</string>
+    <string name="settings__localization__subtype_download_message">A(z) {language_name} hozzáadása {size} szólistát és szövegkörnyezeti adatot tölt le. A javaslatoknak és az automatikus javításnak szüksége van rájuk. A letöltés azonnal indul, és mobiladatot is használhat.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Altípus szerkesztése</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Elsődleges nyelv</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Felugró társítás</string>
@@ -323,6 +325,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Okossáv javaslat vágólapról</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Okossáv megjelölt kapocs ikonja</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Okossáv megjelölt kapocs szövege</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Okossáv vágólap-javaslat elvetés gombja</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Okossáv javaslat elválasztó</string>
     <string name="snygg__rule_element__subtype_panel">Altípuspanel</string>
     <string name="snygg__rule_element__subtype_panel_header">Altípuspanel-fejléc</string>

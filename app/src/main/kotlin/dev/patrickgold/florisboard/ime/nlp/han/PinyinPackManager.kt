@@ -62,7 +62,8 @@ object PinyinPackManager {
     private const val RELEASE =
         "https://github.com/DevEmperor/DictateKeyboard/releases/download/language-packs-v1"
     private const val URL = "$RELEASE/$FILE_NAME"
-    private const val SIZE_BYTES = 3_030_654L
+    /** Exposed so the add-a-language dialog can name what it costs (issue #334). */
+    const val SIZE_BYTES = 3_030_654L
     private const val SHA256 = "861309d3c2f5461808b3f1dcb28eeb284e9a67c27b2130d03233d927b0eb0159"
 
     /**

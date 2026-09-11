@@ -138,6 +138,8 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Ajouter une disposition</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Gérer les packs de langue installés</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Extensions ajoutant une méthode de saisie : le pinyin chinois et les méthodes basées sur la forme.</string>
+    <string name="settings__localization__subtype_download_title">Données de langue</string>
+    <string name="settings__localization__subtype_download_message">Ajouter {language_name} télécharge {size} de listes de mots et de données contextuelles. Les suggestions et la correction automatique en ont besoin. Le téléchargement démarre aussitôt et peut utiliser les données mobiles.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Modifier la disposition</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Langue principale</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mappage des fenêtres contextuelles</string>
@@ -276,6 +278,7 @@
     <string name="snygg__rule_element__smartbar_candidates_row">Rangée de suggestions à la Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Mot candidat de la Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Suggestion du presse-papier dans la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Bouton de fermeture du presse-papiers suggéré de la barre intelligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espacement des suggestions dans la Smartbar</string>
     <string name="snygg__rule_element__subtype_panel_header">Sous-type d\'en-tête de panneau</string>
     <string name="snygg__rule_selector__pressed">Appuyé</string>
