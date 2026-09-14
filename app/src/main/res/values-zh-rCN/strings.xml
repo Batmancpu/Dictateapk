@@ -445,6 +445,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">字体大小缩放倍率</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">布局</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">横向全屏输入</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">按键间距</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">垂直 {v}%、水平 {h}% — 间距越大按键越小，键盘大小不变。</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">按键</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">弹出键可见</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">按键时显示弹出提示</string>

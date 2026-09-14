@@ -350,6 +350,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Moltiplicatore dimensione carattere</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Inserimento a schermo intero orizzontale</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Spazio tra i tasti</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% verticale, {h}% orizzontale — uno spazio più ampio rimpicciolisce i tasti, non la tastiera.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressione tasti</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilità Popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra popup quando si preme un tasto</string>

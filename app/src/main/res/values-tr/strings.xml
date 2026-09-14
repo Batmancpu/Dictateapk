@@ -436,6 +436,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Yazı tipi boyutu çarpanı</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Düzen</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Yatay tam ekran girişi</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Tuşlar arası boşluk</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">Dikey %{v}, yatay %{h} — daha geniş boşluk klavyeyi değil, tuşları küçültür.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tuşa basma</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Açılır Pencere Görünürlüğü</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Bir tuşa bastığınızda açılır pencere göster</string>

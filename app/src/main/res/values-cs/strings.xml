@@ -444,7 +444,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Násobitel velikosti písma</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozložení</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Vstupní okno v celoobrazovkovém režimu na šířku</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Faktor odsazení klávesnice</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Mezera mezi klávesami</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v} % svisle, {h} % vodorovně — větší mezera zmenší klávesy, ne klávesnici.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Stisk klávesy</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Viditelnost vyskakovacího okna</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Zobrazit vyskakovací okno při stisku klávesy</string>

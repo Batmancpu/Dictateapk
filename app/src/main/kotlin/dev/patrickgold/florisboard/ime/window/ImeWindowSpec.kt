@@ -42,9 +42,21 @@ sealed class ImeWindowSpec {
 
     abstract val userPreferredOptions: UserPreferredOptions
 
-    val keyMarginH: Dp by lazy { props.calcKeyMarginH(constraints) * userPreferredOptions.keySpacingFactorH }
+    // The margin is deflated off every side of a key cell, so at the top of the widened spacing range
+    // (issue #365) it could eat the key itself: 300 % of the 5dp vertical base is 15dp per side, and a
+    // keyboard the user has already shrunk to its minimum has rows barely twice that tall. Cap each
+    // margin at a fraction of the cell it is taken out of, which always leaves the key the rest.
+    val keyMarginH: Dp by lazy {
+        val keyCellWidth = props.keyboardWidth(constraints) / KEYS_PER_ROW
+        (props.calcKeyMarginH(constraints) * userPreferredOptions.keySpacingFactorH)
+            .coerceAtMost(keyCellWidth * MAX_KEY_MARGIN_FRACTION)
+    }
 
-    val keyMarginV: Dp by lazy { props.calcKeyMarginV(constraints) * userPreferredOptions.keySpacingFactorV }
+    val keyMarginV: Dp by lazy {
+        val keyCellHeight = calcRowHeight(props.keyboardHeight)
+        (props.calcKeyMarginV(constraints) * userPreferredOptions.keySpacingFactorV)
+            .coerceAtMost(keyCellHeight * MAX_KEY_MARGIN_FRACTION)
+    }
 
     val fontScale: Float by lazy { props.calcFontScale(constraints) * userPreferredOptions.fontScale }
 
@@ -292,6 +304,18 @@ sealed class ImeWindowSpec {
     )
 
     companion object {
+        /**
+         * The number of key cells a character row is divided into, mirroring the cell width
+         * `TextKeyboardLayout` lays the keys out with. Only used as a reference for [keyMarginH].
+         */
+        private const val KEYS_PER_ROW = 10
+
+        /**
+         * The share of a key cell a single key margin may take up at most. Both sides are deflated, so
+         * the key itself always keeps at least `1 - 2 *` this fraction of the cell.
+         */
+        private const val MAX_KEY_MARGIN_FRACTION = 0.3f
+
         /**
          * The fallback window spec. It does not guarantee the window fits into the root window, and assumes
          * the root window is zero-sized. In practice this is never used, but allows for always having rootInsets,
