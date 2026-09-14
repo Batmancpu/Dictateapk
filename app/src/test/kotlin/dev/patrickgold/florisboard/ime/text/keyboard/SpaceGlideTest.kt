@@ -188,6 +188,23 @@ class SpaceGlideTest {
     }
 
     @Test
+    fun `sideways resolves through the same rule as vertical`() {
+        // Left and right used to have their own release-only branches reading the detector's eight
+        // sectors. All four directions now go through one rule, so a sideways swipe that is ended rather
+        // than flicked commits too.
+        assertEquals(
+            SwipeGesture.Direction.LEFT,
+            swipeCommitDirection(absUnitCountX = -SWIPE_COMMIT_UNITS, absUnitCountY = 0),
+        )
+        assertEquals(
+            SwipeGesture.Direction.RIGHT,
+            swipeCommitDirection(absUnitCountX = SWIPE_COMMIT_UNITS, absUnitCountY = 0),
+        )
+        // Just short of the distance is still nothing, whichever way it points.
+        assertEquals(null, swipeCommitDirection(absUnitCountX = -(SWIPE_COMMIT_UNITS - 1), absUnitCountY = 0))
+    }
+
+    @Test
     fun `on release the direction is read the same way, without a distance of its own`() {
         // The detector has already demanded distance and speed by then, so commitUnits is 1.
         assertEquals(

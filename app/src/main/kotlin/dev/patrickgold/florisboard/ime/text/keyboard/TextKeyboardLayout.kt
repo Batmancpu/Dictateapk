@@ -1004,7 +1004,7 @@ private class TextKeyboardLayoutController(
             SwipeGesture.Type.TOUCH_MOVE -> {
                 val movedAcross = glideAcross(event, pointer)
                 val movedDown = glideDown(event, pointer)
-                val fired = commitVerticalAction(event, pointer, SWIPE_COMMIT_UNITS)
+                val fired = commitSpaceAction(event, pointer, SWIPE_COMMIT_UNITS)
                 // Claiming the gesture is not only about having moved the cursor. Returning false leaves
                 // the press with the ordinary key dispatch, which re-binds it to whatever the finger has
                 // reached — and starts that key's long-press timer, so an upward slide off the space bar
@@ -1015,43 +1015,9 @@ private class TextKeyboardLayoutController(
                     prefs.gestures.spaceBarSwipeUp.get() != SwipeAction.NO_ACTION ||
                     prefs.gestures.spaceBarSwipeDown.get() != SwipeAction.NO_ACTION
             }
-            SwipeGesture.Type.TOUCH_UP -> when (event.direction) {
-                SwipeGesture.Direction.LEFT -> {
-                    prefs.gestures.spaceBarSwipeLeft.get().let {
-                        when {
-                            it == SwipeAction.NO_ACTION -> {
-                                false
-                            }
-                            it != SwipeAction.MOVE_CURSOR_LEFT -> {
-                                keyboardManager.executeSwipeAction(it)
-                                true
-                            }
-                            else -> {
-                                false
-                            }
-                        }
-                    }
-                }
-                SwipeGesture.Direction.RIGHT -> {
-                    prefs.gestures.spaceBarSwipeRight.get().let {
-                        when {
-                            it == SwipeAction.NO_ACTION -> {
-                                false
-                            }
-                            it != SwipeAction.MOVE_CURSOR_RIGHT -> {
-                                keyboardManager.executeSwipeAction(it)
-                                true
-                            }
-                            else -> {
-                                false
-                            }
-                        }
-                    }
-                }
-                // The lift-off half of the same rule. It asks for no distance of its own — the detector
-                // has already required a third of the screen's width and real speed to report at all.
-                else -> commitVerticalAction(event, pointer, commitUnits = 1)
-            }
+            // The lift-off half of the same rule, for every direction. It asks for no distance of its
+            // own — the detector has already required real travel and real speed to report at all.
+            SwipeGesture.Type.TOUCH_UP -> commitSpaceAction(event, pointer, commitUnits = 1)
         }
     }
 
@@ -1102,8 +1068,27 @@ private class TextKeyboardLayoutController(
         return true
     }
 
+    /** The preference a space-bar swipe in this direction answers to. */
+    private fun spaceActionFor(direction: SwipeGesture.Direction?): SwipeAction? = when (direction) {
+        SwipeGesture.Direction.UP -> prefs.gestures.spaceBarSwipeUp.get()
+        SwipeGesture.Direction.DOWN -> prefs.gestures.spaceBarSwipeDown.get()
+        SwipeGesture.Direction.LEFT -> prefs.gestures.spaceBarSwipeLeft.get()
+        SwipeGesture.Direction.RIGHT -> prefs.gestures.spaceBarSwipeRight.get()
+        // An ambiguous diagonal is nobody's.
+        else -> null
+    }
+
+    /** The cursor move the glide itself consumes in this direction, and so the one-shot must not. */
+    private fun glideActionFor(direction: SwipeGesture.Direction?): SwipeAction? = when (direction) {
+        SwipeGesture.Direction.UP -> SwipeAction.MOVE_CURSOR_UP
+        SwipeGesture.Direction.DOWN -> SwipeAction.MOVE_CURSOR_DOWN
+        SwipeGesture.Direction.LEFT -> SwipeAction.MOVE_CURSOR_LEFT
+        SwipeGesture.Direction.RIGHT -> SwipeAction.MOVE_CURSOR_RIGHT
+        else -> null
+    }
+
     /**
-     * The one-shot bound to an up or down swipe on the space bar, fired once per gesture (issue #364).
+     * The one-shot bound to a swipe on the space bar, fired once per gesture (issue #364).
      *
      * Called twice with different distances, which is the whole point. [SWIPE_COMMIT_UNITS] under the
      * finger, and on release whatever the detector was already willing to report — because the detector
@@ -1114,31 +1099,24 @@ private class TextKeyboardLayoutController(
      * asymmetry showed up. `SwipeCommit` names this failure and issue #327 fixed it for the character
      * keys; the space bar was left on the lift-off path alone.
      *
+     * Sideways has 411 dp of runway and a flick clears that speed easily, so it never looked broken — but
+     * it is the same bug, and a swipe that is *ended* rather than flicked was dropped there too. All four
+     * directions go through the one rule.
+     *
      * The direction comes from [swipeCommitDirection] on both paths rather than the detector's
-     * eight-sector reading, so a swipe that is 30° off vertical counts the same on release as it does
-     * mid-gesture.
+     * eight-sector reading, so a swipe 30° off an axis counts the same on release as it does mid-gesture.
      */
-    private fun commitVerticalAction(
+    private fun commitSpaceAction(
         event: SwipeGesture.Event,
         pointer: TouchPointer,
         commitUnits: Int,
     ): Boolean {
         if (pointer.hasCommittedSpaceAction) return false
         val direction = swipeCommitDirection(event.absUnitCountX, event.absUnitCountY, commitUnits)
-        val action = when (direction) {
-            SwipeGesture.Direction.UP -> prefs.gestures.spaceBarSwipeUp.get()
-            SwipeGesture.Direction.DOWN -> prefs.gestures.spaceBarSwipeDown.get()
-            // Sideways travel is the glide's business, and an ambiguous diagonal is nobody's.
-            else -> return false
-        }
-        // A cursor move is what the glide has been doing all along; firing it again here would add a line
+        val action = spaceActionFor(direction) ?: return false
+        // A cursor move is what the glide has been doing all along; firing it again here would add a step
         // nobody asked for.
-        if (action == SwipeAction.NO_ACTION ||
-            action == SwipeAction.MOVE_CURSOR_UP ||
-            action == SwipeAction.MOVE_CURSOR_DOWN
-        ) {
-            return false
-        }
+        if (action == SwipeAction.NO_ACTION || action == glideActionFor(direction)) return false
         pointer.hasCommittedSpaceAction = true
         keyboardManager.executeSwipeAction(action)
         return true
