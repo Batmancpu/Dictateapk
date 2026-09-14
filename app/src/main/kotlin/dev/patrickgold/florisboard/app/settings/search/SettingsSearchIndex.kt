@@ -239,6 +239,8 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__gestures__swipe_right__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__swipe_right__label"),
         SettingsSearchEntry(R.string.pref__gestures__space_bar_title, R.string.settings__gestures__title, Routes.Settings.Gestures),
         SettingsSearchEntry(R.string.pref__gestures__space_bar_swipe_up__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__space_bar_swipe_up__label"),
+        // Hand-added (issue #364) — the generator drops rows it did not write, so diff before keeping a rerun.
+        SettingsSearchEntry(R.string.pref__gestures__space_bar_swipe_down__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__space_bar_swipe_down__label"),
         SettingsSearchEntry(R.string.pref__gestures__space_bar_swipe_left__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__space_bar_swipe_left__label"),
         SettingsSearchEntry(R.string.pref__gestures__space_bar_swipe_right__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__space_bar_swipe_right__label"),
         SettingsSearchEntry(R.string.pref__gestures__space_bar_long_press__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__space_bar_long_press__label"),

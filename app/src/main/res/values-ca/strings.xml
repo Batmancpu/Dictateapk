@@ -460,6 +460,7 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">En lliscar cap a l\'esquerra</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">En lliscar cap a la dreta</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Lliscar cap amunt a la barra espaiadora</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Lliscar cap avall a la barra espaiadora</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Lliscar cap a l\'esquerra a la barra espaiadora</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Lliscar cap a la dreta a la barra espaiadora</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Toc llarg a la barra espaiadora</string>

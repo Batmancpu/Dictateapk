@@ -445,6 +445,7 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">السحب لليسار</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">السحب لليمين</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">السحب للأعلى من خلال مفتاح المسافة</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">السحب للأسفل من خلال مفتاح المسافة</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">السحب لليسار من خلال مفتاح المسافة</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">السحب لليمين من خلال مفتاح المسافة</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">الضغط المطول على شريط المسافة</string>

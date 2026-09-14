@@ -552,6 +552,7 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Жест влево</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Жест вправо</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Жест вверх на пробеле</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Жест вниз на пробеле</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Жест влево на пробеле</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Жест вправо на пробеле</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Долгое нажатие пробела</string>

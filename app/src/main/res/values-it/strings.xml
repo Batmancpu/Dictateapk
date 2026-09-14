@@ -463,6 +463,7 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Swipe a sinistra</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Swipe a destra</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Swipe della barra verso l\'alto</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Swipe della barra verso il basso</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Swipe della barra verso sinistra</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Swipe della barra verso destra</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Pressione prolungata sulla barra di spazio</string>

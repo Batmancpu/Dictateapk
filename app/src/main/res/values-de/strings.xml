@@ -492,6 +492,7 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Nach links wischen</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Nach rechts wischen</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Leertaste nach oben wischen</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Leertaste nach unten wischen</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Leertaste nach links wischen</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Leertaste nach rechts wischen</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Leertaste lang drücken</string>

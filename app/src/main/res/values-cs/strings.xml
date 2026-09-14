@@ -558,6 +558,7 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Přejetí doleva</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Přejeďte prstem doprava</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Přejetí nahoru přes mezerník</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Přejetí dolů přes mezerník</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Přejetí vlevo přes mezerník</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Přejetí vpravo přes mezerník</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Dlouhý stisk mezerníku</string>

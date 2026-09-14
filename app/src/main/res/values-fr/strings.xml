@@ -486,6 +486,7 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Glisser vers la gauche</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Glisser vers la droite</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Glisser de la barre d\'espace vers le haut</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Glisser de la barre d\'espace vers le bas</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Glisser de la barre d\'espace vers la gauche</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Glisser de la barre d\'espace vers la droite</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Appui long sur la barre d\'espace</string>

@@ -544,6 +544,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Geser ke kiri</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Geser ke kanan</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Geser batang spasi ke atas</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Geser batang spasi ke bawah</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Geser batang spasi ke kiri</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Geser batang spasi ke kanan</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Tekan lama bilah spasi</string>

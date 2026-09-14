@@ -452,6 +452,7 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Deslizar para esquerda</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Deslizar para direita</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Deslizar barra de espaço para cima</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Deslizar barra de espaço para baixo</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Deslizar barra de espaço para esquerda</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Deslizar barra de espaço para direita</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Pressionar e segurar barra de espaço</string>

@@ -480,6 +480,7 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Naar links vegen</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Naar rechts vegen</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Omhoog vegen op de spatiebalk</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Omlaag vegen op de spatiebalk</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Naar links vegen op de spatiebalk</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Naar rechts vegen op de spatiebalk</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Spatiebalk lang indrukken</string>

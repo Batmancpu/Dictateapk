@@ -445,6 +445,7 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Провести вліво</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Провести вправо</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Провести вгору на пробілі</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Провести вниз на пробілі</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Провести вліво на пробілі</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Провести вправо на пробілі</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Довге натискання пробілу</string>

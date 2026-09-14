@@ -1150,9 +1150,16 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "gestures__swipe_right",
             default = SwipeAction.SWITCH_TO_PREV_SUBTYPE,
         )
+        // Up and down default to a cursor move, where up used to do nothing at all (issue #364): the
+        // vertical glide they switch on is the other half of the one left/right have had all along, and a
+        // trackpad that only goes sideways was the complaint that asked for it.
         val spaceBarSwipeUp = enum(
             key = "gestures__space_bar_swipe_up",
-            default = SwipeAction.NO_ACTION,
+            default = SwipeAction.MOVE_CURSOR_UP,
+        )
+        val spaceBarSwipeDown = enum(
+            key = "gestures__space_bar_swipe_down",
+            default = SwipeAction.MOVE_CURSOR_DOWN,
         )
         val spaceBarSwipeLeft = enum(
             key = "gestures__space_bar_swipe_left",
