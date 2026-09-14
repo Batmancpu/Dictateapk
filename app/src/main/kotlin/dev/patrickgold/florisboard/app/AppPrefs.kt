@@ -742,6 +742,32 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__history_audio_budget_mb",
             default = 200,
         )
+        // --- Folder export (issue #379) ----------------------------------------------------------
+        // A SAF tree URI we hold a persisted read+write grant on. Every finished dictation is written
+        // into it as a plain .txt the moment it exists, so whatever the user already runs on that folder
+        // (a sync client, a script, an agent) can pick it up. Empty = off, which is also where a revoked
+        // grant lands. Deliberately not an account integration: the app writes files, it never uploads.
+        val historyExportFolderUri = string(
+            key = "dictate__history_export_folder_uri",
+            default = "",
+        )
+        // Display name of that folder, so the settings row can name it without touching SAF.
+        val historyExportFolderName = string(
+            key = "dictate__history_export_folder_name",
+            default = "",
+        )
+        // Also write the retained WAV next to the transcript. Only does anything while audio retention
+        // is on — without it the recording is deleted as soon as it has been transcribed.
+        val historyExportAudio = boolean(
+            key = "dictate__history_export_audio",
+            default = false,
+        )
+        // Epoch millis of the last write that failed (0 = none since the last success), so the settings
+        // row can say so. There is no retry queue; "export everything" is the catch-up.
+        val historyExportLastFailure = long(
+            key = "dictate__history_export_last_failure",
+            default = 0L,
+        )
         // --- Lifetime dictation statistics (issue #142) ------------------------------------------
         // Never auto-reset (unlike totalAudioSeconds below, which the rate nudge clears); only the user
         // can reset them from the stats screen. Updated centrally after each successful dictation.

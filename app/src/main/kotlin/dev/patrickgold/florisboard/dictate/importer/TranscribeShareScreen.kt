@@ -224,8 +224,12 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
                 // Kept like every other dictation, so closing this screen does not lose the transcript.
                 // Wrapped, because a history write that fails must not take the transcript with it: the
                 // text is the thing the user came for, the log entry is bookkeeping.
+                //
+                // "Like every other dictation" now includes honouring the opt-in, which this path used to
+                // skip: it logged even with history switched off. That was a stray row until the folder
+                // export (issue #379) turned the same omission into files appearing on someone's disk.
                 withContext(Dispatchers.IO) {
-                    runCatching {
+                    if (prefs.dictate.historyEnabled.get()) runCatching {
                         val account = ImportTranscriber.accountFor(prefs)
                         val preset = ImportTranscriber.presetFor(account)
                         DictateHistoryStore.record(

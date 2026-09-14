@@ -2239,6 +2239,26 @@
     <string name="dictate__history_clear_title" comment="Title of the clear-history confirmation dialog">Clear history?</string>
     <string name="dictate__history_clear_message" comment="Body of the clear-history confirmation dialog">This permanently deletes all history entries and any retained audio.</string>
     <string name="dictate__history_clear_confirm" comment="Confirm button that clears the whole history">Clear all</string>
+    <string name="dictate__history_export_title" comment="Title of the folder-export dialog on the history screen">Export to a folder</string>
+    <string name="dictate__history_export_summary" comment="Intro line of the folder-export dialog">Every new dictation is also written into this folder as a plain text file, the moment it is finished.</string>
+    <string name="dictate__history_export_folder" comment="Label above the chosen export folder">Folder</string>
+    <string name="dictate__history_export_folder_unset" comment="Shown in place of the folder name when no export folder has been chosen">Not set</string>
+    <string name="dictate__history_export_folder_unavailable" comment="Shown when the export folder can no longer be written to (permission revoked, storage removed, restored backup)">Folder unavailable — pick it again</string>
+    <string name="dictate__history_export_choose" comment="Button that opens the folder picker for the first time">Choose folder</string>
+    <string name="dictate__history_export_change" comment="Button that opens the folder picker to swap the export folder">Change</string>
+    <string name="dictate__history_export_disconnect" comment="Button that stops the folder export and gives up access to the folder">Disconnect</string>
+    <string name="dictate__history_export_audio_title" comment="Toggle: also write the recording next to the exported transcript">Also export the recording</string>
+    <string name="dictate__history_export_audio_summary" comment="Summary of the export-the-recording toggle when it can be used">Saves the audio next to the transcript.</string>
+    <string name="dictate__history_export_audio_needs_retention" comment="Summary of the export-the-recording toggle while Keep audio is off, which leaves no recording to export">Needs “Keep audio” to be switched on.</string>
+    <string name="dictate__history_export_all" comment="Button that writes the whole history into the export folder in one pass">Export everything now</string>
+    <string name="dictate__history_export_all_summary" comment="Explains what the export-everything button is for">Writes every dictation that is not in the folder yet — the ones from before you picked it, and any the app could not write while the folder was unreachable.</string>
+    <string name="dictate__history_export_all_result" comment="Summary after an export-everything run. {written}, {skipped} and {failed} are counts">{written} written, {skipped} already there, {failed} failed</string>
+    <string name="dictate__history_export_last_failure" comment="Warning that a dictation could not be written to the folder. {when} is a relative time like 5 minutes ago">A write failed {when}. “Export everything now” puts what is missing back.</string>
+    <string name="dictate__history_export_warning_title" comment="Title of the dialog shown before the export folder is picked for the first time">What lands there</string>
+    <string name="dictate__history_export_warning_message" comment="Body of the dialog shown before the export folder is picked for the first time">The folder will hold the text of every dictation you make from now on, and the recordings too if you switch that on. Anything that syncs it — a cloud client, a backup tool, another app — carries those transcripts off this device.\n\nDictate keeps writing until you disconnect the folder, and it never deletes from it: entries that drop out of the history stay in the folder. Password and incognito fields are never recorded, and so are never exported.</string>
+    <string name="dictate__history_export_needs_history" comment="Shown when the export is opened while the history is switched off">Folder export writes what the history records, so the history has to be switched on for it.</string>
+    <string name="dictate__history_export_enable_history" comment="Button that switches the history on from the export dialog">Turn on history</string>
+    <string name="dictate__history_export_pick_failed" comment="Toast shown when Android refused write access to the picked folder">Could not get write access to that folder</string>
     <string name="dictate__stats_empty" comment="Shown on the statistics screen before any dictation exists">No dictations yet — your stats will appear here once you start dictating.</string>
     <string name="dictate__stats_time_saved" comment="Label of the hero time-saved statistic">Time saved</string>
     <string name="dictate__stats_time_saved_sub" comment="Subtitle under the time-saved figure">vs. typing on a keyboard</string>
