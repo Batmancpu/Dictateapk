@@ -137,6 +137,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">szavak száma karakterszám hossz statisztika</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">vágás szóköz eltávolítás tisztítás másolás kivágás</string>
     <string name="settings__search__keywords__clear_cache">gyorsítótár tárhely hely ideiglenes fájlok felszabadítás törlés takarítás</string>
+    <string name="settings__search__keywords__momentary_layer">nyomva tartás húzás szimbólum réteg írásjel ideiglenes 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emodzsi emoji sor sáv nemrég használt billentyűzet felett gyors</string>
     <string name="settings__search__keywords__request_timeout">időkorlát időtúllépés lassú várakozás kapcsolat másodperc</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Nyelvek és elrendezések</string>
@@ -559,6 +560,8 @@
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Szóköz balra húzása</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Szóköz jobbra húzása</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Szóköz hosszú lenyomása</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Nyomva tartva belenézhet egy rétegbe</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Tartsa nyomva a ?123 gombot, húzza egy karakterre, majd engedje el — bekerül, és visszajönnek a betűk</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Törlés gomb balra húzása</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Törlés gomb hosszan nyomása</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Húzási sebesség küszöbe</string>

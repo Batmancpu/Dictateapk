@@ -149,6 +149,12 @@ fun GesturesScreen() = FlorisScreen {
         }
 
         PreferenceGroup(title = stringRes(R.string.pref__gestures__other_title)) {
+            SwitchPreference(
+                prefs.gestures.momentaryLayer,
+                modifier = Modifier.settingsSearchAnchor("pref__gestures__momentary_layer__label"),
+                title = stringRes(R.string.pref__gestures__momentary_layer__label),
+                summary = stringRes(R.string.pref__gestures__momentary_layer__summary),
+            )
             ListPreference(
                 prefs.gestures.deleteKeySwipeLeft,
                 modifier = Modifier.settingsSearchAnchor("pref__gestures__delete_key_swipe_left__label"),

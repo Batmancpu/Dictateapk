@@ -129,6 +129,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">Wörter zählen Wortanzahl Zeichenzahl Länge Statistik wie viele Wörter</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">kürzen Leerzeichen entfernen bereinigen kopieren ausschneiden Umbruch</string>
     <string name="settings__search__keywords__clear_cache">Cache Zwischenspeicher Speicher Speicherplatz temporäre Dateien freigeben löschen aufräumen</string>
+    <string name="settings__search__keywords__momentary_layer">halten ziehen symbol ebene sonderzeichen umschalten kurz vorübergehend 123 satzzeichen iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji reihe zeile leiste zuletzt benutzt über tastatur schnell smiley</string>
     <string name="settings__search__keywords__request_timeout">Zeitlimit Timeout Zeitüberschreitung langsam warten Verbindung Sekunden abgebrochen</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Sprachen &amp; Layouts</string>
@@ -494,6 +495,8 @@
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Leertaste nach links wischen</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Leertaste nach rechts wischen</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Leertaste lang drücken</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Halten, um eine Ebene aufzuschlagen</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">\?123 halten, auf ein Zeichen ziehen und loslassen — es wird eingefügt und die Buchstaben sind zurück</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Löschtaste nach links wischen</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Aktion bei lang gedrückter Löschtaste</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Gesten-Geschwindigkeitsschwelle</string>

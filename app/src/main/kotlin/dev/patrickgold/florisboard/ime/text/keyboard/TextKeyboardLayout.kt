@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -256,6 +257,12 @@ fun TextKeyboardLayout(
             }
         }
 
+        // The momentary layer (issue #366) asked for this keyboard while a finger was already down, and
+        // has been holding that finger's re-binding back until it arrived. Reported from here rather than
+        // where `controller.keyboard` is assigned, because only now has `keyboard.layout(...)` run above
+        // and the new keys have bounds to be found by.
+        SideEffect { controller.onKeyboardSettled() }
+
         val desiredKeyHack = rememberUpdatedState(desiredKey) // TODO quick'n'dirty hack
         val popupUiController = rememberPopupUiController(
             key1 = keyboard,
@@ -427,6 +434,19 @@ private class TextKeyboardLayoutController(
     private val pointerMap: PointerMap<TouchPointer> = PointerMap { TouchPointer() }
     lateinit var popupUiController: PopupUiController
 
+    /** The layer a finger is currently holding open, if any (issue #366). */
+    private val momentary = MomentaryLayer()
+
+    /**
+     * The key the finger sits on in the *new* layer, highlighted for looks only.
+     *
+     * While the finger has not left the layer key, [TouchPointer.activeKey] deliberately stays pointed at
+     * the old layer's key object — its up event is what latches the layer, exactly as a tap always has.
+     * That object is no longer rendered though, so without this the highlight would vanish out from under
+     * a finger that has not moved.
+     */
+    private var momentaryPressedKey: TextKey? = null
+
     private var initSelectionStart: Int = 0
     private var initSelectionEnd: Int = 0
     var isGliding by mutableStateOf(false)
@@ -444,6 +464,27 @@ private class TextKeyboardLayoutController(
         !dev.patrickgold.florisboard.dictate.ui.LegacyLayoutState.suppressGlide.value &&
         editorInstance.activeInfo.isRichInputEditor &&
         keyboardManager.activeState.keyVariation != KeyVariation.PASSWORD && !isTouchExplorationEnabled(appContext)
+
+    /**
+     * Reported from composition once the keyboard a momentary layer asked for has been laid out
+     * (issue #366). Until then the finger's re-binding is held back, because the keys still under it
+     * belong to the layer that is on its way out.
+     */
+    fun onKeyboardSettled() {
+        if (!momentary.isPending) return
+        momentary.onKeyboardSettled(keyboard.mode)
+        if (momentary.isPending) return
+        val heldKey = pointerMap.findById(momentary.ownerPointerId)?.activeKey ?: return
+        val bounds = heldKey.visibleBounds
+        momentaryPressedKey = keyboard
+            .getKeyForPos(bounds.left + bounds.width / 2f, bounds.top + bounds.height / 2f)
+            ?.also { it.isPressed = true }
+    }
+
+    private fun clearMomentaryHighlight() {
+        momentaryPressedKey?.isPressed = false
+        momentaryPressedKey = null
+    }
 
     fun onTouchEventInternal(event: MotionEvent) {
         flogDebug { "event=$event" }
@@ -582,6 +623,10 @@ private class TextKeyboardLayoutController(
     private fun onTouchDownInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
 
+        // Only the key the finger actually landed on may open a layer — this runs again on every re-bind
+        // within the same gesture, and sliding onto `ABC` inside the symbols must not open a second one.
+        val isFirstDown = pointer.initialKey == null
+
         val key = keyboard.getKeyForPos(event.getX(pointer.index), event.getY(pointer.index))
         if (key != null && key.isEnabled) {
             key.computedDataOnDown = key.computedData
@@ -649,12 +694,24 @@ private class TextKeyboardLayoutController(
             pointer.activeKey = key
             initSelectionStart = editorInstance.activeContent.selection.start
             initSelectionEnd = editorInstance.activeContent.selection.end
+            // A layer key opens its layer right here, under the finger, instead of waiting for the lift
+            // (issue #366). Nothing is lost for anyone who only taps: what happens on the way up still
+            // depends on whether another key was pressed in between, and a plain tap latches as before.
+            val downCode = key.computedData.code
+            if (isFirstDown && momentary.isIdle && prefs.gestures.momentaryLayer.get()) {
+                MomentaryLayer.modeFor(downCode)?.takeIf { it != keyboard.mode }?.let { target ->
+                    momentary.begin(pointer.id, from = keyboard.mode, to = target)
+                    keyboardManager.activeState.keyboardMode = target
+                }
+            }
             // Space/backspace own a horizontal swipe (cursor move / delete). Flag it (and clear it for any
             // other key, so it never gets stuck) so the legacy SWIPE-mode toggle doesn't hijack that swipe
             // on the modern keyboard (issue #188). A long-press accent popup raises the same flag later (#221).
-            val downCode = key.computedData.code
+            // A held-open layer owns its slide for the same reason — and has to keep owning it across the
+            // re-binds that carry the finger from the layer key to the symbol it is reaching for (#366).
             LegacyLayoutState.keyOwnsSwipe.value =
-                downCode == KeyCode.SPACE || downCode == KeyCode.CJK_SPACE || downCode == KeyCode.DELETE
+                downCode == KeyCode.SPACE || downCode == KeyCode.CJK_SPACE || downCode == KeyCode.DELETE ||
+                    !momentary.isIdle
         } else {
             pointer.activeKey = null
         }
@@ -663,6 +720,10 @@ private class TextKeyboardLayoutController(
     private fun onTouchMoveInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
 
+        // The layer this finger asked for has not been laid out yet (issue #366). Re-binding now would
+        // press a key of the layer that is leaving — one the user cannot see any more.
+        if (momentary.owns(pointer.id) && momentary.isPending) return
+
         val initialKey = pointer.initialKey
         val activeKey = pointer.activeKey
         if (initialKey != null && activeKey != null) {
@@ -670,7 +731,8 @@ private class TextKeyboardLayoutController(
                 val x = event.getX(pointer.index)
                 val y = event.getY(pointer.index)
                 if (!popupUiController.propagateMotionEvent(activeKey, x, y)) {
-                    onTouchCancelInternal(event, pointer)
+                    clearMomentaryHighlight()
+                    onTouchCancelInternal(event, pointer, isRebind = true)
                     onTouchDownInternal(event, pointer)
                 }
             } else {
@@ -679,7 +741,8 @@ private class TextKeyboardLayoutController(
                     || (event.getY(pointer.index) < activeKey.visibleBounds.top - 0.35f * activeKey.visibleBounds.height)
                     || (event.getY(pointer.index) > activeKey.visibleBounds.bottom + 0.35f * activeKey.visibleBounds.height)
                 ) {
-                    onTouchCancelInternal(event, pointer)
+                    clearMomentaryHighlight()
+                    onTouchCancelInternal(event, pointer, isRebind = true)
                     onTouchDownInternal(event, pointer)
                 }
             }
@@ -688,6 +751,9 @@ private class TextKeyboardLayoutController(
 
     private fun onTouchUpInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
+        // Read before the key is released below, which clears `activeKey` (issue #366).
+        val landedCode = pointer.activeKey?.computedData?.code
+        val layerData = pointer.initialKey?.computedData
         LegacyLayoutState.keyOwnsSwipe.value = false // clear the legacy-swipe guard (#188 / #221)
         pointer.pressedKeyInfo?.cancelJobs()
         pointer.pressedKeyInfo = null
@@ -738,9 +804,26 @@ private class TextKeyboardLayoutController(
             pointer.activeKey = null
         }
         pointer.hasTriggeredGestureMove = false
+
+        // After the key has been sent, never before: a layer key's own up event puts the keyboard where a
+        // tap would leave it, and only then is there something to undo (issue #366).
+        if (momentary.owns(pointer.id)) {
+            clearMomentaryHighlight()
+            val restore = momentary.end(
+                landedCode = landedCode,
+                wasUninterrupted = layerData != null &&
+                    inputEventDispatcher.isUninterruptedEventSequence(layerData),
+            )
+            restore?.let { keyboardManager.activeState.keyboardMode = it }
+        }
     }
 
-    private fun onTouchCancelInternal(event: MotionEvent, pointer: TouchPointer) {
+    /**
+     * @param isRebind whether this is the release half of a slide onto another key rather than the end of
+     *   the gesture. A held-open layer (issue #366) has to survive that — sliding onto the symbol is the
+     *   whole point of it — but must not survive a real cancel.
+     */
+    private fun onTouchCancelInternal(event: MotionEvent, pointer: TouchPointer, isRebind: Boolean = false) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
         LegacyLayoutState.keyOwnsSwipe.value = false // clear the legacy-swipe guard (#188 / #221)
         pointer.pressedKeyInfo?.cancelJobs()
@@ -761,6 +844,14 @@ private class TextKeyboardLayoutController(
             pointer.activeKey = null
         }
         pointer.hasTriggeredGestureMove = false
+
+        // A press the system took away is not a choice: the keyboard goes back to the layer the gesture
+        // started in rather than staying in one nobody confirmed (issue #366). This is also the path
+        // `resetAllKeys` takes when the keyboard is dismissed mid-press.
+        if (!isRebind && momentary.owns(pointer.id)) {
+            clearMomentaryHighlight()
+            momentary.endCancelled()?.let { keyboardManager.activeState.keyboardMode = it }
+        }
     }
 
     override fun onSwipe(event: SwipeGesture.Event): Boolean {

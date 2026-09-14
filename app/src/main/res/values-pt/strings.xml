@@ -132,6 +132,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">contar palavras número de palavras caracteres comprimento estatísticas</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">cortar espaços remover limpar copiar recortar</string>
     <string name="settings__search__keywords__clear_cache">cache armazenamento espaço ficheiros temporários libertar apagar limpar</string>
+    <string name="settings__search__keywords__momentary_layer">manter deslizar simbolo nivel pontuacao temporario momentaneo 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji linha barra recentes usados acima teclado rápido</string>
     <string name="settings__search__keywords__request_timeout">tempo limite timeout lento espera ligação segundos</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas e esquemas</string>
@@ -549,6 +550,8 @@
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Deslizar para a esquerda na barra de espaços</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Deslizar para a direita na barra de espaços</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Toque longo na barra de espaço</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Manter premido para espreitar um nível</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Mantenha ?123, deslize até um caractere e solte: é inserido e as letras voltam</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Deslizar para a esquerda na tecla de retrocesso</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Apertar e segurar tecla de apagar</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Velocidade de deslize</string>

@@ -243,6 +243,9 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__gestures__space_bar_swipe_right__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__space_bar_swipe_right__label"),
         SettingsSearchEntry(R.string.pref__gestures__space_bar_long_press__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__space_bar_long_press__label"),
         SettingsSearchEntry(R.string.pref__gestures__other_title, R.string.settings__gestures__title, Routes.Settings.Gestures),
+        // Hand-added (issue #366): the generator emits no keywordsRes, and nobody looking for this
+        // gesture searches for the word "layer" — they search for "symbols", "hold", "iPhone".
+        SettingsSearchEntry(R.string.pref__gestures__momentary_layer__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__momentary_layer__label", keywordsRes = R.string.settings__search__keywords__momentary_layer),
         SettingsSearchEntry(R.string.pref__gestures__delete_key_swipe_left__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__delete_key_swipe_left__label"),
         SettingsSearchEntry(R.string.pref__gestures__delete_key_long_press__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__delete_key_long_press__label"),
         SettingsSearchEntry(R.string.pref__gestures__swipe_velocity_threshold__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__swipe_velocity_threshold__label"),

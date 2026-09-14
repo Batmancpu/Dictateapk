@@ -136,6 +136,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">počet slov počítadlo slov znaky délka statistika</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">oříznutí mezery odstranit vyčistit kopírovat vyjmout</string>
     <string name="settings__search__keywords__clear_cache">mezipaměť cache úložiště místo dočasné soubory uvolnit smazat vyčistit</string>
+    <string name="settings__search__keywords__momentary_layer">podržet přeject symbol vrstva interpunkce dočasně okamžitě 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emodži emoji řádek lišta nedávné použité nad klávesnicí rychlý</string>
     <string name="settings__search__keywords__request_timeout">časový limit timeout pomalé čekání spojení sekundy</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Jazyky a rozložení</string>
@@ -560,6 +561,8 @@
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Přejetí vlevo přes mezerník</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Přejetí vpravo přes mezerník</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Dlouhý stisk mezerníku</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Podržením nahlédnout do vrstvy</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Podržte ?123, přejeďte na znak a pusťte — vloží se a písmena jsou zpět</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Přejetí doleva na klávese mazání</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Dlouhé stisknutí klávesy ke smazání</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Práh rychlosti přejetí</string>

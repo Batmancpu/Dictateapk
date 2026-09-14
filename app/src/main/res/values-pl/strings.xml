@@ -137,6 +137,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">liczba słów licznik słów znaki długość statystyki</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">przycinanie spacje usuwanie czyszczenie kopiowanie wycinanie</string>
     <string name="settings__search__keywords__clear_cache">pamięć podręczna cache miejsce pliki tymczasowe zwolnić usunąć wyczyścić</string>
+    <string name="settings__search__keywords__momentary_layer">przytrzymaj przesuń symbol warstwa interpunkcja tymczasowo chwilowo 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji rząd pasek ostatnio używane nad klawiaturą szybki</string>
     <string name="settings__search__keywords__request_timeout">limit czasu timeout wolno czekanie połączenie sekundy</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Język i układ</string>
@@ -561,6 +562,8 @@
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Spacja Przesuń palcem w dół</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Spacja Przesuń palcem w prawo</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Spacja długie naciśnięcie</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Przytrzymaj, aby zajrzeć do warstwy</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Przytrzymaj ?123, przesuń na znak i puść — zostanie wstawiony, a litery wrócą</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Klawisz Delete przesuń w lewo</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Klawisz Delete przy długim przytrzymaniu</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Próg prędkości przesuwania</string>

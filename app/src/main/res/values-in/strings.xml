@@ -133,6 +133,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">hitung kata jumlah kata karakter panjang statistik</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">pangkas spasi hapus bersihkan salin potong</string>
     <string name="settings__search__keywords__clear_cache">cache penyimpanan ruang berkas sementara mengosongkan hapus bersihkan</string>
+    <string name="settings__search__keywords__momentary_layer">tahan geser simbol lapisan tanda baca sementara sesaat 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji baris deret terbaru digunakan di atas papan ketik cepat</string>
     <string name="settings__search__keywords__request_timeout">batas waktu timeout lambat menunggu koneksi detik</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Tata letak Bahasa &amp;</string>
@@ -546,6 +547,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Geser batang spasi ke kiri</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Geser batang spasi ke kanan</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Tekan lama bilah spasi</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Tahan untuk mengintip lapisan</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Tahan ?123, geser ke sebuah karakter lalu lepaskan — karakter disisipkan dan huruf kembali</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Tombol hapus geser ke kiri</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Tekanan lama tombol hapus</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Ambang batas kecepatan geser</string>
