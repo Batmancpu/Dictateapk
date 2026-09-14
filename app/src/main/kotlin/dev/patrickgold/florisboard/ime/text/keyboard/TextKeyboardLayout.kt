@@ -234,14 +234,23 @@ fun TextKeyboardLayout(
         val windowSpec by windowController.activeWindowSpec.collectAsState()
         val keyMarginH by remember { derivedStateOf { windowSpec.keyMarginH.toPx() } }
         val keyMarginV by remember { derivedStateOf { windowSpec.keyMarginV.toPx() } }
+        // Keyed on the keyboard and its width, unlike the margins above: whether there is a gap at all
+        // depends on which keyboard this is — a number pad has nothing to split (issue #362).
+        val splitGap by remember(keyboard, keyboardWidth) {
+            derivedStateOf { keyboard.effectiveSplitGap(keyboardWidth, windowSpec.splitGap.toPx()) }
+        }
 
         val desiredKey = remember(
             keyboard, keyboardWidth, keyboardHeight, keyMarginH, keyMarginV,
-            keyboardRowBaseHeight, evaluator
+            keyboardRowBaseHeight, evaluator, splitGap,
         ) {
             TextKey(data = TextKeyData.UNSPECIFIED).also { desiredKey ->
                 desiredKey.touchBounds.apply {
-                    width = keyboardWidth / 10f
+                    // The gap belongs to no key, so the reference width is a tenth of what the two halves
+                    // share, not of the whole window (issue #362): every key asks for its width in
+                    // multiples of this, and a half laid out from a width it does not have gets keys that
+                    // shrink into each other.
+                    width = (keyboardWidth - splitGap) / 10f
                     height = when (keyboard.mode) {
                         KeyboardMode.CHARACTERS,
                         KeyboardMode.NUMERIC_ADVANCED,
@@ -254,7 +263,7 @@ fun TextKeyboardLayout(
                     }
                 }
                 desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
-                keyboard.layout(keyboardWidth, keyboardHeight, desiredKey, true)
+                keyboard.layout(keyboardWidth, keyboardHeight, desiredKey, true, splitGap)
             }
         }
 

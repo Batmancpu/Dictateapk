@@ -53,7 +53,10 @@ enum class ImeWindowMode {
         COMPACT,
 
         /**
-         * TODO Placeholder, to be implemented in the future.
+         * The layout occupies the full window width, but its rows are split into two halves that sit at
+         * the left and right edge, with a gap in between (issue #362). For typing with both thumbs on a
+         * window too wide to reach across. The gap's width is what is left once both halves have the
+         * width two thumbs can cover, see [ImeWindowConstraints.Fixed.Thumbs].
          */
         THUMBS;
     }

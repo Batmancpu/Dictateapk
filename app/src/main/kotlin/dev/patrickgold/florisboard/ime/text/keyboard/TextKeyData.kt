@@ -122,6 +122,7 @@ data class TextKeyData(
                 CLIPBOARD_CLEAR_FULL_HISTORY,
                 CLIPBOARD_CLEAR_PRIMARY_CLIP,
                 TOGGLE_COMPACT_LAYOUT,
+                SPLIT_LAYOUT,
                 COMPACT_LAYOUT_TO_LEFT,
                 COMPACT_LAYOUT_TO_RIGHT,
                 UNDO,
@@ -352,6 +353,12 @@ data class TextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.TOGGLE_COMPACT_LAYOUT,
             label = "toggle_compact_layout",
+        )
+        /** Predefined key data for [KeyCode.SPLIT_LAYOUT], which toggles the split keyboard (issue #362) */
+        val SPLIT_LAYOUT = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.SPLIT_LAYOUT,
+            label = "split_layout",
         )
         /** Predefined key data for [KeyCode.COMPACT_LAYOUT_TO_LEFT] */
         val COMPACT_LAYOUT_TO_LEFT = TextKeyData(

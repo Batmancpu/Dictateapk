@@ -1791,6 +1791,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                         dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.TOGGLE_RESIZE_MODE))
                     )
                 }
+                // The split keyboard (issue #362) is new, so an arrangement saved before it existed has
+                // no entry for it and would never show it — the action list is the saved one, not the
+                // default one.
+                if (QuickAction.InsertKey(TextKeyData.SPLIT_LAYOUT) !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.SPLIT_LAYOUT))
+                    )
+                }
                 val json = QuickActionJsonConfig.encodeToString(newArrangement.distinct())
                 entry.transform(rawValue = json)
             }

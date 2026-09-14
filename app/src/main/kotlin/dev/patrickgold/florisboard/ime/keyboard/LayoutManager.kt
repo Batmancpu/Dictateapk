@@ -23,6 +23,7 @@ import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
@@ -177,6 +178,7 @@ class LayoutManager(context: Context) {
         main: LTN? = null,
         modifier: LTN? = null,
         extension: LTN? = null,
+        isSplit: Boolean = false,
     ): TextKeyboard {
         val extendedPopupsDefault = loadPopupMappingAsync()
         val extendedPopups = loadPopupMappingAsync(subtype)
@@ -296,6 +298,10 @@ class LayoutManager(context: Context) {
             }
         }
 
+        if (isSplit && keyboardMode.isSplittable()) {
+            addSecondSpaceBar(computedArrangement)
+        }
+
         val array = Array(computedArrangement.size) { computedArrangement[it] }
         return TextKeyboard(
             arrangement = array,
@@ -307,6 +313,34 @@ class LayoutManager(context: Context) {
                 flogWarning(LogTopic.LAYOUT_MANAGER) { it.toString() }
             }.getOrNull()?.mapping
         )
+    }
+
+    /**
+     * Gives the row that carries the space bar a second one, so a split keyboard has a space key under
+     * each thumb (issue #362) — the way Gboard and Samsung's keyboard split that row.
+     *
+     * The copy carries the seam, which is the whole reason it is made here and not in the layout pass:
+     * by width alone the seam of that row falls before the space bar, and the left half would end up
+     * with the symbol and comma keys and no way to type a space. Both keys are the same key data, so
+     * both behave identically — the swipe gestures, the language label, the long press, all of it.
+     */
+    private fun addSecondSpaceBar(arrangement: ArrayList<Array<TextKey>>) {
+        for ((r, row) in arrangement.withIndex()) {
+            val spaceIndex = row.indexOfFirst { key ->
+                val data = key.data
+                data is TextKeyData && (data.code == KeyCode.SPACE || data.code == KeyCode.CJK_SPACE)
+            }
+            if (spaceIndex < 0) continue
+            val secondSpaceBar = TextKey(row[spaceIndex].data).also { it.isSplitSeamStart = true }
+            arrangement[r] = Array(row.size + 1) { k ->
+                when {
+                    k <= spaceIndex -> row[k]
+                    k == spaceIndex + 1 -> secondSpaceBar
+                    else -> row[k - 1]
+                }
+            }
+            return
+        }
     }
 
     private fun addRowHints(main: Array<TextKey>, hint: Array<TextKey>, hintType: KeyType) {
@@ -335,10 +369,14 @@ class LayoutManager(context: Context) {
      *
      * @param keyboardMode The keyboard mode for which the layout should be computed.
      * @param subtype The subtype which localizes the computed layout.
+     * @param isSplit Whether the keyboard is currently split into two halves (issue #362), which is the
+     *  one thing about the window that reaches into the arrangement: a split keyboard gets a second
+     *  space bar so that each half has one.
      */
     fun computeKeyboardAsync(
         keyboardMode: KeyboardMode,
         subtype: Subtype,
+        isSplit: Boolean = false,
     ): Deferred<TextKeyboard> = ioScope.async {
         var main: LTN? = null
         var modifier: LTN? = null
@@ -391,7 +429,7 @@ class LayoutManager(context: Context) {
             }
         }
 
-        return@async mergeLayouts(keyboardMode, subtype, main, modifier, extension)
+        return@async mergeLayouts(keyboardMode, subtype, main, modifier, extension, isSplit)
     }
 
     /**

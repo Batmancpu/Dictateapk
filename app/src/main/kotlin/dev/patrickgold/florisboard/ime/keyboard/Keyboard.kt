@@ -53,12 +53,16 @@ abstract class Keyboard {
     /**
      * Layouts the keys according the the dimensions and parameters provided by given arguments. This method's
      * exact behavior is highly dependent aon the actual subclass.
+     *
+     * @param splitGap The width of the gap between the two halves of a split keyboard, in px, or zero
+     *  for the usual unsplit keyboard (issue #362). A subclass may ignore it if it has nothing to split.
      */
     abstract fun layout(
         keyboardWidth: Float,
         keyboardHeight: Float,
         desiredKey: Key,
         extendTouchBoundariesDownwards: Boolean,
+        splitGap: Float = 0.0f,
     )
 }
 

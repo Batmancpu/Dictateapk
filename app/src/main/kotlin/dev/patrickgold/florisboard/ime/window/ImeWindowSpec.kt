@@ -47,7 +47,9 @@ sealed class ImeWindowSpec {
     // keyboard the user has already shrunk to its minimum has rows barely twice that tall. Cap each
     // margin at a fraction of the cell it is taken out of, which always leaves the key the rest.
     val keyMarginH: Dp by lazy {
-        val keyCellWidth = props.keyboardWidth(constraints) / KEYS_PER_ROW
+        // Minus the split gap: the cap is there to stop the margin from eating the key, so it has to be
+        // taken against the cell the key really gets, which on a split keyboard excludes the gap (#362).
+        val keyCellWidth = (props.keyboardWidth(constraints) - splitGap) / KEYS_PER_ROW
         (props.calcKeyMarginH(constraints) * userPreferredOptions.keySpacingFactorH)
             .coerceAtMost(keyCellWidth * MAX_KEY_MARGIN_FRACTION)
     }
@@ -59,6 +61,12 @@ sealed class ImeWindowSpec {
     }
 
     val fontScale: Float by lazy { props.calcFontScale(constraints) * userPreferredOptions.fontScale }
+
+    /**
+     * The width of the gap between the two halves of a split keyboard, or zero when this window is not
+     * split (issue #362). Only the thumbs mode brings a gap along, so no mode check is needed here.
+     */
+    val splitGap: Dp by lazy { constraints.defSplitGap }
 
     /**
      * Calculate how a move gesture would change the computed props.

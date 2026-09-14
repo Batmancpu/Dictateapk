@@ -100,6 +100,8 @@
     <string name="quick_action__floating_window_mode" comment="Please mind the limited available space for the quick action strings">Плавающая</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Одной рукой</string>
     <string name="quick_action__one_handed_mode__tooltip">Включить режим управления одной рукой</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Разделённая</string>
+    <string name="quick_action__split_layout__tooltip">Включить разделённую клавиатуру</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Ряд цифр</string>
     <string name="quick_action__toggle_number_row__tooltip">Показать или скрыть ряд цифр</string>
     <string name="quick_action__resize_mode" comment="Please mind the limited available space for the quick action strings">Изменить размер</string>

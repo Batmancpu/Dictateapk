@@ -23,6 +23,8 @@ import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.width
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -61,6 +63,7 @@ import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.DevanagariBase
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
+import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -202,6 +205,19 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     keyboardCache.clear(KeyboardMode.CHARACTERS)
                 }
             }
+            // Splitting the keyboard is the one window mode that reaches into the arrangement itself: it
+            // needs a second space bar so that each half has one (issue #362), so the keyboard on screen
+            // has to be rebuilt when it is toggled. The window config is a pref, so the toggle arrives
+            // here like any other pref change — guarded, because that same pref also carries every resize
+            // drag and one-handed nudge, which change no key at all. The two arrangements live side by
+            // side in the cache, so nothing has to be thrown away here.
+            prefs.keyboard.windowConfig.asFlow().collectLatestIn(scope) {
+                val isSplit = isSplitLayoutActive()
+                if (isSplit != lastSplitLayoutState) {
+                    lastSplitLayoutState = isSplit
+                    updateActiveEvaluators()
+                }
+            }
             prefs.keyboard.hintedNumberRowEnabled.asFlow().collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
@@ -245,6 +261,22 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
+    /**
+     * The split state the on-screen keyboard was last built for, so that a window config change that is
+     * only a resize or a one-handed nudge does not rebuild every key for nothing.
+     */
+    private var lastSplitLayoutState: Boolean = false
+
+    /**
+     * Whether the keyboard is currently split into two halves (issue #362). Read from the window
+     * controller, because the split is a window mode and not a setting of its own; false while there is
+     * no keyboard window to ask.
+     */
+    private fun isSplitLayoutActive(): Boolean {
+        val config = FlorisImeService.windowControllerOrNull()?.activeWindowConfig?.value ?: return false
+        return config.mode == ImeWindowMode.FIXED && config.fixedMode == ImeWindowMode.Fixed.THUMBS
+    }
+
     fun updateActiveEvaluators(action: () -> Unit = { }) = scope.launch {
         activeEvaluatorGuard.withLock {
             action()
@@ -257,10 +289,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             if (mode != KeyboardMode.CHARACTERS) {
                 state.inputShiftState = InputShiftState.UNSHIFTED
             }
-            val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
+            val isSplit = isSplitLayoutActive()
+            val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype, isSplit) {
                 layoutManager.computeKeyboardAsync(
                     keyboardMode = mode,
                     subtype = subtype,
+                    isSplit = isSplit,
                 ).await()
             }
             val computingEvaluator = ComputingEvaluatorImpl(
@@ -1395,6 +1429,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             }
             KeyCode.TOGGLE_FLOATING_WINDOW -> windowController.actions.toggleFloatingWindow()
             KeyCode.TOGGLE_COMPACT_LAYOUT -> windowController.actions.toggleCompactLayout()
+            KeyCode.SPLIT_LAYOUT -> windowController.actions.toggleSplitLayout()
             KeyCode.COMPACT_LAYOUT_TO_LEFT -> windowController.actions.compactLayoutToLeft()
             KeyCode.COMPACT_LAYOUT_TO_RIGHT -> windowController.actions.compactLayoutToRight()
             KeyCode.TOGGLE_RESIZE_MODE -> windowController.editor.toggleEnabled()
@@ -1743,6 +1778,18 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 KeyCode.LANGUAGE_SWITCH -> {
                     subtypeManager.subtypes.size > 1
+                }
+                KeyCode.SPLIT_LAYOUT -> {
+                    // Two halves of a window this narrow would be two rows of slivers (issue #362), so
+                    // the action is greyed out rather than hidden — the same answer the language switch
+                    // gives when there is only one language. The measured window is asked first and the
+                    // display only as a fallback: the Smartbar can compose before the keyboard view has
+                    // been measured, and a window of no width yet would grey the action out for the
+                    // first frames of every keyboard that opens.
+                    val rootBounds = FlorisImeService.windowControllerOrNull()?.activeRootInsets?.value?.boundsDp
+                    val windowWidth = rootBounds?.width?.takeIf { it > 0.dp }
+                        ?: appContext.resources.configuration.screenWidthDp.dp
+                    windowWidth >= SplitLayoutMinWindowWidth
                 }
                 KeyCode.DICTATE_REINSERT -> {
                     // Opens the transcription history panel (issue #140); greyed out only when the history

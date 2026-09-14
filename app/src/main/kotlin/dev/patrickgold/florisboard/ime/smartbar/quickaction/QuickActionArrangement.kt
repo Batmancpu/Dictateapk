@@ -91,6 +91,10 @@ data class QuickActionArrangement(
                 // Like the GIF action it sits in the list until dragged into the bar.
                 QuickAction.InsertKey(TextKeyData.IME_UI_MODE_STICKER),
                 QuickAction.InsertKey(TextKeyData.TOGGLE_COMPACT_LAYOUT),
+                // Split keyboard for two thumbs on a wide window (issue #362). Next to one-handed
+                // because they are the same kind of answer: greyed out below 600dp, where two halves
+                // would be two rows of slivers.
+                QuickAction.InsertKey(TextKeyData.SPLIT_LAYOUT),
                 QuickAction.InsertKey(TextKeyData.TOGGLE_INCOGNITO_MODE),
                 QuickAction.InsertKey(TextKeyData.ARROW_UP),
                 QuickAction.InsertKey(TextKeyData.ARROW_DOWN),

@@ -82,7 +82,8 @@ class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
     fun clear(subtype: Subtype) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Clear cache for subtype '${subtype.toShortString()}'" }
         for (mode in KeyboardMode.entries) {
-            cache[mode]!!.remove(subtype.hashCode())
+            cache[mode]!!.remove(cacheKey(subtype, isSplit = false))
+            cache[mode]!!.remove(cacheKey(subtype, isSplit = true))
         }
     }
 
@@ -94,7 +95,17 @@ class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
      */
     fun clear(mode: KeyboardMode, subtype: Subtype) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Clear cache for mode '$mode' and subtype '${subtype.toShortString()}'" }
-        cache[mode]!!.remove(subtype.hashCode())
+        cache[mode]!!.remove(cacheKey(subtype, isSplit = false))
+        cache[mode]!!.remove(cacheKey(subtype, isSplit = true))
+    }
+
+    /**
+     * The key a keyboard is cached under. A split keyboard is not the same arrangement as an unsplit one
+     * — it carries a second space bar (issue #362) — so the two are cached side by side instead of one
+     * evicting the other, which is also what keeps a saved split mode correct across a service restart.
+     */
+    private fun cacheKey(subtype: Subtype, isSplit: Boolean): Int {
+        return 31 * subtype.hashCode() + if (isSplit) 1 else 0
     }
 
     /**
@@ -102,12 +113,13 @@ class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
      *
      * @param mode The mode of the computed keyboard to get.
      * @param subtype The subtype of the computed keyboard to get.
+     * @param isSplit Whether the split arrangement is wanted (issue #362).
      *
      * @return The deferred computed keyboard or null if the cache does not have an entry associated with the given
      *  params.
      */
-    fun getAsync(mode: KeyboardMode, subtype: Subtype): TextKeyboard? {
-        return cache[mode]!![subtype.hashCode()].also {
+    fun getAsync(mode: KeyboardMode, subtype: Subtype, isSplit: Boolean = false): TextKeyboard? {
+        return cache[mode]!![cacheKey(subtype, isSplit)].also {
             flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Get keyboard '$mode ${subtype.toShortString()}'" }
         }
     }
@@ -119,20 +131,26 @@ class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
      *
      * @param mode The mode of the computed keyboard to get.
      * @param subtype The subtype of the computed keyboard to get.
+     * @param isSplit Whether the split arrangement is wanted (issue #362).
      * @param block The lambda expression which is invoked to provide a fallback computed keyboard.
      *
      * @return The deferred computed keyboard either from the cache or from [block].
      */
-    fun getOrElseAsync(mode: KeyboardMode, subtype: Subtype, block: suspend () -> TextKeyboard): TextKeyboard {
+    fun getOrElseAsync(
+        mode: KeyboardMode,
+        subtype: Subtype,
+        isSplit: Boolean = false,
+        block: suspend () -> TextKeyboard,
+    ): TextKeyboard {
         contract {
             callsInPlace(block, InvocationKind.AT_MOST_ONCE)
         }
-        val cachedKeyboard = getAsync(mode, subtype)
+        val cachedKeyboard = getAsync(mode, subtype, isSplit)
         return if (cachedKeyboard != null) {
             cachedKeyboard
         } else {
             val keyboard = runBlocking { block() }
-            set(mode, subtype, keyboard)
+            set(mode, subtype, keyboard, isSplit)
             keyboard
         }
     }
@@ -143,9 +161,10 @@ class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
      * @param mode The mode of the computed keyboard to set.
      * @param subtype The subtype of the computed keyboard to set.
      * @param keyboard The deferred computed keyboard to set for the given params.
+     * @param isSplit Whether [keyboard] is the split arrangement (issue #362).
      */
-    fun set(mode: KeyboardMode, subtype: Subtype, keyboard: TextKeyboard) {
+    fun set(mode: KeyboardMode, subtype: Subtype, keyboard: TextKeyboard, isSplit: Boolean = false) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Set keyboard '$mode ${subtype.toShortString()}'" }
-        cache[mode]!![subtype.hashCode()] = keyboard
+        cache[mode]!![cacheKey(subtype, isSplit)] = keyboard
     }
 }
