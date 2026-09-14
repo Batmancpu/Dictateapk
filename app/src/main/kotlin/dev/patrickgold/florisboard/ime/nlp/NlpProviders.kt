@@ -361,6 +361,20 @@ interface LearningProvider {
     suspend fun learnWordPair(subtype: Subtype, previousWord: String, word: String)
 
     /**
+     * Counts one sighting of a word the user **tapped in the suggestion strip** (issue #375).
+     *
+     * A tap is the most deliberate thing that happens while typing — the word was on screen, it was read,
+     * it was chosen — and it used to teach the vocabulary nothing at all. The word then stalled at
+     * whatever rung it had reached, because the moment a word starts being offered is the moment people
+     * stop spelling it out: reported as "typed it six times, still says seen 2×".
+     *
+     * Deliberately **only bumps rows that already exist**. This is not a second way into the vocabulary —
+     * there is no tap evidence to judge here, so the entry test cannot run, and a rule that let picks
+     * *create* entries would be a way around it. It is a way of counting use.
+     */
+    suspend fun learnPickedWord(subtype: Subtype, word: String): LearnOutcome
+
+    /**
      * Drops [word] from the learned vocabulary entirely and reports whether it had already been promoted
      * into the personal dictionary — in which case the caller has that copy to remove as well.
      */

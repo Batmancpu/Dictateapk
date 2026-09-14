@@ -64,6 +64,17 @@ fun TypingScreen() = FlorisScreen {
     val navController = LocalNavController.current
 
     content {
+        // First on this screen rather than last (issue #375): the personal dictionary and the words the
+        // keyboard picks up are what make it yours, and they were at the bottom of the longest settings
+        // page in the app — reported as "too hidden under Typing".
+        PreferenceGroup(title = stringRes(R.string.settings__dictionary__title)) {
+            Preference(
+                icon = Icons.AutoMirrored.Filled.LibraryBooks,
+                title = stringRes(R.string.settings__dictionary__title),
+                onClick = { navController.navigate(Routes.Settings.Dictionary) },
+            )
+        }
+
         PreferenceGroup(title = stringRes(R.string.pref__suggestion__title)) {
             SwitchPreference(
                 prefs.suggestion.enabled,
@@ -226,12 +237,5 @@ fun TypingScreen() = FlorisScreen {
             )
         }
 
-        PreferenceGroup(title = stringRes(R.string.settings__dictionary__title)) {
-            Preference(
-                icon = Icons.AutoMirrored.Filled.LibraryBooks,
-                title = stringRes(R.string.settings__dictionary__title),
-                onClick = { navController.navigate(Routes.Settings.Dictionary) },
-            )
-        }
     }
 }

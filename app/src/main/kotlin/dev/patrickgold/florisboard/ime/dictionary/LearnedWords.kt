@@ -23,6 +23,8 @@ import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.Transaction
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import dev.patrickgold.florisboard.ime.nlp.latin.WordLearningGate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
@@ -47,8 +49,13 @@ internal const val LEARNED_BIGRAMS_TABLE = "learned_bigrams"
 @Entity(
     tableName = LEARNED_WORDS_TABLE,
     indices = [
-        Index(value = ["lang", "word"], unique = true),
-        Index(value = ["lang", "key"]),
+        // Unique on the *folded* key, not on the spelling (issue #375). `Prateek` at the start of a
+        // sentence and `prateek` in the middle of one are the same word typed by the same finger —
+        // auto-capitalisation is as often ours as it is the user's. Keyed on the spelling they were two
+        // rows of two sightings each, so the ladder never reached its third rung and the rank saw half
+        // the usage twice. Everything that *reads* this table was already case-blind; only the write
+        // was not.
+        Index(value = ["lang", "key"], unique = true),
     ],
 )
 data class LearnedWordEntry(
@@ -120,6 +127,19 @@ abstract class LearnedWordsDao {
     @Query("SELECT * FROM $LEARNED_WORDS_TABLE WHERE lang = :lang AND word = :word LIMIT 1")
     abstract suspend fun findWord(lang: String, word: String): LearnedWordEntry?
 
+    /** The row for a folded lookup key — the identity this table actually has (issue #375). */
+    @Query("SELECT * FROM $LEARNED_WORDS_TABLE WHERE lang = :lang AND key = :key LIMIT 1")
+    abstract suspend fun findWordByKey(lang: String, key: String): LearnedWordEntry?
+
+    /**
+     * Changes only the displayed spelling, leaving the count and the recency alone.
+     *
+     * The row keeps the capitalisation it was last typed with, which is the one the strip should offer:
+     * a name the user has started writing with a capital is a name they want back with a capital.
+     */
+    @Query("UPDATE $LEARNED_WORDS_TABLE SET word = :word WHERE id = :id")
+    abstract suspend fun retitleWord(id: Long, word: String)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun insertWord(entry: LearnedWordEntry): Long
 
@@ -147,6 +167,22 @@ abstract class LearnedWordsDao {
     abstract suspend fun deleteAllWords()
 
     /**
+     * Drops every observation but keeps the words that made it into the personal dictionary (issue
+     * #375).
+     *
+     * "Forget everything" is about the record of what was noticed, not about the vocabulary the user
+     * ended up with: the dictionary entry survives this either way (it lives in the other database), and
+     * deleting its row here only threw away the explanation of where it came from — and with it the
+     * usage count that orders the user's own words in the strip.
+     */
+    @Query("DELETE FROM $LEARNED_WORDS_TABLE WHERE promoted = 0")
+    abstract suspend fun deleteUnpromotedWords()
+
+    /** Everything at one stage of one language, for the per-tier "forget" on the settings screen. */
+    @Query("DELETE FROM $LEARNED_WORDS_TABLE WHERE lang = :lang AND id IN (:ids)")
+    abstract suspend fun deleteWords(lang: String, ids: List<Long>)
+
+    /**
      * Records one sighting of [word], inserting it when new. Returns the row as it now stands.
      *
      * A single transaction because two keystroke-driven coroutines can reach the same new word at once,
@@ -160,15 +196,17 @@ abstract class LearnedWordsDao {
         weight: Int,
         now: Long,
     ): LearnedWordEntry? {
-        val existing = findWord(lang, word)
+        // Looked up by [key], not by [word]: see the index on [LearnedWordEntry] (issue #375).
+        val existing = findWordByKey(lang, key)
         if (existing != null) {
             bumpWord(existing.id, weight, now)
-            return findWord(lang, word)
+            if (existing.word != word) retitleWord(existing.id, word)
+            return findWordByKey(lang, key)
         }
         insertWord(
             LearnedWordEntry(word = word, key = key, lang = lang, count = weight, lastUsed = now),
         )
-        return findWord(lang, word)
+        return findWordByKey(lang, key)
     }
 
     // ── Bigrams ──────────────────────────────────────────────────────────────────────────────────
@@ -207,7 +245,7 @@ abstract class LearnedWordsDao {
 
 @Database(
     entities = [LearnedWordEntry::class, LearnedBigramEntry::class],
-    version = 1,
+    version = 2,
     exportSchema = true,
 )
 abstract class LearnedWordsDatabase : RoomDatabase() {
@@ -216,8 +254,58 @@ abstract class LearnedWordsDatabase : RoomDatabase() {
     companion object {
         const val DB_FILE_NAME = "dictate_learned_words"
 
+        /**
+         * v1 → v2: one row per folded key instead of one row per spelling (issue #375).
+         *
+         * Written out rather than left to [fallbackToDestructiveMigration], which on this database would
+         * mean every user silently losing the vocabulary the feature exists to build. The rows that were
+         * split by capitalisation are merged rather than picked from:
+         *
+         *  - `count` is the **sum** — the sightings really did happen, they were only filed twice;
+         *  - `lastUsed` is the most recent of them, because that is what the decay should reckon with;
+         *  - `promoted` survives if *any* spelling earned it (the dictionary entry it stands for exists);
+         *  - the spelling kept is the one of the most recently used row, which is the one the user is
+         *    currently writing.
+         *
+         * `GROUP BY` with bare columns is well-defined in SQLite when paired with `MAX()`: the row that
+         * supplied the maximum supplies the other columns too. That is exactly the "keep the newest
+         * spelling" rule, done in one statement.
+         */
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `${LEARNED_WORDS_TABLE}_new` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `word` TEXT NOT NULL,
+                        `key` TEXT NOT NULL,
+                        `lang` TEXT NOT NULL,
+                        `count` INTEGER NOT NULL,
+                        `lastUsed` INTEGER NOT NULL,
+                        `promoted` INTEGER NOT NULL
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL(
+                    """
+                    INSERT INTO `${LEARNED_WORDS_TABLE}_new` (`word`, `key`, `lang`, `count`, `lastUsed`, `promoted`)
+                    SELECT `word`, `key`, `lang`, SUM(`count`), MAX(`lastUsed`), MAX(`promoted`)
+                    FROM `$LEARNED_WORDS_TABLE`
+                    GROUP BY `lang`, `key`
+                    """.trimIndent(),
+                )
+                db.execSQL("DROP TABLE `$LEARNED_WORDS_TABLE`")
+                db.execSQL("ALTER TABLE `${LEARNED_WORDS_TABLE}_new` RENAME TO `$LEARNED_WORDS_TABLE`")
+                db.execSQL(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS `index_${LEARNED_WORDS_TABLE}_lang_key` " +
+                        "ON `$LEARNED_WORDS_TABLE` (`lang`, `key`)",
+                )
+            }
+        }
+
         fun new(context: Context): LearnedWordsDatabase =
             Room.databaseBuilder(context, LearnedWordsDatabase::class.java, DB_FILE_NAME)
+                .addMigrations(MIGRATION_1_2)
                 // Only reachable if no migration path exists at all. Losing a learned vocabulary is bad;
                 // an input method that crash-loops on open is worse, and the user could not even switch
                 // keyboards to fix it. Same trade as the dictation history.

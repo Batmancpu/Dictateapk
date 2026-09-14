@@ -50,6 +50,8 @@ import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.WordOrigin
+import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.latin.DictFold
 import dev.patrickgold.florisboard.ime.nlp.latin.TouchTrace
 import dev.patrickgold.florisboard.ime.nlp.latin.WordLearningGate
 import dev.patrickgold.florisboard.ime.nlp.math.MathSuggestionCandidate
@@ -407,7 +409,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         // Read before the commit — afterwards the editor holds the corrected word and the typed one is
         // gone for good.
         val replaced = editorInstance.textCompletionWouldReplace()
-        commitCandidate(candidate)
+        commitCandidate(candidate, byUser = false)
         val inserted = candidate.text.toString()
         pendingAutoCorrection = if (replaced.isNotEmpty() && replaced != inserted) {
             AutoCorrection(inserted = inserted, replaced = replaced)
@@ -483,13 +485,52 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         lastTypedWord = word.takeIf { wasTyped }
     }
 
-    fun commitCandidate(candidate: SuggestionCandidate) {
+    /**
+     * Writes [candidate] into the editor.
+     *
+     * @param byUser true when a finger landed on the strip, false when the corrector is applying a
+     *  candidate of its own accord (see [commitAutoCorrection]).
+     */
+    fun commitCandidate(candidate: SuggestionCandidate, byUser: Boolean = true) {
         pendingExpansion = null // this write does not come through onInputKeyUp (issue #283)
         // A tap on the strip replaces whatever the previous correction left behind, so there is nothing
         // left to take back. [commitAutoCorrection] re-arms it immediately afterwards for its own case.
         pendingAutoCorrection = null
         scope.launch {
             candidate.sourceProvider?.notifySuggestionAccepted(subtypeManager.activeSubtype, candidate)
+        }
+        // Tapping one of your own words counts as using it (issue #375). Restricted to words the
+        // keyboard already holds — [SuggestionCandidate.isLearned] is set by the provider that found
+        // them — because a tap on an ordinary dictionary word says nothing about personal vocabulary,
+        // and counting those would fill the store with `the` and `and`.
+        //
+        // [byUser] is why this is a parameter rather than a line at the top of this function: the
+        // auto-correction path commits through here too, and a silent swap is not a choice. Counting it
+        // would also contradict the rule one screen up, where a word that *was* auto-corrected is
+        // deliberately not offered for learning — the same event must not walk in through the other door.
+        if (byUser && candidate is WordSuggestionCandidate) {
+            if (candidate.isLearned) {
+                nlpManager.learnPickedWord(candidate.text.toString())
+            }
+            // …and the *pair* it forms with the word in front of it (issue #334, his §3.3), for any word
+            // taken from the strip rather than only for the user's own vocabulary: a pair is a statement
+            // about this sentence, not about who owns the word.
+            //
+            // Read here, before the commit, because afterwards the composing region is gone and the text
+            // before the cursor ends in the word we just wrote. Same rule the provider uses for its own
+            // context, kept deliberately narrow: letters and an apostrophe, nothing else.
+            val picked = candidate.text.toString()
+            val content = editorInstance.activeContent
+            val before = content.textBeforeSelection.removeSuffix(content.composingText).trimEnd()
+            val previous = before.takeLastWhile { DictFold.isWordChar(it) || it == '\'' }
+            if (previous.isNotEmpty()) {
+                nlpManager.learnWordPair(previous, picked)
+            }
+            // A picked word is a finished word, so the *next* one pairs with it. Without this the chain
+            // broke at every tap: `lastTypedWord` still held the word before the pick, the anchor guard
+            // in [offerFinishedWordForLearning] then failed against text that no longer ends in it, and
+            // the pair was silently dropped rather than recorded wrongly.
+            lastTypedWord = picked
         }
         // The composing word is being replaced wholesale, so its tap evidence no longer describes what is
         // in the editor (issue #242).
@@ -668,14 +709,24 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * The replacement goes straight to the InputConnection, so the cached editor content is one step
      * behind for a moment, and `commitChar`'s auto-space logic would decide on stale text.
      */
-    private fun expandSnippet(boundary: String): Boolean {
-        if (SnippetTriggers.isEmpty) return false
-        // Never in a password field, and never while something is selected (the selection is what the
-        // user means to replace, not the word before it).
-        if (activeState.keyVariation == KeyVariation.PASSWORD) return false
+    /**
+     * The snippet trigger standing before the cursor, or null when there is none — the question
+     * [expandSnippet] asks before it acts, split out so [handleEnter] can ask it *without* acting.
+     *
+     * Never in a password field, and never while something is selected (the selection is what the user
+     * means to replace, not the word before it).
+     */
+    private fun pendingSnippetTrigger(): String? {
+        if (SnippetTriggers.isEmpty) return null
+        if (activeState.keyVariation == KeyVariation.PASSWORD) return null
         val content = editorInstance.activeContent
-        if (content.selection.isSelectionMode) return false
-        val token = SnippetTriggers.triggerCandidate(content.textBeforeSelection) ?: return false
+        if (content.selection.isSelectionMode) return null
+        val token = SnippetTriggers.triggerCandidate(content.textBeforeSelection) ?: return null
+        return token.takeIf { SnippetTriggers.bodyFor(it) != null }
+    }
+
+    private fun expandSnippet(boundary: String): Boolean {
+        val token = pendingSnippetTrigger() ?: return false
         val body = SnippetTriggers.bodyFor(token) ?: return false
 
         val inserted = body + boundary
@@ -833,6 +884,19 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.ENTER] event.
      */
     private fun handleEnter() {
+        // Enter ends a word too, and in a chat app it is the *usual* way to end the last one (issue
+        // #375): a word typed on its own line was never counted, never paired with its predecessor and
+        // therefore never learned, however often it was typed. Reported as "six sightings, still 1×".
+        //
+        // Deliberately [offerFinishedWordForLearning] rather than [endOfWord]: the latter would also
+        // apply the pending auto-correction, and in a field where Enter submits that means silently
+        // rewriting the last word in the instant it is sent. Learning is free to be late; a swap is not
+        // free to be a surprise.
+        //
+        // A pending snippet trigger is skipped for the same reason the space path skips it: there,
+        // `expandSnippet` runs before `endOfWord` and the trigger never reaches the vocabulary (issue
+        // #283). A shortcut somebody invented is not a word they typed.
+        if (pendingSnippetTrigger() == null) offerFinishedWordForLearning()
         TouchTrace.reset() // word boundary (issue #242)
         val info = editorInstance.activeInfo
         val isShiftPressed = inputEventDispatcher.isPressed(KeyCode.SHIFT)

@@ -715,7 +715,9 @@
 
     <string name="settings__learned__title" comment="Title of the learned words screen">Learned words</string>
     <string name="settings__learned__empty" comment="Shown when nothing has been learned yet">Nothing learned yet. Words you type that no dictionary knows will appear here.</string>
+    <string name="settings__learned__empty_stage" comment="Shown when one learning stage holds no words, while others do">Nothing at this stage.</string>
     <string name="settings__learned__disabled" comment="Shown when the learning feature is switched off">Learning words as you type is switched off, so nothing new is being remembered.</string>
+    <string name="settings__learned__disabled_dictionary" comment="Shown when learning is on but the internal user dictionary it writes into is off">The internal user dictionary is switched off, so nothing can be learned — a word that is picked up has nowhere to graduate to. Switch it on under User dictionaries.</string>
     <string name="settings__learned__stage_remembered" comment="Ladder stage: seen once, no effect yet">Noticed — not suggested yet</string>
     <string name="settings__learned__stage_suggested" comment="Ladder stage: appears in the suggestion strip">Suggested while you type</string>
     <string name="settings__learned__stage_promoted" comment="Ladder stage: in the personal dictionary">In your dictionary — autocorrect leaves it alone</string>
@@ -723,6 +725,12 @@
     <string name="settings__learned__forget" comment="Button that removes one learned word">Forget</string>
     <string name="settings__learned__forget_all" comment="Button that removes every learned word">Forget everything</string>
     <string name="settings__learned__forget_all_confirm" comment="Confirmation question before deleting all learned words">Forget every learned word? Words already added to your dictionary stay there.</string>
+    <string name="settings__learned__tier_remembered" comment="Short name of the first learning stage, used as a folder title">Noticed</string>
+    <string name="settings__learned__tier_suggested" comment="Short name of the second learning stage, used as a folder title">Suggested</string>
+    <string name="settings__learned__tier_promoted" comment="Short name of the third learning stage, used as a folder title">In your dictionary</string>
+    <string name="settings__learned__forget_tier" comment="Button that removes every word at one learning stage">Forget these</string>
+    <string name="settings__learned__forget_tier_confirm" comment="Confirmation question before deleting the words at one stage. The placeholder inserts a already-pluralised word count, e.g. &quot;3 words&quot;.">Forget {words}? Nothing else is touched.</string>
+    <string name="settings__learned__forget_promoted_confirm" comment="Stronger confirmation before deleting words that reached the personal dictionary. The placeholder inserts an already-pluralised word count, e.g. &quot;3 words&quot;.">Forget {words}? What is at this stage is part of your dictionary — autocorrect leaves it alone, and forgetting it takes it out of the dictionary too.</string>
     <string name="settings__learned__add_now" comment="Button that promotes a learned word into the personal dictionary immediately">Add to dictionary</string>
     <string name="settings__learned__how_it_works" comment="Explanation shown at the top of the learned words screen">A word is only remembered once it looks deliberate rather than mistyped. It is suggested from the second time you type it, and added to your dictionary at the third — from then on autocorrect leaves it alone.\n\nEverything stays on this device. Nothing is learned in incognito mode, in password fields, or from dictation — only from what you actually typed.</string>
     <string name="suggestion__forgot_word" comment="Toast after forgetting a learned word. The placeholder inserts the word.">Forgot “{word}”</string>

@@ -223,6 +223,41 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             return seen.entries.take(max).map { it.key to it.value }
         }
 
+        /**
+         * How many continuations are scanned for one that extends the prefix being typed (issue #334).
+         *
+         * Deliberately much larger than [CONTEXT_COMPLETION_MAX]: the reporter's sketch took the top three
+         * continuations and *then* filtered them by the prefix, which promotes nothing whenever the three
+         * most common continuations happen to start with other letters — that is most of the time, and it
+         * would have made the whole item look inert. Take many, keep few.
+         */
+        internal const val CONTEXT_COMPLETION_SCAN = 32
+
+        /** How many context-blessed completions may lead the strip. Small: they are claims. */
+        internal const val CONTEXT_COMPLETION_MAX = 3
+
+        /** Corpus sightings the exact triple needs before it may lead the strip mid-word. */
+        internal const val IN_WORD_PREDICTION_MIN_COUNT = 3
+
+        /**
+         * The completions the sentence expects, best first — two words of context ahead of one
+         * (issue #334, his §3.5 and §3.9).
+         *
+         * Pure so the measuring stand ranks the strip with the same rule the keyboard uses, rather than
+         * with a copy of it that can drift. [deep] is the single trigram answer, [blessed] the bigram
+         * ones; both are already filtered to the prefix being typed by the caller.
+         */
+        internal fun orderContextCompletions(deep: String?, blessed: List<String>, max: Int): List<String> {
+            if (max <= 0) return emptyList()
+            val out = LinkedHashSet<String>()
+            if (deep != null) out.add(deep)
+            for (candidate in blessed) {
+                if (out.size >= max) break
+                out.add(candidate)
+            }
+            return out.take(max)
+        }
+
         internal fun isAtPredictionPoint(textBeforeCursor: String, phantomSpacePending: Boolean): Boolean {
             if (!textBeforeCursor.endsWith(" ") && !phantomSpacePending) return false
             val settled = textBeforeCursor.trimEnd()
@@ -771,7 +806,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // even with the large corpus tables; a handful of personal pairs is far thinner evidence and the
         // failure would be a word the user never typed appearing in place of one they did. Offering a
         // prediction risks nothing — it sits in the strip until it is chosen.
-        val learnedPairs = if (prefs.suggestion.learnTypedWords.get()) {
+        val learnedPairs = if (prefs.wordLearningIsOn) {
             dictLangFor(subtype)
                 ?.let { lang -> runCatching { LearnedWordsStore.bigrams(appContext, lang) }.getOrNull() }
                 .orEmpty()
@@ -796,13 +831,30 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         } else {
             emptyList()
         }
-        if (bigrams.isEmpty && deepPairs.isEmpty() && learnedPairs.isEmpty()) return emptyList()
-
-        // No unigram fallback on purpose: without a matching bigram the strip would fill with generic filler
-        // ("the", "and", "of") that carries no information about what the user is writing.
         val corpusPairs = bigrams.topContinuations(prevWord, maxCandidateCount)
 
-        return mergePredictions(learnedPairs, deepPairs, corpusPairs, maxCandidateCount).map { (candidate, isLearned) ->
+        // When nothing above matched, the most common words of the language rather than an empty strip
+        // (issue #334, his §3.2).
+        //
+        // This overturns a decision that used to be written here — "no unigram fallback on purpose,
+        // the strip would fill with generic filler that carries no information". That reasoning is still
+        // true about the *words*: `the` after `hi` says nothing about what is being written. What it got
+        // wrong is the alternative it was measured against. The tables cover 92.2 % of prediction points,
+        // so roughly every twelfth finished word left the strip blank — and a strip that empties itself
+        // at unpredictable moments does not read as restraint, it reads as broken, which is exactly how
+        // it was reported. Filler that is never auto-committed costs a glance; a bar that blinks out
+        // costs trust in the whole row.
+        //
+        // Deliberately the dictionary's own frequency order rather than the user's learned words: a
+        // fresh install has no learned words at all, and this exists precisely for the moments when
+        // there is nothing better to say.
+        val fallback = if (learnedPairs.isEmpty() && deepPairs.isEmpty() && corpusPairs.isEmpty()) {
+            rankedWordsFor(subtype).take(maxCandidateCount).map { index.fold(it) }.filter { it.isNotEmpty() }
+        } else {
+            emptyList()
+        }
+
+        return mergePredictions(learnedPairs, deepPairs, corpusPairs + fallback, maxCandidateCount).map { (candidate, isLearned) ->
             val text = index.canonical[candidate] ?: candidate
             WordSuggestionCandidate(
                 text = text,
@@ -1013,7 +1065,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     /** The learned-word snapshot for [subtype], or null when learning is off / there is no dictionary. */
     private suspend fun learnedSnapshotFor(subtype: Subtype): LearnedSnapshot? =
         dictLangFor(subtype)
-            ?.takeIf { prefs.suggestion.learnTypedWords.get() }
+            ?.takeIf { prefs.wordLearningIsOn }
             ?.let { lang -> runCatching { LearnedWordsStore.snapshot(appContext, lang) }.getOrNull() }
 
     private fun isInUserDictionary(word: String, subtype: Subtype): Boolean = runCatching {
@@ -1056,7 +1108,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         wordDataFor(subtype)
         // Housekeeping for the learned vocabulary (issue #318) rides along here: it is the one moment per
         // language change that is already off the typing path and already expected to touch storage.
-        if (prefs.suggestion.learnTypedWords.get()) {
+        if (prefs.wordLearningIsOn) {
             dictLangFor(subtype)?.let { lang ->
                 runCatching { LearnedWordsStore.prune(appContext, lang) }
             }
@@ -1454,6 +1506,63 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             }
         }
 
+        // The completions the sentence expects, ahead of the ones the language merely makes common
+        // (issue #334, his §3.5 and §3.9). "brand ne" offers `new` before `near`, because `new` is what
+        // follows `brand`; without a previous word this block is skipped and the strip is what it was.
+        //
+        // Promotion rather than re-sorting, and that distinction is the whole design: the walk below
+        // interleaves the personal and learned words at rank boundaries *while it runs*, and the typed
+        // word has to stay tappable (issue #150). Re-sorting the result would quietly break both. These
+        // go in first and everything underneath keeps the order it has today, deduplicating through the
+        // same `putIfAbsent`.
+        //
+        // None of them may be auto-committed. The space bar takes the first *eligible* candidate, not the
+        // first one, so a claim about the sentence can lead the strip without ever rewriting a half-typed
+        // word on its own.
+        //
+        // Restricted to words the dictionary knows, and that is not cosmetic: the corrector below reads
+        // `out.isNotEmpty()` as "the prefix extends something", and that flag decides whether a silent
+        // auto-correction is allowed at all. A continuation that only the pair table knows would set the
+        // flag for a prefix the walk finds nothing for, and quietly make autocorrect more timid in a case
+        // nobody measured. Keeping the promoted set a subset of what the walk could produce leaves that
+        // decision exactly where it was.
+        val contextWords = previousWordsOf(content, index, 2)
+        val foldedTyped = index.fold(word)
+        val ctxPrevWord = contextWords.lastOrNull()
+        if (ctxPrevWord != null && foldedTyped.isNotEmpty()) {
+            val ctxBigrams = bigramsFor(subtype)
+            val ctxTrigrams = trigramsFor(subtype)
+            // Two words of evidence outrank one, but only when the exact triple is common enough to be
+            // a fact about the language rather than an accident of the corpus.
+            val deep = if (contextWords.size >= 2 && !ctxTrigrams.isEmpty) {
+                val deepPrefix = contextWords.joinToString(" ")
+                ctxTrigrams.topContinuations(deepPrefix, CONTEXT_COMPLETION_SCAN)
+                    .firstOrNull { it.startsWith(foldedTyped) && index.freq.containsKey(it) }
+                    ?.takeIf { ctxTrigrams.countOf("$deepPrefix $it") >= IN_WORD_PREDICTION_MIN_COUNT }
+            } else {
+                null
+            }
+            val blessed = if (ctxBigrams.isEmpty) {
+                emptyList()
+            } else {
+                ctxBigrams.topContinuations(ctxPrevWord, CONTEXT_COMPLETION_SCAN)
+                    .filter { it.startsWith(foldedTyped) && index.freq.containsKey(it) }
+            }
+            for (continuation in orderContextCompletions(deep, blessed, CONTEXT_COMPLETION_MAX)) {
+                if (out.size >= completionCap) break
+                val text = cased(index.canonical[continuation] ?: continuation)
+                out.putIfAbsent(
+                    text.lowercase(),
+                    WordSuggestionCandidate(
+                        text = text,
+                        confidence = (index.freq[continuation] ?: 0) / 255.0,
+                        isEligibleForAutoCommit = false,
+                        sourceProvider = this,
+                    ),
+                )
+            }
+        }
+
         val data = wordDataFor(subtype)
         // Prefix matching happens on the stored spellings, so an Arabic writer typing ان or a French
         // writer typing ho would miss أنا and hôte. Where the fold changes the lookup spelling, compare
@@ -1617,7 +1726,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         weight: Int,
         trustedByUser: Boolean,
     ): LearnOutcome {
-        val enabled = prefs.suggestion.learnTypedWords.get()
+        val enabled = prefs.wordLearningIsOn
         // A sentence that ends on an address hands over `jannis@example.com.` — the dot stays inside the
         // run while it is being typed (issue #318) and has nothing to do with the address afterwards.
         val trimmed = WordRun.trimTrailingPunctuation(word.trim())
@@ -1688,13 +1797,35 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         )
     }
 
+    override suspend fun learnPickedWord(subtype: Subtype, word: String): LearnOutcome {
+        if (!prefs.wordLearningIsOn) return LearnOutcome.NOTHING
+        val trimmed = WordRun.trimTrailingPunctuation(word.trim())
+        if (trimmed.isEmpty()) return LearnOutcome.NOTHING
+        val lang = dictLangFor(subtype) ?: return LearnOutcome.NOTHING
+        val folded = lowerIndexFor(subtype).fold(trimmed)
+        // Only a word this store already holds. A pick carries no tap evidence, so the entry test has
+        // nothing to judge — letting one in here would be a door around the gate rather than a sighting
+        // of something already through it.
+        if ((learnedSnapshotFor(subtype)?.scoreOfKey(folded) ?: 0.0) <= 0.0) return LearnOutcome.NOTHING
+        val entry = LearnedWordsStore.note(appContext, trimmed, folded, lang) ?: return LearnOutcome.NOTHING
+        val score = WordLearningGate.decayedScore(entry.count, entry.lastUsed, System.currentTimeMillis() / 1000L)
+        return LearnOutcome(
+            learned = true,
+            word = trimmed,
+            lang = lang,
+            entryId = entry.id,
+            readyForPromotion = !entry.promoted &&
+                WordLearningGate.stageOf(score) == WordLearningGate.Stage.PROMOTED,
+        )
+    }
+
     override suspend fun forgetLearnedWord(subtype: Subtype, word: String): Boolean {
         val lang = dictLangFor(subtype) ?: return false
         return LearnedWordsStore.forgetWord(appContext, word.trim(), lang)?.promoted == true
     }
 
     override suspend fun learnWordPair(subtype: Subtype, previousWord: String, word: String) {
-        if (!prefs.suggestion.learnTypedWords.get()) return
+        if (!prefs.wordLearningIsOn) return
         val lang = dictLangFor(subtype) ?: return
         val index = lowerIndexFor(subtype)
         val prev = index.fold(previousWord.trim())
