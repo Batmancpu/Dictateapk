@@ -5,19 +5,22 @@
     "version": "0.3.0",
     "title": "Dictate Keyboard default themes",
     "description": "Default themes (both day and night) for the keyboard UI",
-    "maintainers": [ "patrickgold <patrick@patrickgold.dev>", "lm41 <lm41@lm41.xyz>" ],
+    "maintainers": [
+      "patrickgold <patrick@patrickgold.dev>",
+      "lm41 <lm41@lm41.xyz>"
+    ],
     "license": "apache-2.0"
   },
   "themes": [
     {
-      "id": "dictate_glass_day",
-      "label": "Dictate Glass (Day)",
+      "id": "dictate_glass",
+      "label": "Dictate Glass",
       "authors": [ "DevEmperor" ],
-      "isNight": false
+      "isNight": true
     },
     {
-      "id": "dictate_glass_night",
-      "label": "Dictate Glass (Night)",
+      "id": "dictate_glass_clear",
+      "label": "Dictate Glass Clear",
       "authors": [ "DevEmperor" ],
       "isNight": true
     },

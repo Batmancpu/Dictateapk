@@ -145,7 +145,7 @@ Dictate nothing and are not going anywhere.
   - Huge variety of keyboard layouts and easy language/subtype switching, including **phonetic Russian** (ЯШЕРТЫ) beside ЙЦУКЕН
   - **French finds its accents from the plain letters** — `ho` reaches *hôte* and *hôtel*, and an unaccented spelling still gets its accent back
   - **Chinese input** with Pinyin and a candidate row, alongside the Zhengma shape-based method
-  - Full theme customization with day/night presets and automatic switching, plus bundled themes of our own: **Glass** (translucent, frosted where Android 12+ allows it), **Sand**, **Deep** and a high-contrast **E-Ink** pair for e-readers
+  - Full theme customization with day/night presets and automatic switching, plus bundled themes of our own: **Glass** and **Glass Clear** (translucent, so the app you are in tints the keyboard), **Sand**, **Deep** and a high-contrast **E-Ink** pair for e-readers
   - Emoji keyboard with search in **51 languages** — look for "heart", "心" or "قلب" and land on the same emoji — plus clipboard manager & cursor tools
   - One-handed / compact mode, a **split keyboard** for two thumbs on a tablet or an unfolded foldable, gesture actions, customizable key sound & haptic feedback
 - **Privacy-respecting by design** — no tracking, and your audio goes only to the provider you configure. Choose a key, a server of your own or an on-device model and Dictate never talks to us at all; choose Dictate Cloud and nothing you say or write is stored on the way through.

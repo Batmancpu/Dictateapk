@@ -97,6 +97,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
@@ -314,6 +315,11 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float, vi
             },
         ) {
             val locked = lockProgress >= 1f
+            // The resting fill used to be a hardcoded 55% black, which sat on a translucent keyboard as a
+            // dark blob that belonged to nothing. A small thing floating above the keys is exactly what
+            // `key-popup-box` describes, so it borrows that and follows every theme by itself.
+            val restingFill = rememberSnyggThemeQuery(FlorisImeUi.KeyPopupBox.elementName)
+                .background(default = Color.Black.copy(alpha = 0.55f))
             // A single pop at the instant it catches — the gesture ends there, so without a beat of
             // feedback the only sign that anything happened is a lock icon you are not looking at.
             val catchPop = remember { Animatable(0f) }
@@ -340,7 +346,7 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float, vi
                         // Fills with the accent the closer the finger gets, so "how much further" needs
                         // no text, and flashes white for an instant as it catches.
                         lerp(
-                            lerp(Color.Black.copy(alpha = 0.55f), accent, lockProgress),
+                            lerp(restingFill, accent, lockProgress),
                             Color.White,
                             catchPop.value * 0.7f,
                         ),

@@ -945,11 +945,20 @@ private fun EnterCharPopup(
             }
         }
     }
+    // The popup used to hardcode its own dark box, which meant it stayed dark-grey no matter what the
+    // keyboard looked like. It is a key popup, so it takes the key popup's style like every other one.
+    val boxStyle = rememberSnyggThemeQuery(FlorisImeUi.KeyPopupBox.elementName)
+    val focusStyle = rememberSnyggThemeQuery(
+        FlorisImeUi.KeyPopupElement.elementName,
+        selector = SnyggSelector.FOCUS,
+    )
+    val boxColor = boxStyle.background(default = Color(0xFF2B2B2B))
+    val boxText = boxStyle.foreground(default = Color.White)
     Popup(popupPositionProvider = positionProvider) {
         Row(
             modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color(0xFF2B2B2B))
+                .clip(boxStyle.shape())
+                .background(boxColor)
                 .padding(4.dp),
             horizontalArrangement = Arrangement.spacedBy(2.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -959,13 +968,13 @@ private fun EnterCharPopup(
                 Box(
                     modifier = Modifier
                         .size(width = 34.dp, height = 40.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(focusStyle.shape())
                         .background(if (selected) accent else Color.Transparent),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         text = ch,
-                        color = if (selected) onAccent else Color.White,
+                        color = if (selected) onAccent else boxText,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp,
                     )
