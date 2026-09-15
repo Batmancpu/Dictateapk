@@ -334,10 +334,13 @@
     <string name="snygg__rule_selector__disabled">Devre dışı</string>
     <string name="snygg__property_name__background">Arka Plan</string>
     <string name="snygg__property_name__foreground">Ön Plan</string>
+    <string name="snygg__property_name__background_blur">Arka plan bulanıklığı</string>
     <string name="snygg__property_name__background_image">Arka plan resmi</string>
     <string name="snygg__property_name__content_scale">İçerik ölçeği</string>
     <string name="snygg__property_name__border_color">Kenarlık rengi</string>
     <string name="snygg__property_name__border_style">Kenarlık stili</string>
+    <string name="snygg__property_name__background_sheen">Arka plan parlaklığı</string>
+    <string name="snygg__property_name__border_sheen">Kenar parlaklığı</string>
     <string name="snygg__property_name__border_width">Kenarlık genişliği</string>
     <string name="snygg__property_name__font_family">Yazı tipi ailesi</string>
     <string name="snygg__property_name__font_size">Yazı tipi boyutu</string>
@@ -386,6 +389,8 @@
     <string name="snygg__property_value__circle_shape">Daire şekli</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Kesik köşe şekli (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Kesik köşe şekli (%)</string>
+    <string name="snygg__property_value__sheen">Parlaklık</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Yuvarlak köşe şekli (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Yuvarlak köşe şekli (%)</string>
     <string name="snygg__property_value__dp_size">Boyut (dp)</string>

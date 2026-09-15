@@ -143,6 +143,12 @@ class SnyggSinglePropertySetEditor(initProperties: Map<String, SnyggValue>? = nu
         get() =  getProperty(Snygg.Foreground)
         set(v) = setProperty(Snygg.Foreground, v)
 
+    var backgroundBlur: SnyggValue?
+        get() =  getProperty(Snygg.BackgroundBlur)
+        set(v) = setProperty(Snygg.BackgroundBlur, v)
+    var backgroundSheen: SnyggValue?
+        get() =  getProperty(Snygg.BackgroundSheen)
+        set(v) = setProperty(Snygg.BackgroundSheen, v)
     var backgroundImage: SnyggValue?
         get() =  getProperty(Snygg.BackgroundImage)
         set(v) = setProperty(Snygg.BackgroundImage, v)
@@ -159,6 +165,9 @@ class SnyggSinglePropertySetEditor(initProperties: Map<String, SnyggValue>? = nu
     var borderWidth: SnyggValue?
         get() =  getProperty(Snygg.BorderWidth)
         set(v) = setProperty(Snygg.BorderWidth, v)
+    var borderSheen: SnyggValue?
+        get() =  getProperty(Snygg.BorderSheen)
+        set(v) = setProperty(Snygg.BorderSheen, v)
 
     var fontFamily: SnyggValue?
         get() =  getProperty(Snygg.FontFamily)

@@ -274,9 +274,12 @@
     <string name="snygg__rule_selector__disabled">Deaktiviert</string>
     <string name="snygg__property_name__background">Hintergrund</string>
     <string name="snygg__property_name__foreground">Vordergrund</string>
+    <string name="snygg__property_name__background_blur">Hintergrundunschärfe</string>
     <string name="snygg__property_name__background_image">Hintergrundbild</string>
     <string name="snygg__property_name__border_color">Rahmenfarbe</string>
     <string name="snygg__property_name__border_style">Rahmenstil</string>
+    <string name="snygg__property_name__background_sheen">Flächenschimmer</string>
+    <string name="snygg__property_name__border_sheen">Kantenschimmer</string>
     <string name="snygg__property_name__border_width">Rahmenbreite</string>
     <string name="snygg__property_name__font_family">Schriftart</string>
     <string name="snygg__property_name__font_size">Schriftgröße</string>
@@ -312,6 +315,8 @@
     <string name="snygg__property_value__circle_shape">Kreisform</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Form mit eckigen Ecken (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Form mit eckigen Ecken (%)</string>
+    <string name="snygg__property_value__sheen">Schimmer</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Form mit abgerundeten Ecken (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Form mit abgerundeten Ecken (%)</string>
     <string name="snygg__property_value__dp_size">Größe (dp)</string>

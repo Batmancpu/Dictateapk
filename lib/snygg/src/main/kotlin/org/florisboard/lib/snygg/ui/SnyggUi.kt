@@ -61,6 +61,7 @@ import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggNoValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
+import org.florisboard.lib.snygg.value.SnyggSheenValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggValue
@@ -287,16 +288,19 @@ internal fun Modifier.snyggBackground(
     shape: Shape = style.shape(),
     allowClip: Boolean = true,
 ): Modifier {
+    // A sheen turns the flat fill into a vertical brush without the stylesheet naming a second colour,
+    // so it still follows `var(--surface)` and the accent the user picked.
+    val sheen = (style.backgroundSheen as? SnyggSheenValue)?.takeIf { !it.isFlat }
     val modifier = when (val bg = style.background) {
-        is SnyggStaticColorValue -> this.background(
-            color = bg.color,
-            shape = shape,
-        )
-        else if (default.isSpecified) -> {
-            this.background(
-                color = default,
-                shape = shape,
-            )
+        is SnyggStaticColorValue -> if (sheen != null) {
+            this.background(brush = sheen.brush(bg.color), shape = shape)
+        } else {
+            this.background(color = bg.color, shape = shape)
+        }
+        else if (default.isSpecified) -> if (sheen != null) {
+            this.background(brush = sheen.brush(default), shape = shape)
+        } else {
+            this.background(color = default, shape = shape)
         }
         else -> this
     }
@@ -312,10 +316,14 @@ internal fun Modifier.snyggBorder(
     color: Color = style.borderColor.colorOrDefault(default = Color.Unspecified),
     shape: Shape = style.shape(),
 ): Modifier {
-    return if (color.isSpecified) {
-        this.border(width, color, shape)
+    if (!color.isSpecified) return this
+    // The specular edge: bright where the light lands, gone where it does not. A uniform border reads
+    // as an outline drawn around the element; this one reads as the element having a lit edge.
+    val sheen = (style.borderSheen as? SnyggSheenValue)?.takeIf { !it.isFlat }
+    return if (sheen != null) {
+        this.border(width, sheen.brush(color), shape)
     } else {
-        this
+        this.border(width, color, shape)
     }
 }
 

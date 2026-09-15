@@ -337,10 +337,13 @@
     <string name="snygg__rule_selector__disabled">Отключено</string>
     <string name="snygg__property_name__background">Фон</string>
     <string name="snygg__property_name__foreground">Передний план</string>
+    <string name="snygg__property_name__background_blur">Размытие фона</string>
     <string name="snygg__property_name__background_image">Фоновое изображение</string>
     <string name="snygg__property_name__content_scale">Размер контента</string>
     <string name="snygg__property_name__border_color">Цвет контура</string>
     <string name="snygg__property_name__border_style">Стиль контура</string>
+    <string name="snygg__property_name__background_sheen">Блик фона</string>
+    <string name="snygg__property_name__border_sheen">Блик края</string>
     <string name="snygg__property_name__border_width">Ширина контура</string>
     <string name="snygg__property_name__font_family">Семейство шрифтов</string>
     <string name="snygg__property_name__font_size">Размер шрифта</string>
@@ -389,6 +392,8 @@
     <string name="snygg__property_value__circle_shape">Круглая форма</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Форма со срезанием углов (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Форма со срезанием углов (%)</string>
+    <string name="snygg__property_value__sheen">Блик</string>
+    <string name="snygg__property_value__squircle_shape">Суперэллипс</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Форма с закруглением углов (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Форма с закруглением углов (%)</string>
     <string name="snygg__property_value__dp_size">Размер (dp)</string>

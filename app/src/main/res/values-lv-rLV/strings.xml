@@ -308,10 +308,13 @@
     <string name="snygg__rule_selector__disabled">Atspējots</string>
     <string name="snygg__property_name__background">Pamats</string>
     <string name="snygg__property_name__foreground">Priekšplāns</string>
+    <string name="snygg__property_name__background_blur">Fona izpludināšana</string>
     <string name="snygg__property_name__background_image">Fona attēls</string>
     <string name="snygg__property_name__content_scale">Satura mērogs</string>
     <string name="snygg__property_name__border_color">Apmales krāsa</string>
     <string name="snygg__property_name__border_style">Apmales veids</string>
+    <string name="snygg__property_name__background_sheen">Virsmas spīdums</string>
+    <string name="snygg__property_name__border_sheen">Malas spīdums</string>
     <string name="snygg__property_name__border_width">Apmales platums</string>
     <string name="snygg__property_name__font_family">Fontu saime</string>
     <string name="snygg__property_name__font_size">Burtu lielums</string>
@@ -350,6 +353,8 @@
     <string name="snygg__property_value__circle_shape">Apļa veidols</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Nogriezta stūra aprise (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Nogriezta stūra aprise (%)</string>
+    <string name="snygg__property_value__sheen">Spīdums</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Noapaļota stūra aprise (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Noapaļota stūra aprise (%)</string>
     <string name="snygg__property_value__dp_size">Lielums (dp)</string>

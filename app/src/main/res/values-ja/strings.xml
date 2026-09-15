@@ -315,10 +315,13 @@
     <string name="snygg__rule_selector__disabled">無効状態</string>
     <string name="snygg__property_name__background">背景</string>
     <string name="snygg__property_name__foreground">前景</string>
+    <string name="snygg__property_name__background_blur">背景のぼかし</string>
     <string name="snygg__property_name__background_image">背景画像</string>
     <string name="snygg__property_name__content_scale">コンテンツスケール</string>
     <string name="snygg__property_name__border_color">枠線の色</string>
     <string name="snygg__property_name__border_style">枠線のスタイル</string>
+    <string name="snygg__property_name__background_sheen">背景の光沢</string>
+    <string name="snygg__property_name__border_sheen">枠線の光沢</string>
     <string name="snygg__property_name__border_width">枠線の幅</string>
     <string name="snygg__property_name__font_family">フォントファミリー</string>
     <string name="snygg__property_name__font_size">フォントサイズ</string>
@@ -367,6 +370,8 @@
     <string name="snygg__property_value__circle_shape">円形</string>
     <string name="snygg__property_value__cut_corner_shape_dp">角丸（切り取り、dp）</string>
     <string name="snygg__property_value__cut_corner_shape_percent">角丸（切り取り、%）</string>
+    <string name="snygg__property_value__sheen">光沢</string>
+    <string name="snygg__property_value__squircle_shape">スーパー楕円</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">角丸（dp）</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">角丸（%）</string>
     <string name="snygg__property_value__dp_size">サイズ（dp）</string>

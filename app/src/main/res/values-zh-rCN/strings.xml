@@ -343,10 +343,13 @@
     <string name="snygg__rule_selector__disabled">已停用</string>
     <string name="snygg__property_name__background">背景</string>
     <string name="snygg__property_name__foreground">前景</string>
+    <string name="snygg__property_name__background_blur">背景模糊</string>
     <string name="snygg__property_name__background_image">背景图片</string>
     <string name="snygg__property_name__content_scale">内容规模</string>
     <string name="snygg__property_name__border_color">边框颜色</string>
     <string name="snygg__property_name__border_style">边框样式</string>
+    <string name="snygg__property_name__background_sheen">背景光泽</string>
+    <string name="snygg__property_name__border_sheen">边框光泽</string>
     <string name="snygg__property_name__border_width">边框宽度</string>
     <string name="snygg__property_name__font_family">字体系列</string>
     <string name="snygg__property_name__font_size">字体大小</string>
@@ -395,6 +398,8 @@
     <string name="snygg__property_value__circle_shape">圆形形状</string>
     <string name="snygg__property_value__cut_corner_shape_dp">切角形状 (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">切角形状 (%)</string>
+    <string name="snygg__property_value__sheen">光泽</string>
+    <string name="snygg__property_value__squircle_shape">超椭圆</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">圆角矩形形状 (%)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">圆角矩形形状 (%)</string>
     <string name="snygg__property_value__dp_size">尺寸 (dp)</string>

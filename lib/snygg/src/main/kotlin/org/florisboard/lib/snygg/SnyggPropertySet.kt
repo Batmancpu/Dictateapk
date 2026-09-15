@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.TextUnit
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.JsonArray
@@ -107,12 +108,15 @@ data class SnyggSinglePropertySet internal constructor(
     val background = properties[Snygg.Background] ?: SnyggUndefinedValue
     val foreground = properties[Snygg.Foreground] ?: SnyggUndefinedValue
 
+    val backgroundBlur = properties[Snygg.BackgroundBlur] ?: SnyggUndefinedValue
+    val backgroundSheen = properties[Snygg.BackgroundSheen] ?: SnyggUndefinedValue
     val backgroundImage = properties[Snygg.BackgroundImage] ?: SnyggUndefinedValue
     val contentScale = properties[Snygg.ContentScale] ?: SnyggUndefinedValue
 
     val borderColor = properties[Snygg.BorderColor] ?: SnyggUndefinedValue
     val borderStyle = properties[Snygg.BorderStyle] ?: SnyggUndefinedValue
     val borderWidth = properties[Snygg.BorderWidth] ?: SnyggUndefinedValue
+    val borderSheen = properties[Snygg.BorderSheen] ?: SnyggUndefinedValue
 
     val fontFamily = properties[Snygg.FontFamily] ?: SnyggUndefinedValue
     val fontSize = properties[Snygg.FontSize] ?: SnyggUndefinedValue
@@ -205,6 +209,18 @@ data class SnyggSinglePropertySet internal constructor(
     fun foreground(default: Color = Color.Unspecified): Color {
         return when (foreground) {
             is SnyggStaticColorValue -> foreground.color
+            else -> default
+        }
+    }
+
+    /**
+     * How far behind this element the platform should blur, for elements that are backed by a window of
+     * their own. Zero (the default) means no blur; the renderer is free to ignore it where the platform
+     * cannot deliver one.
+     */
+    fun backgroundBlur(default: Dp = 0.dp): Dp {
+        return when (backgroundBlur) {
+            is SnyggDpSizeValue -> backgroundBlur.dp
             else -> default
         }
     }

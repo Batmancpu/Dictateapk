@@ -343,10 +343,13 @@
     <string name="snygg__rule_selector__disabled">Изключен</string>
     <string name="snygg__property_name__background">Фон</string>
     <string name="snygg__property_name__foreground">Преден план</string>
+    <string name="snygg__property_name__background_blur">Замъгляване на фона</string>
     <string name="snygg__property_name__background_image">Фоново изображение</string>
     <string name="snygg__property_name__content_scale">Мащаб на съдържанието</string>
     <string name="snygg__property_name__border_color">Цвят на канта</string>
     <string name="snygg__property_name__border_style">Стил на канта</string>
+    <string name="snygg__property_name__background_sheen">Отблясък на фона</string>
+    <string name="snygg__property_name__border_sheen">Отблясък на ръба</string>
     <string name="snygg__property_name__border_width">Дебелина на канта</string>
     <string name="snygg__property_name__font_family">Семейство на шрифта</string>
     <string name="snygg__property_name__font_size">Размер на шрифта</string>
@@ -395,6 +398,8 @@
     <string name="snygg__property_value__circle_shape">Кръгла форма</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Форма с рязани ъгли (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Форма с рязани ъгли (%)</string>
+    <string name="snygg__property_value__sheen">Отблясък</string>
+    <string name="snygg__property_value__squircle_shape">Суперелипса</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Форма със заоблени ъгли (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Форма със заоблени ъгли (%)</string>
     <string name="snygg__property_value__dp_size">Размер (dp)</string>

@@ -329,10 +329,13 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__rule_selector__disabled">Dinonaktifkan</string>
     <string name="snygg__property_name__background">Latar belakang</string>
     <string name="snygg__property_name__foreground">Latar depan</string>
+    <string name="snygg__property_name__background_blur">Buram latar belakang</string>
     <string name="snygg__property_name__background_image">Gambar latar belakang</string>
     <string name="snygg__property_name__content_scale">Skala konten</string>
     <string name="snygg__property_name__border_color">Warna tepian</string>
     <string name="snygg__property_name__border_style">Gaya tepian</string>
+    <string name="snygg__property_name__background_sheen">Kilau latar belakang</string>
+    <string name="snygg__property_name__border_sheen">Kilau tepi</string>
     <string name="snygg__property_name__border_width">Lebar tepian</string>
     <string name="snygg__property_name__font_family">Keluarga font</string>
     <string name="snygg__property_name__font_size">Ukuran font</string>
@@ -381,6 +384,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__property_value__circle_shape">Bentuk lingkaran</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Potong bentuk sudut (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Potong bentuk sudut (%)</string>
+    <string name="snygg__property_value__sheen">Kilau</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Pembulatan bentuk sudut (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Pembulatan bentuk sudut (%)</string>
     <string name="snygg__property_value__dp_size">Ukuran (dp)</string>

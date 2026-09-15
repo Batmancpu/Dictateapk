@@ -43,6 +43,8 @@ import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
+import org.florisboard.lib.snygg.value.SnyggSheenValue
+import org.florisboard.lib.snygg.value.SnyggSquircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggTextAlignValue
@@ -69,11 +71,14 @@ internal fun Context.translateElementName(element: String, level: SnyggLevel): S
 private val PropertyNameMap = mapOf(
     Snygg.Background to R.string.snygg__property_name__background,
     Snygg.Foreground to R.string.snygg__property_name__foreground,
+    Snygg.BackgroundBlur to R.string.snygg__property_name__background_blur,
+    Snygg.BackgroundSheen to R.string.snygg__property_name__background_sheen,
     Snygg.BackgroundImage to R.string.snygg__property_name__background_image,
     Snygg.ContentScale to R.string.snygg__property_name__content_scale,
     Snygg.BorderColor to R.string.snygg__property_name__border_color,
     Snygg.BorderStyle to R.string.snygg__property_name__border_style,
     Snygg.BorderWidth to R.string.snygg__property_name__border_width,
+    Snygg.BorderSheen to R.string.snygg__property_name__border_sheen,
     Snygg.FontFamily to R.string.snygg__property_name__font_family,
     Snygg.FontSize to R.string.snygg__property_name__font_size,
     Snygg.FontStyle to R.string.snygg__property_name__font_style,
@@ -169,6 +174,8 @@ private val PropertyValueEncoderNameMap = mapOf(
     SnyggCutCornerPercentShapeValue to R.string.snygg__property_value__cut_corner_shape_percent,
     SnyggRoundedCornerDpShapeValue to R.string.snygg__property_value__rounded_corner_shape_dp,
     SnyggRoundedCornerPercentShapeValue to R.string.snygg__property_value__rounded_corner_shape_percent,
+    SnyggSquircleShapeValue to R.string.snygg__property_value__squircle_shape,
+    SnyggSheenValue to R.string.snygg__property_value__sheen,
     SnyggDpSizeValue to R.string.snygg__property_value__dp_size,
     SnyggSpSizeValue to R.string.snygg__property_value__sp_size,
     SnyggPercentageSizeValue to R.string.snygg__property_value__percentage_size,

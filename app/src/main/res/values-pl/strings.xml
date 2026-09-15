@@ -343,10 +343,13 @@
     <string name="snygg__rule_selector__disabled">Wyłączony</string>
     <string name="snygg__property_name__background">Tło</string>
     <string name="snygg__property_name__foreground">Pierwszy plan</string>
+    <string name="snygg__property_name__background_blur">Rozmycie tła</string>
     <string name="snygg__property_name__background_image">Obraz tła</string>
     <string name="snygg__property_name__content_scale">Skala zawartości</string>
     <string name="snygg__property_name__border_color">Kolor obramowania</string>
     <string name="snygg__property_name__border_style">Styl ramki</string>
+    <string name="snygg__property_name__background_sheen">Połysk tła</string>
+    <string name="snygg__property_name__border_sheen">Połysk krawędzi</string>
     <string name="snygg__property_name__border_width">Szerokość obramowania</string>
     <string name="snygg__property_name__font_family">Rodzina czcionek</string>
     <string name="snygg__property_name__font_size">Rozmiar czcionki</string>
@@ -395,6 +398,8 @@
     <string name="snygg__property_value__circle_shape">Kształt koła</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Kształt ze ściętymi kątami (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Kształt ze ściętymi kątami (%)</string>
+    <string name="snygg__property_value__sheen">Połysk</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Kształt z zaokrąglonymi kątami (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Kształt z zaokrąglonymi kątami (%)</string>
     <string name="snygg__property_value__dp_size">Rozmiar (dp)</string>

@@ -342,10 +342,13 @@
     <string name="snygg__rule_selector__disabled">Letiltott</string>
     <string name="snygg__property_name__background">Háttér</string>
     <string name="snygg__property_name__foreground">Előtér</string>
+    <string name="snygg__property_name__background_blur">Háttér elmosása</string>
     <string name="snygg__property_name__background_image">Háttérkép</string>
     <string name="snygg__property_name__content_scale">Tartalomméretezés</string>
     <string name="snygg__property_name__border_color">Szegélyszín</string>
     <string name="snygg__property_name__border_style">Szegélystílus</string>
+    <string name="snygg__property_name__background_sheen">Felület csillanása</string>
+    <string name="snygg__property_name__border_sheen">Szegély csillanása</string>
     <string name="snygg__property_name__border_width">Szegélyszélesség</string>
     <string name="snygg__property_name__font_family">Betűkészlet</string>
     <string name="snygg__property_name__font_size">Betűméret</string>
@@ -394,6 +397,8 @@
     <string name="snygg__property_value__circle_shape">Kör</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Levágott sarok (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Levágott sarok (%)</string>
+    <string name="snygg__property_value__sheen">Csillanás</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Lekerekített sarok (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Lekerekített sarok (%)</string>
     <string name="snygg__property_value__dp_size">Méret (dp)</string>

@@ -90,6 +90,14 @@
       "type": "string",
       "pattern": "^\\s*dynamic-dark-color[(]\\s*(?<name>primary|onPrimary|primaryContainer|onPrimaryContainer|inversePrimary|secondary|onSecondary|secondaryContainer|onSecondaryContainer|tertiary|onTertiary|tertiaryContainer|onTertiaryContainer|background|onBackground|onSurface|surfaceVariant|onSurfaceVariant|surfaceTint|inverseSurface|inverseOnSurface|error|onError|errorContainer|onErrorContainer|outline|outlineVariant|scrim|surfaceBright|surfaceDim|surfaceContainer|surfaceContainerHigh|surfaceContainerHighest|surfaceContainerLow|surfaceContainerLowest)\\s*[)]\\s*$"
     },
+    "snygg-dp-size-value": {
+      "type": "string",
+      "pattern": "^\\s*(?<size>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?|[.][0-9]+)dp\\s*$"
+    },
+    "snygg-sheen-value": {
+      "type": "string",
+      "pattern": "^\\s*(?<topLift>100|[1-9]?[0-9])%\\s* \\s*(?<bottomShade>100|[1-9]?[0-9])%\\s*$"
+    },
     "snygg-content-scale-value": {
       "type": "string",
       "enum": [
@@ -101,10 +109,6 @@
         "inside",
         "none"
       ]
-    },
-    "snygg-dp-size-value": {
-      "type": "string",
-      "pattern": "^\\s*(?<size>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?|[.][0-9]+)dp\\s*$"
     },
     "snygg-generic-font-family-value": {
       "type": "string",
@@ -163,6 +167,10 @@
     "snygg-cut-corner-percent-shape-value": {
       "type": "string",
       "pattern": "^\\s*cut-corner[(]\\s*(?<cornerSizeTopStart>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeTopEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomStart>100|[1-9]?[0-9])%\\s*[)]\\s*$"
+    },
+    "snygg-squircle-shape-value": {
+      "type": "string",
+      "pattern": "^\\s*squircle[(]\\s*(?<cornerSizeTopStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeTopEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*[)]\\s*$"
     },
     "snygg-yes-value": {
       "type": "string",
@@ -235,10 +243,13 @@
               "$ref": "#/$defs/snygg-dynamic-dark-color-value"
             },
             {
-              "$ref": "#/$defs/snygg-content-scale-value"
+              "$ref": "#/$defs/snygg-dp-size-value"
             },
             {
-              "$ref": "#/$defs/snygg-dp-size-value"
+              "$ref": "#/$defs/snygg-sheen-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-content-scale-value"
             },
             {
               "$ref": "#/$defs/snygg-generic-font-family-value"
@@ -269,6 +280,9 @@
             },
             {
               "$ref": "#/$defs/snygg-cut-corner-percent-shape-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-squircle-shape-value"
             },
             {
               "$ref": "#/$defs/snygg-yes-value"
@@ -373,6 +387,32 @@
             }
           ]
         },
+        "background-blur": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-dp-size-value"
+            }
+          ]
+        },
+        "background-sheen": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-sheen-value"
+            }
+          ]
+        },
         "background-image": {
           "oneOf": [
             {
@@ -438,6 +478,19 @@
             },
             {
               "$ref": "#/$defs/snygg-dp-size-value"
+            }
+          ]
+        },
+        "border-sheen": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-sheen-value"
             }
           ]
         },
@@ -605,6 +658,9 @@
             },
             {
               "$ref": "#/$defs/snygg-cut-corner-percent-shape-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-squircle-shape-value"
             }
           ]
         },

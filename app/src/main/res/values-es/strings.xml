@@ -333,10 +333,13 @@
     <string name="snygg__rule_selector__disabled">Deshabilitado</string>
     <string name="snygg__property_name__background">Fondo</string>
     <string name="snygg__property_name__foreground">Primer plano</string>
+    <string name="snygg__property_name__background_blur">Desenfoque del fondo</string>
     <string name="snygg__property_name__background_image">Imagen de fondo</string>
     <string name="snygg__property_name__content_scale">Escala de contenido</string>
     <string name="snygg__property_name__border_color">Color de borde</string>
     <string name="snygg__property_name__border_style">Estilo de borde</string>
+    <string name="snygg__property_name__background_sheen">Brillo del fondo</string>
+    <string name="snygg__property_name__border_sheen">Brillo del borde</string>
     <string name="snygg__property_name__border_width">Ancho de borde</string>
     <string name="snygg__property_name__font_family">Familia de fuente</string>
     <string name="snygg__property_name__font_size">Tamaño de fuente</string>
@@ -385,6 +388,8 @@
     <string name="snygg__property_value__circle_shape">Forma circular</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Forma de esquina recortada (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Forma de esquina recortada (%)</string>
+    <string name="snygg__property_value__sheen">Brillo</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Forma de esquina redondeada (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Forma de esquina redondeada (%)</string>
     <string name="snygg__property_value__dp_size">Tamaño (dp)</string>

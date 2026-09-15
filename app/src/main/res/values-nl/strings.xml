@@ -271,10 +271,13 @@
     <string name="snygg__rule_selector__disabled">Gehandicapt</string>
     <string name="snygg__property_name__background">Achtergrond</string>
     <string name="snygg__property_name__foreground">Voorgrond</string>
+    <string name="snygg__property_name__background_blur">Achtergrondvervaging</string>
     <string name="snygg__property_name__background_image">Achtergrondafbeelding</string>
     <string name="snygg__property_name__content_scale">Inhoudsschaal</string>
     <string name="snygg__property_name__border_color">Rand kleur</string>
     <string name="snygg__property_name__border_style">Randstijl</string>
+    <string name="snygg__property_name__background_sheen">Achtergrondglans</string>
+    <string name="snygg__property_name__border_sheen">Randglans</string>
     <string name="snygg__property_name__border_width">Grensbreedte</string>
     <string name="snygg__property_name__font_family">Lettertypefamilie</string>
     <string name="snygg__property_name__font_size">Lettertypegrootte</string>
@@ -320,6 +323,8 @@
     <string name="snygg__property_value__circle_shape">cirkelvorm</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Gesneden hoekvorm (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Gesneden hoekvorm (%)</string>
+    <string name="snygg__property_value__sheen">Glans</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Afgeronde hoekvorm (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Afgeronde hoekvorm (%)</string>
     <string name="snygg__property_value__dp_size">Maat (dp)</string>
