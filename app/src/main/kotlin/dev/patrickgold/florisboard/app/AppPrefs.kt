@@ -742,6 +742,32 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__history_audio_budget_mb",
             default = 200,
         )
+        // --- Folder export (issue #379) ----------------------------------------------------------
+        // A SAF tree URI we hold a persisted read+write grant on. Every finished dictation is written
+        // into it as a plain .txt the moment it exists, so whatever the user already runs on that folder
+        // (a sync client, a script, an agent) can pick it up. Empty = off, which is also where a revoked
+        // grant lands. Deliberately not an account integration: the app writes files, it never uploads.
+        val historyExportFolderUri = string(
+            key = "dictate__history_export_folder_uri",
+            default = "",
+        )
+        // Display name of that folder, so the settings row can name it without touching SAF.
+        val historyExportFolderName = string(
+            key = "dictate__history_export_folder_name",
+            default = "",
+        )
+        // Also write the retained WAV next to the transcript. Only does anything while audio retention
+        // is on — without it the recording is deleted as soon as it has been transcribed.
+        val historyExportAudio = boolean(
+            key = "dictate__history_export_audio",
+            default = false,
+        )
+        // Epoch millis of the last write that failed (0 = none since the last success), so the settings
+        // row can say so. There is no retry queue; "export everything" is the catch-up.
+        val historyExportLastFailure = long(
+            key = "dictate__history_export_last_failure",
+            default = 0L,
+        )
         // --- Lifetime dictation statistics (issue #142) ------------------------------------------
         // Never auto-reset (unlike totalAudioSeconds below, which the rate nudge clears); only the user
         // can reset them from the stats screen. Updated centrally after each successful dictation.
@@ -975,6 +1001,21 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
     }
 
+    /**
+     * Whether word learning is actually running — the switch **and** the dictionary it writes into.
+     *
+     * The settings screen has always greyed the learning switch out while the internal user dictionary
+     * is off, because promotion writes into exactly that dictionary and a learned word could otherwise
+     * never graduate. The engine never knew about that dependency: it read the switch alone, so the
+     * combination "learning on, internal dictionary off" learned words all the way into a dictionary
+     * that was then not consulted — half-working in the way the comment on that screen warns about.
+     *
+     * Reachable for real since issue #375 turned learning on by default: anyone who had switched the
+     * internal dictionary off would land in exactly that state without ever touching the learning switch.
+     */
+    val wordLearningIsOn: Boolean
+        get() = suggestion.learnTypedWords.get() && dictionary.enableFlorisUserDictionary.get()
+
     val dictionary = Dictionary()
     inner class Dictionary {
         val enableSystemUserDictionary = boolean(
@@ -1150,9 +1191,16 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "gestures__swipe_right",
             default = SwipeAction.SWITCH_TO_PREV_SUBTYPE,
         )
+        // Up and down default to a cursor move, where up used to do nothing at all (issue #364): the
+        // vertical glide they switch on is the other half of the one left/right have had all along, and a
+        // trackpad that only goes sideways was the complaint that asked for it.
         val spaceBarSwipeUp = enum(
             key = "gestures__space_bar_swipe_up",
-            default = SwipeAction.NO_ACTION,
+            default = SwipeAction.MOVE_CURSOR_UP,
+        )
+        val spaceBarSwipeDown = enum(
+            key = "gestures__space_bar_swipe_down",
+            default = SwipeAction.MOVE_CURSOR_DOWN,
         )
         val spaceBarSwipeLeft = enum(
             key = "gestures__space_bar_swipe_left",
@@ -1173,6 +1221,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val deleteKeyLongPress = enum(
             key = "gestures__delete_key_long_press",
             default = SwipeAction.DELETE_CHARACTER,
+        )
+        // On by default (issue #366): for anyone who only taps ?123 nothing changes except that the layer
+        // appears under the finger instead of on the lift, and holding it open is the gesture people arrive
+        // from an iPhone expecting. Switchable all the same, because it does claim the slide off the key.
+        val momentaryLayer = boolean(
+            key = "gestures__momentary_layer",
+            default = true,
         )
         val swipeDistanceThreshold = int(
             key = "gestures__swipe_distance_threshold",
@@ -1601,12 +1656,34 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // Build a personal vocabulary out of what is typed (issue #318): a word no dictionary knows is
         // remembered, offered from the second sighting and added to the personal dictionary at the third.
         //
-        // Off by default, and deliberately so. Every learned word is a word autocorrect eventually stops
-        // repairing, and a keyboard that starts keeping a record of what you write is a thing to be asked
-        // about rather than told. Nothing is learned in incognito, in password fields, or from anything
-        // that was not typed key by key — dictation and glide included.
+        // **On by default since issue #375.** It shipped off, on the reasoning that a keyboard which
+        // starts keeping a record of what you write is a thing to be asked about rather than told. What
+        // that produced instead was a core keyboard feature nobody found: it sits three screens deep, and
+        // a personal vocabulary that only switched-on users get is one most users never have. The record
+        // it keeps never leaves the device, it is listed word by word in settings with a delete next to
+        // each, and none of the never-learn rules move — nothing in incognito, in password fields, or
+        // from anything that was not typed key by key, dictation and glide included.
+        //
+        // No migration key is needed for the flip: JetPref only stores what was touched, so a user who
+        // switched this *off* keeps their stored `false`, and only those who never had an opinion get the
+        // new default. The release that carries this says so in its what's-new, with where to turn it off.
         val learnTypedWords = boolean(
             key = "suggestion__learn_typed_words",
+            default = true,
+        )
+        // Guard for the one-time switch of existing users onto word learning (the new default above).
+        //
+        // Same shape and same reasoning as `dictate__push_to_talk_default_migrated`: a keyboard already in
+        // use would otherwise keep a default nobody ever chose and go on behaving differently from every
+        // fresh install for as long as it exists — and this is the feature the whole personalisation story
+        // rests on, so "only new installs get it" is most of the feature not existing.
+        //
+        // It does write over a deliberate "off", and nothing can tell that apart from a default never
+        // touched. That is exactly why it belongs in the what's-new of the release that carries it: the
+        // switch is one tap away in Typing › User dictionaries, the learned words are listed word by word
+        // with a delete next to each, and the release has to say so plainly. Idempotent via this flag.
+        val learnTypedWordsDefaultMigrated = boolean(
+            key = "suggestion__learn_typed_words_default_migrated",
             default = false,
         )
         // On by default (issue #329), unlike the learning above: this one keeps no record, changes
@@ -1775,6 +1852,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                 if (QuickAction.InsertKey(TextKeyData.TOGGLE_RESIZE_MODE) !in newArrangement) {
                     newArrangement = newArrangement.copy(
                         dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.TOGGLE_RESIZE_MODE))
+                    )
+                }
+                // The split keyboard (issue #362) is new, so an arrangement saved before it existed has
+                // no entry for it and would never show it — the action list is the saved one, not the
+                // default one.
+                if (QuickAction.InsertKey(TextKeyData.SPLIT_LAYOUT) !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.SPLIT_LAYOUT))
                     )
                 }
                 val json = QuickActionJsonConfig.encodeToString(newArrangement.distinct())

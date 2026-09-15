@@ -28,11 +28,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.input.pointer.AwaitPointerEventScope
+import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.PointerInputChange
+import androidx.compose.ui.input.pointer.changedToUpIgnoreConsumed
+import androidx.compose.ui.input.pointer.isOutOfBounds
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
@@ -564,7 +568,7 @@ fun QuickActionButton(
                                 // Either an ordinary action, or a mic press the window never saw land —
                                 // handing that one over would leave the key held with nobody to release it.
                                 handleUpOrCancel(
-                                    waitForUpOrCancellation(), press, interactionSource, action, context,
+                                    waitForUpOrRealCancellation(), press, interactionSource, action, context,
                                 )
                             }
                         }
@@ -656,6 +660,58 @@ fun QuickActionButton(
                     )
                 }
             }
+        }
+    }
+}
+
+/**
+ * Waits for the finger to leave the key, and reports a finished tap even when the release arrives
+ * already consumed.
+ *
+ * Compose's own `waitForUpOrCancellation` cannot, because `changedToUp()` is defined as
+ * `!isConsumed && previousPressed && !pressed`: a consumed release is not recognised as a release at
+ * all, so a completed tap comes back as a cancellation. That withdraws the key press instead of
+ * finishing it, and then costs the *next* tap as well — the dispatcher still believes the key to be
+ * held and drops the following down (#257, #261).
+ *
+ * The release genuinely does arrive consumed here, and the consumer is [PlainTooltip]. It wraps this
+ * button, listens on [PointerEventPass.Initial] — parent before child — and while its tooltip is on
+ * screen it consumes every change of the release event, so that dismissing a tooltip does not also
+ * press the button underneath it. The tooltip lingers after a press, so the tap that follows one
+ * lands inside that window and loses its release; the tooltip then hides and the tap after that
+ * works. That is the cleanly alternating dead tap #257 measured, and why it was never reproducible
+ * on an emulator, where a mouse drives the tooltip through hover instead. Read out of tooltip
+ * 0.2.0-rc02's bytecode on 2026-09-14 — its single `consume()` sits in the Release branch behind an
+ * `isTooltipShowing` guard. Nothing in this app consumes the release.
+ *
+ * So a consumed change is a cancellation only while the finger is still **down** — that is the real
+ * "another handler took over the drag" case, and the only one worth abandoning a press for. A
+ * consumed *release* is a finished tap.
+ *
+ * Sliding off a key still aborts it, which is an expectation people bring to every button, but with
+ * one touch slop of margin so a thumb rolling a few pixels does not cost the press. That check runs
+ * only while pressed too, so it can never turn a release near the edge back into a cancellation —
+ * the very failure this function exists to remove.
+ *
+ * The mic does not come through here on its normal path (it is driven from the window's own touch
+ * stream, see [DictateHoldTouch]) — but its fallback does, for a press the window never saw land.
+ */
+private suspend fun AwaitPointerEventScope.waitForUpOrRealCancellation(): PointerInputChange? {
+    val slop = viewConfiguration.touchSlop
+    val bounds = Size(extendedTouchPadding.width + slop, extendedTouchPadding.height + slop)
+    while (true) {
+        val event = awaitPointerEvent()
+        if (event.changes.all { it.changedToUpIgnoreConsumed() }) {
+            return event.changes[0]
+        }
+        if (event.changes.any { it.pressed && (it.isConsumed || it.isOutOfBounds(size, bounds)) }) {
+            return null
+        }
+        // The Final pass of this same event, so a handler further out that takes the drag after us is
+        // still seen. Again only while the finger is down: this is Compose's own check, narrowed.
+        val afterOthers = awaitPointerEvent(PointerEventPass.Final)
+        if (afterOthers.changes.any { it.pressed && it.isConsumed }) {
+            return null
         }
     }
 }

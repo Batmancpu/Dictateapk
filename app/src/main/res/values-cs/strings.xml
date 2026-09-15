@@ -100,6 +100,8 @@
     <string name="quick_action__floating_window_mode__tooltip">Přepnout režim okna plovoucí klávesnice</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Jedna ruka</string>
     <string name="quick_action__one_handed_mode__tooltip">Přepnout režim jedné ruky</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Rozdělená</string>
+    <string name="quick_action__split_layout__tooltip">Přepnout rozdělenou klávesnici</string>
     <string name="quick_action__resize_mode" comment="Please mind the limited available space for the quick action strings">Změnit velikost</string>
     <string name="quick_action__resize_mode__tooltip">Přepnout režim změny velikosti</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Číselná řada</string>
@@ -136,6 +138,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">počet slov počítadlo slov znaky délka statistika</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">oříznutí mezery odstranit vyčistit kopírovat vyjmout</string>
     <string name="settings__search__keywords__clear_cache">mezipaměť cache úložiště místo dočasné soubory uvolnit smazat vyčistit</string>
+    <string name="settings__search__keywords__momentary_layer">podržet přeject symbol vrstva interpunkce dočasně okamžitě 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emodži emoji řádek lišta nedávné použité nad klávesnicí rychlý</string>
     <string name="settings__search__keywords__request_timeout">časový limit timeout pomalé čekání spojení sekundy</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Jazyky a rozložení</string>
@@ -339,10 +342,13 @@
     <string name="snygg__rule_selector__disabled">Zakázáno</string>
     <string name="snygg__property_name__background">Pozadí</string>
     <string name="snygg__property_name__foreground">Popředí</string>
+    <string name="snygg__property_name__background_blur">Rozostření pozadí</string>
     <string name="snygg__property_name__background_image">Obrázek na pozadí</string>
     <string name="snygg__property_name__content_scale">Škálování obashu</string>
     <string name="snygg__property_name__border_color">Barva okraje</string>
     <string name="snygg__property_name__border_style">Styl okraje</string>
+    <string name="snygg__property_name__background_sheen">Lesk plochy</string>
+    <string name="snygg__property_name__border_sheen">Lesk okraje</string>
     <string name="snygg__property_name__border_width">Šířka okraje</string>
     <string name="snygg__property_name__font_family">Rodina písem</string>
     <string name="snygg__property_name__font_size">Velikost písma</string>
@@ -391,6 +397,8 @@
     <string name="snygg__property_value__circle_shape">Kruhový tvar</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Tvar ořezaného rohu (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Tvar ořezaného rohu (%)</string>
+    <string name="snygg__property_value__sheen">Lesk</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Zaoblený tvar rohu (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Zaoblený tvar rohu (%)</string>
     <string name="snygg__property_value__dp_size">Velikost (dp)</string>
@@ -443,7 +451,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Násobitel velikosti písma</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozložení</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Vstupní okno v celoobrazovkovém režimu na šířku</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Faktor odsazení klávesnice</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Mezera mezi klávesami</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v} % svisle, {h} % vodorovně — větší mezera zmenší klávesy, ne klávesnici.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Stisk klávesy</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Viditelnost vyskakovacího okna</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Zobrazit vyskakovací okno při stisku klávesy</string>
@@ -557,9 +566,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Přejetí doleva</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Přejeďte prstem doprava</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Přejetí nahoru přes mezerník</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Přejetí dolů přes mezerník</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Přejetí vlevo přes mezerník</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Přejetí vpravo přes mezerník</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Dlouhý stisk mezerníku</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Podržením nahlédnout do vrstvy</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Podržte ?123, přejeďte na znak a pusťte — vloží se a písmena jsou zpět</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Přejetí doleva na klávese mazání</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Dlouhé stisknutí klávesy ke smazání</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Práh rychlosti přejetí</string>
@@ -1726,6 +1738,26 @@
     <string name="dictate__history_clear_title">Vymazat historii?</string>
     <string name="dictate__history_clear_message">Tímto trvale odstraníte všechny položky historie i veškerý uchovaný zvuk.</string>
     <string name="dictate__history_clear_confirm">Vymazat vše</string>
+    <string name="dictate__history_export_title">Export do složky</string>
+    <string name="dictate__history_export_summary">Každé nové diktování se hned po dokončení zapíše také do této složky jako prostý textový soubor.</string>
+    <string name="dictate__history_export_folder">Složka</string>
+    <string name="dictate__history_export_folder_unset">Nenastaveno</string>
+    <string name="dictate__history_export_folder_unavailable">Složka není dostupná — vyberte ji znovu</string>
+    <string name="dictate__history_export_choose">Vybrat složku</string>
+    <string name="dictate__history_export_change">Změnit</string>
+    <string name="dictate__history_export_disconnect">Odpojit</string>
+    <string name="dictate__history_export_audio_title">Exportovat i nahrávku</string>
+    <string name="dictate__history_export_audio_summary">Uloží zvuk vedle přepisu.</string>
+    <string name="dictate__history_export_audio_needs_retention">Vyžaduje „Uchovávat zvuk“.</string>
+    <string name="dictate__history_export_all">Exportovat vše nyní</string>
+    <string name="dictate__history_export_all_summary">Zapíše každé diktování, které ve složce ještě není: ta z doby před jejím výběrem i ta, která nešlo zapsat, když byla složka nedostupná.</string>
+    <string name="dictate__history_export_all_result">Zapsáno: {written}, již přítomno: {skipped}, selhalo: {failed}</string>
+    <string name="dictate__history_export_last_failure">Zápis {when} selhal. „Exportovat vše nyní“ doplní, co chybí.</string>
+    <string name="dictate__history_export_warning_title">Co tam skončí</string>
+    <string name="dictate__history_export_warning_message">Složka bude od nynějška obsahovat text každého vašeho diktování a při zapnutí i nahrávky. Vše, co ji synchronizuje — cloudový klient, zálohovací nástroj, jiná aplikace — odnáší tyto přepisy z tohoto zařízení.\n\nDictate zapisuje, dokud složku neodpojíte, a nikdy z ní nic nemaže: záznamy, které vypadnou z historie, ve složce zůstávají. Pole pro hesla a anonymní režim se nikdy nezaznamenávají, a tedy ani neexportují.</string>
+    <string name="dictate__history_export_needs_history">Export do složky zapisuje to, co zaznamenává historie, takže historie musí být zapnutá.</string>
+    <string name="dictate__history_export_enable_history">Zapnout historii</string>
+    <string name="dictate__history_export_pick_failed">K této složce se nepodařilo získat oprávnění k zápisu</string>
     <string name="dictate__stats_empty">Zatím žádné diktáty — statistiky se objeví, jakmile začnete diktovat.</string>
     <string name="dictate__stats_time_saved">Ušetřený čas</string>
     <string name="dictate__stats_time_saved_sub">oproti psaní</string>

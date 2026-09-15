@@ -101,6 +101,8 @@
     <string name="quick_action__floating_window_mode__tooltip">切换浮动键盘窗口模式</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">单手模式</string>
     <string name="quick_action__one_handed_mode__tooltip">单手模式开关</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">分屏键盘</string>
+    <string name="quick_action__split_layout__tooltip">分屏键盘开关</string>
     <string name="quick_action__resize_mode" comment="Please mind the limited available space for the quick action strings">调整大小</string>
     <string name="quick_action__resize_mode__tooltip">切换调整大小模式</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">数字行</string>
@@ -137,6 +139,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">字数 词数 统计 字符数</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">去除空格 空白 修剪 复制 剪切</string>
     <string name="settings__search__keywords__clear_cache">缓存 存储 空间 临时文件 释放 删除 清理</string>
+    <string name="settings__search__keywords__momentary_layer">长按 滑动 符号 层 临时 瞬时 标点 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">表情 emoji 行 栏 最近 使用 键盘 上方 快捷</string>
     <string name="settings__search__keywords__request_timeout">超时 等待 慢 连接 秒 断开</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">语言 &amp; 键盘布局</string>
@@ -340,10 +343,13 @@
     <string name="snygg__rule_selector__disabled">已停用</string>
     <string name="snygg__property_name__background">背景</string>
     <string name="snygg__property_name__foreground">前景</string>
+    <string name="snygg__property_name__background_blur">背景模糊</string>
     <string name="snygg__property_name__background_image">背景图片</string>
     <string name="snygg__property_name__content_scale">内容规模</string>
     <string name="snygg__property_name__border_color">边框颜色</string>
     <string name="snygg__property_name__border_style">边框样式</string>
+    <string name="snygg__property_name__background_sheen">背景光泽</string>
+    <string name="snygg__property_name__border_sheen">边框光泽</string>
     <string name="snygg__property_name__border_width">边框宽度</string>
     <string name="snygg__property_name__font_family">字体系列</string>
     <string name="snygg__property_name__font_size">字体大小</string>
@@ -392,6 +398,8 @@
     <string name="snygg__property_value__circle_shape">圆形形状</string>
     <string name="snygg__property_value__cut_corner_shape_dp">切角形状 (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">切角形状 (%)</string>
+    <string name="snygg__property_value__sheen">光泽</string>
+    <string name="snygg__property_value__squircle_shape">超椭圆</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">圆角矩形形状 (%)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">圆角矩形形状 (%)</string>
     <string name="snygg__property_value__dp_size">尺寸 (dp)</string>
@@ -444,6 +452,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">字体大小缩放倍率</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">布局</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">横向全屏输入</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">按键间距</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">垂直 {v}%、水平 {h}% — 间距越大按键越小，键盘大小不变。</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">按键</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">弹出键可见</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">按键时显示弹出提示</string>
@@ -557,9 +567,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">向左滑动</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">向右滑动</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">空格键向上滑动</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">空格键向下滑动</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">空格键向左滑动</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">空格键向右滑动</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">空格键长按</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">长按临时切换层</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">按住 ?123 滑到某个字符再松开 — 字符已输入，键盘回到字母</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">删除键向左滑动</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">删除键长按</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">滑动触发速度阈值</string>
@@ -1703,6 +1716,26 @@
     <string name="dictate__history_clear_title">清除历史记录？</string>
     <string name="dictate__history_clear_message">这将永久删除所有历史记录条目和任何保留的音频。</string>
     <string name="dictate__history_clear_confirm">全部清除</string>
+    <string name="dictate__history_export_title">导出到文件夹</string>
+    <string name="dictate__history_export_summary">每段新的听写完成后，都会以纯文本文件的形式同时写入该文件夹。</string>
+    <string name="dictate__history_export_folder">文件夹</string>
+    <string name="dictate__history_export_folder_unset">未设置</string>
+    <string name="dictate__history_export_folder_unavailable">文件夹不可用 — 请重新选择</string>
+    <string name="dictate__history_export_choose">选择文件夹</string>
+    <string name="dictate__history_export_change">更改</string>
+    <string name="dictate__history_export_disconnect">断开</string>
+    <string name="dictate__history_export_audio_title">同时导出录音</string>
+    <string name="dictate__history_export_audio_summary">将音频保存在转写文本旁边。</string>
+    <string name="dictate__history_export_audio_needs_retention">需要先开启“保留音频”。</string>
+    <string name="dictate__history_export_all">立即导出全部</string>
+    <string name="dictate__history_export_all_summary">写入所有尚未出现在该文件夹中的听写：选择文件夹之前的记录，以及文件夹不可用期间未能写入的记录。</string>
+    <string name="dictate__history_export_all_result">已写入 {written} 条，已存在 {skipped} 条，失败 {failed} 条</string>
+    <string name="dictate__history_export_last_failure">{when}有一次写入失败。“立即导出全部”可以补齐缺失的文件。</string>
+    <string name="dictate__history_export_warning_title">文件夹里会有什么</string>
+    <string name="dictate__history_export_warning_message">从现在起，该文件夹会保存你每一段听写的文字；如果开启，还会保存录音。任何同步它的工具 — 云端客户端、备份工具或其他应用 — 都会把这些转写带离本设备。\n\n在你断开该文件夹之前，Dictate 会持续写入，并且从不删除其中的文件：从历史记录中移除的条目仍会留在文件夹里。密码字段和无痕输入从不记录，因此也从不导出。</string>
+    <string name="dictate__history_export_needs_history">文件夹导出写入的是历史记录所保存的内容，因此需要开启历史记录。</string>
+    <string name="dictate__history_export_enable_history">开启历史记录</string>
+    <string name="dictate__history_export_pick_failed">无法获得该文件夹的写入权限</string>
     <string name="dictate__stats_empty">还没有听写 — 开始听写后统计会显示在这里。</string>
     <string name="dictate__stats_time_saved">节省的时间</string>
     <string name="dictate__stats_time_saved_sub">相比打字</string>

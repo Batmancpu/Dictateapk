@@ -129,6 +129,12 @@ fun GesturesScreen() = FlorisScreen {
                 entries = enumDisplayEntriesOf(SwipeAction::class, "general"),
             )
             ListPreference(
+                prefs.gestures.spaceBarSwipeDown,
+                modifier = Modifier.settingsSearchAnchor("pref__gestures__space_bar_swipe_down__label"),
+                title = stringRes(R.string.pref__gestures__space_bar_swipe_down__label),
+                entries = enumDisplayEntriesOf(SwipeAction::class, "general"),
+            )
+            ListPreference(
                 prefs.gestures.spaceBarSwipeLeft,
                 modifier = Modifier.settingsSearchAnchor("pref__gestures__space_bar_swipe_left__label"),
                 title = stringRes(R.string.pref__gestures__space_bar_swipe_left__label),
@@ -149,6 +155,12 @@ fun GesturesScreen() = FlorisScreen {
         }
 
         PreferenceGroup(title = stringRes(R.string.pref__gestures__other_title)) {
+            SwitchPreference(
+                prefs.gestures.momentaryLayer,
+                modifier = Modifier.settingsSearchAnchor("pref__gestures__momentary_layer__label"),
+                title = stringRes(R.string.pref__gestures__momentary_layer__label),
+                summary = stringRes(R.string.pref__gestures__momentary_layer__summary),
+            )
             ListPreference(
                 prefs.gestures.deleteKeySwipeLeft,
                 modifier = Modifier.settingsSearchAnchor("pref__gestures__delete_key_swipe_left__label"),

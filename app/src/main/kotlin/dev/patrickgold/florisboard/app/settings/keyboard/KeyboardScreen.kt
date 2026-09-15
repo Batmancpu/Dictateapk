@@ -95,18 +95,6 @@ fun KeyboardScreen() = FlorisScreen {
             title = stringRes(R.string.pref__keyboard__capitalization_behavior__label),
             entries = enumDisplayEntriesOf(CapitalizationBehavior::class),
         )
-        DialogSliderPreference(
-            primaryPref = prefs.keyboard.fontSizeMultiplierPortrait,
-            secondaryPref = prefs.keyboard.fontSizeMultiplierLandscape,
-            modifier = Modifier.settingsSearchAnchor("pref__keyboard__font_size_multiplier__label"),
-            title = stringRes(R.string.pref__keyboard__font_size_multiplier__label),
-            primaryLabel = stringRes(R.string.screen_orientation__portrait),
-            secondaryLabel = stringRes(R.string.screen_orientation__landscape),
-            valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
-            min = 50,
-            max = 150,
-            stepIncrement = 5,
-        )
         ListPreference(
             listPref = prefs.keyboard.incognitoDisplayMode,
             modifier = Modifier.settingsSearchAnchor("pref__keyboard__incognito_indicator__label"),
@@ -121,6 +109,23 @@ fun KeyboardScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__keyboard__landscape_input_ui_mode__label),
                 entries = enumDisplayEntriesOf(LandscapeInputUiMode::class),
             )
+            // Sits next to the key gap on purpose: the two get confused for each other (issue #365),
+            // and this is the one that actually makes the letters smaller.
+            DialogSliderPreference(
+                primaryPref = prefs.keyboard.fontSizeMultiplierPortrait,
+                secondaryPref = prefs.keyboard.fontSizeMultiplierLandscape,
+                modifier = Modifier.settingsSearchAnchor("pref__keyboard__font_size_multiplier__label"),
+                title = stringRes(R.string.pref__keyboard__font_size_multiplier__label),
+                primaryLabel = stringRes(R.string.screen_orientation__portrait),
+                secondaryLabel = stringRes(R.string.screen_orientation__landscape),
+                valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
+                min = 50,
+                max = 150,
+                stepIncrement = 5,
+            )
+            // The factor scales a 2dp horizontal / 5dp vertical base, so the old 50-150 % moved the gap
+            // by a single dp and read as doing nothing at all (issue #365). 0-300 % spans no gap to a
+            // clearly wide one; the margin is capped against the key cell in ImeWindowSpec.
             DialogSliderPreference(
                 primaryPref = prefs.keyboard.keySpacingVertical,
                 secondaryPref = prefs.keyboard.keySpacingHorizontal,
@@ -129,8 +134,14 @@ fun KeyboardScreen() = FlorisScreen {
                 primaryLabel = stringRes(R.string.screen_orientation__vertical),
                 secondaryLabel = stringRes(R.string.screen_orientation__horizontal),
                 valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
-                min = 50,
-                max = 150,
+                summary = { vertical, horizontal ->
+                    stringRes(
+                        R.string.pref__keyboard__key_spacing__summary,
+                        "v" to vertical, "h" to horizontal,
+                    )
+                },
+                min = 0,
+                max = 300,
                 stepIncrement = 5,
             )
         }

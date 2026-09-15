@@ -95,6 +95,8 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Öffne Anbieter für Spracheingabe</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Einhändig</string>
     <string name="quick_action__one_handed_mode__tooltip">Einhandmodus umschalten</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Geteilt</string>
+    <string name="quick_action__split_layout__tooltip">Geteilte Tastatur umschalten</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Zahlenreihe</string>
     <string name="quick_action__toggle_number_row__tooltip">Zahlenreihe ein- oder ausblenden</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Zug-Marker</string>
@@ -129,6 +131,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">Wörter zählen Wortanzahl Zeichenzahl Länge Statistik wie viele Wörter</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">kürzen Leerzeichen entfernen bereinigen kopieren ausschneiden Umbruch</string>
     <string name="settings__search__keywords__clear_cache">Cache Zwischenspeicher Speicher Speicherplatz temporäre Dateien freigeben löschen aufräumen</string>
+    <string name="settings__search__keywords__momentary_layer">halten ziehen symbol ebene sonderzeichen umschalten kurz vorübergehend 123 satzzeichen iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji reihe zeile leiste zuletzt benutzt über tastatur schnell smiley</string>
     <string name="settings__search__keywords__request_timeout">Zeitlimit Timeout Zeitüberschreitung langsam warten Verbindung Sekunden abgebrochen</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Sprachen &amp; Layouts</string>
@@ -271,9 +274,12 @@
     <string name="snygg__rule_selector__disabled">Deaktiviert</string>
     <string name="snygg__property_name__background">Hintergrund</string>
     <string name="snygg__property_name__foreground">Vordergrund</string>
+    <string name="snygg__property_name__background_blur">Hintergrundunschärfe</string>
     <string name="snygg__property_name__background_image">Hintergrundbild</string>
     <string name="snygg__property_name__border_color">Rahmenfarbe</string>
     <string name="snygg__property_name__border_style">Rahmenstil</string>
+    <string name="snygg__property_name__background_sheen">Flächenschimmer</string>
+    <string name="snygg__property_name__border_sheen">Kantenschimmer</string>
     <string name="snygg__property_name__border_width">Rahmenbreite</string>
     <string name="snygg__property_name__font_family">Schriftart</string>
     <string name="snygg__property_name__font_size">Schriftgröße</string>
@@ -309,6 +315,8 @@
     <string name="snygg__property_value__circle_shape">Kreisform</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Form mit eckigen Ecken (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Form mit eckigen Ecken (%)</string>
+    <string name="snygg__property_value__sheen">Schimmer</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Form mit abgerundeten Ecken (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Form mit abgerundeten Ecken (%)</string>
     <string name="snygg__property_value__dp_size">Größe (dp)</string>
@@ -357,6 +365,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Schriftgröße</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Querformat Vollbild Eingabe</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Abstand zwischen den Tasten</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v} % vertikal, {h} % horizontal — ein größerer Abstand macht die Tasten kleiner, nicht die Tastatur.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastendruck</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Pop-Up Sichtbarkeit</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pop-Up bei Tastendruck anzeigen</string>
@@ -430,7 +440,9 @@
 
     <string name="settings__learned__title" comment="Title of the learned words screen">Gelernte Wörter</string>
     <string name="settings__learned__empty" comment="Shown when nothing has been learned yet">Noch nichts gelernt. Wörter, die du tippst und die kein Wörterbuch kennt, erscheinen hier.</string>
+    <string name="settings__learned__empty_stage" comment="Shown when one learning stage holds no words, while others do">Auf dieser Stufe steht nichts.</string>
     <string name="settings__learned__disabled" comment="Shown when the learning feature is switched off">Das Lernen beim Tippen ist ausgeschaltet, es wird also nichts Neues gemerkt.</string>
+    <string name="settings__learned__disabled_dictionary" comment="Shown when learning is on but the internal user dictionary it writes into is off">Das interne Benutzerwörterbuch ist ausgeschaltet, also kann nichts gelernt werden — ein aufgeschnapptes Wort hätte kein Ziel. Unter „Benutzerwörterbücher" einschalten.</string>
     <string name="settings__learned__stage_remembered" comment="Ladder stage: seen once, no effect yet">Bemerkt — wird noch nicht vorgeschlagen</string>
     <string name="settings__learned__stage_suggested" comment="Ladder stage: appears in the suggestion strip">Wird beim Tippen vorgeschlagen</string>
     <string name="settings__learned__stage_promoted" comment="Ladder stage: in the personal dictionary">Im Wörterbuch — die Autokorrektur lässt es in Ruhe</string>
@@ -438,6 +450,12 @@
     <string name="settings__learned__forget" comment="Button that removes one learned word">Vergessen</string>
     <string name="settings__learned__forget_all" comment="Button that removes every learned word">Alles vergessen</string>
     <string name="settings__learned__forget_all_confirm" comment="Confirmation question before deleting all learned words">Alle gelernten Wörter vergessen? Wörter, die schon im Wörterbuch stehen, bleiben dort.</string>
+    <string name="settings__learned__tier_remembered" comment="Short name of the first learning stage, used as a folder title">Bemerkt</string>
+    <string name="settings__learned__tier_suggested" comment="Short name of the second learning stage, used as a folder title">Vorgeschlagen</string>
+    <string name="settings__learned__tier_promoted" comment="Short name of the third learning stage, used as a folder title">Im Wörterbuch</string>
+    <string name="settings__learned__forget_tier" comment="Button that removes every word at one learning stage">Diese vergessen</string>
+    <string name="settings__learned__forget_tier_confirm" comment="Confirmation question before deleting the words at one stage. The placeholder inserts a already-pluralised word count, e.g. &quot;3 Wörter&quot;.">{words} vergessen? Sonst wird nichts angefasst.</string>
+    <string name="settings__learned__forget_promoted_confirm" comment="Stronger confirmation before deleting words that reached the personal dictionary. The placeholder inserts an already-pluralised word count, e.g. &quot;3 Wörter&quot;.">{words} vergessen? Was hier steht, gehört zum Wörterbuch — die Autokorrektur lässt es in Ruhe, und Vergessen entfernt es auch dort.</string>
     <string name="settings__learned__add_now" comment="Button that promotes a learned word into the personal dictionary immediately">Ins Wörterbuch übernehmen</string>
     <string name="settings__learned__how_it_works" comment="Explanation shown at the top of the learned words screen">Ein Wort wird erst gemerkt, wenn es absichtlich getippt aussieht und nicht wie ein Vertipper. Ab dem zweiten Mal wird es vorgeschlagen, ab dem dritten steht es im Wörterbuch — von da an lässt die Autokorrektur es in Ruhe.\n\nAlles bleibt auf diesem Gerät. Im Inkognito-Modus, in Passwortfeldern und aus Diktaten wird nichts gelernt — ausschließlich aus dem, was du wirklich getippt hast.</string>
     <string name="suggestion__forgot_word" comment="Toast after forgetting a learned word. The placeholder inserts the word.">„{word}“ vergessen</string>
@@ -491,9 +509,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Nach links wischen</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Nach rechts wischen</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Leertaste nach oben wischen</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Leertaste nach unten wischen</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Leertaste nach links wischen</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Leertaste nach rechts wischen</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Leertaste lang drücken</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Halten, um eine Ebene aufzuschlagen</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">\?123 halten, auf ein Zeichen ziehen und loslassen — es wird eingefügt und die Buchstaben sind zurück</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Löschtaste nach links wischen</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Aktion bei lang gedrückter Löschtaste</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Gesten-Geschwindigkeitsschwelle</string>
@@ -1674,6 +1695,26 @@
     <string name="dictate__history_clear_title">Verlauf löschen?</string>
     <string name="dictate__history_clear_message">Dadurch werden alle Verlaufseinträge und alle gespeicherten Aufnahmen dauerhaft gelöscht.</string>
     <string name="dictate__history_clear_confirm">Alle löschen</string>
+    <string name="dictate__history_export_title">Export in einen Ordner</string>
+    <string name="dictate__history_export_summary">Jedes neue Diktat wird zusätzlich als einfache Textdatei in diesen Ordner geschrieben, sobald es fertig ist.</string>
+    <string name="dictate__history_export_folder">Ordner</string>
+    <string name="dictate__history_export_folder_unset">Nicht festgelegt</string>
+    <string name="dictate__history_export_folder_unavailable">Ordner nicht verfügbar — bitte erneut auswählen</string>
+    <string name="dictate__history_export_choose">Ordner auswählen</string>
+    <string name="dictate__history_export_change">Ändern</string>
+    <string name="dictate__history_export_disconnect">Trennen</string>
+    <string name="dictate__history_export_audio_title">Aufnahme mitexportieren</string>
+    <string name="dictate__history_export_audio_summary">Speichert das Audio neben dem Transkript.</string>
+    <string name="dictate__history_export_audio_needs_retention">Erfordert „Audio speichern“.</string>
+    <string name="dictate__history_export_all">Jetzt alles exportieren</string>
+    <string name="dictate__history_export_all_summary">Schreibt jedes Diktat, das noch nicht im Ordner liegt — die von vor der Auswahl, und alle, die nicht geschrieben werden konnten, während der Ordner nicht erreichbar war.</string>
+    <string name="dictate__history_export_all_result">{written} geschrieben, {skipped} bereits vorhanden, {failed} fehlgeschlagen</string>
+    <string name="dictate__history_export_last_failure">Ein Schreibvorgang ist {when} fehlgeschlagen. „Jetzt alles exportieren“ holt das Fehlende nach.</string>
+    <string name="dictate__history_export_warning_title">Was dort landet</string>
+    <string name="dictate__history_export_warning_message">Der Ordner enthält ab jetzt den Text jedes Diktats, und auf Wunsch auch die Aufnahmen. Alles, was ihn synchronisiert — ein Cloud-Client, ein Backup-Werkzeug, eine andere App — trägt diese Transkripte vom Gerät.\n\nDictate schreibt weiter, bis du den Ordner trennst, und löscht niemals darin: Einträge, die aus dem Verlauf fallen, bleiben im Ordner. Passwort- und Inkognito-Felder werden nie aufgezeichnet und deshalb auch nie exportiert.</string>
+    <string name="dictate__history_export_needs_history">Der Ordner-Export schreibt, was der Verlauf aufzeichnet — dafür muss der Verlauf eingeschaltet sein.</string>
+    <string name="dictate__history_export_enable_history">Verlauf einschalten</string>
+    <string name="dictate__history_export_pick_failed">Kein Schreibzugriff auf diesen Ordner</string>
     <string name="dictate__stats_empty">Noch keine Diktate — deine Statistik erscheint hier, sobald du diktierst.</string>
     <string name="dictate__stats_time_saved">Gesparte Zeit</string>
     <string name="dictate__stats_time_saved_sub">gegenüber Tippen</string>

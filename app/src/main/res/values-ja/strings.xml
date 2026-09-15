@@ -96,6 +96,8 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">音声入力プロバイダを開く</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">片手モード</string>
     <string name="quick_action__one_handed_mode__tooltip">片手モードの切り替え</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">分割</string>
+    <string name="quick_action__split_layout__tooltip">分割キーボードの切り替え</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">数字キー行</string>
     <string name="quick_action__toggle_number_row__tooltip">数字キーの行を表示/非表示</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">ドラッグマーカー</string>
@@ -130,6 +132,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">文字数 単語数 カウント 統計</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">トリミング 空白 削除 コピー 切り取り</string>
     <string name="settings__search__keywords__clear_cache">キャッシュ ストレージ 空き容量 一時ファイル 削除 クリア 掃除</string>
+    <string name="settings__search__keywords__momentary_layer">長押し スライド 記号 レイヤー 一時 句読点 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">絵文字 行 バー 最近 使った キーボード 上 クイック</string>
     <string name="settings__search__keywords__request_timeout">タイムアウト 時間切れ 遅い 待機 接続 秒</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">言語と入力</string>
@@ -312,10 +315,13 @@
     <string name="snygg__rule_selector__disabled">無効状態</string>
     <string name="snygg__property_name__background">背景</string>
     <string name="snygg__property_name__foreground">前景</string>
+    <string name="snygg__property_name__background_blur">背景のぼかし</string>
     <string name="snygg__property_name__background_image">背景画像</string>
     <string name="snygg__property_name__content_scale">コンテンツスケール</string>
     <string name="snygg__property_name__border_color">枠線の色</string>
     <string name="snygg__property_name__border_style">枠線のスタイル</string>
+    <string name="snygg__property_name__background_sheen">背景の光沢</string>
+    <string name="snygg__property_name__border_sheen">枠線の光沢</string>
     <string name="snygg__property_name__border_width">枠線の幅</string>
     <string name="snygg__property_name__font_family">フォントファミリー</string>
     <string name="snygg__property_name__font_size">フォントサイズ</string>
@@ -364,6 +370,8 @@
     <string name="snygg__property_value__circle_shape">円形</string>
     <string name="snygg__property_value__cut_corner_shape_dp">角丸（切り取り、dp）</string>
     <string name="snygg__property_value__cut_corner_shape_percent">角丸（切り取り、%）</string>
+    <string name="snygg__property_value__sheen">光沢</string>
+    <string name="snygg__property_value__squircle_shape">スーパー楕円</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">角丸（dp）</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">角丸（%）</string>
     <string name="snygg__property_value__dp_size">サイズ（dp）</string>
@@ -416,6 +424,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">フォントサイズ倍率</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">レイアウト</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">横向き時のフルスクリーン入力</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">キーの間隔</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">縦 {v}%、横 {h}% — 間隔を広げるとキーボードではなくキーが小さくなります。</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">キー入力</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">キーポップアップの表示</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">キーを押すとポップアップを表示</string>
@@ -529,9 +539,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">左にスワイプ</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">右にスワイプ</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">スペースバーを上にスワイプ</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">スペースバーを下にスワイプ</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">スペースバーを左にスワイプ</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">スペースバーを右にスワイプ</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">スペースバーを長押し</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">長押しでレイヤーを一時表示</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">\?123 を押したまま文字にスライドして離すと、その文字が入力されて文字キーに戻ります</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">削除キーを左にスワイプ</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">削除キーを長押し</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">スワイプ速度の閾値</string>
@@ -1641,6 +1654,26 @@
     <string name="dictate__history_clear_title">履歴を消去しますか？</string>
     <string name="dictate__history_clear_message">これにより、すべての履歴エントリと保存された音声が完全に削除されます。</string>
     <string name="dictate__history_clear_confirm">すべて消去</string>
+    <string name="dictate__history_export_title">フォルダーへエクスポート</string>
+    <string name="dictate__history_export_summary">新しい音声入力は、完了と同時にこのフォルダーへプレーンテキストとしても書き出されます。</string>
+    <string name="dictate__history_export_folder">フォルダー</string>
+    <string name="dictate__history_export_folder_unset">未設定</string>
+    <string name="dictate__history_export_folder_unavailable">フォルダーを利用できません — もう一度選んでください</string>
+    <string name="dictate__history_export_choose">フォルダーを選択</string>
+    <string name="dictate__history_export_change">変更</string>
+    <string name="dictate__history_export_disconnect">接続を解除</string>
+    <string name="dictate__history_export_audio_title">録音も書き出す</string>
+    <string name="dictate__history_export_audio_summary">文字起こしの隣に音声を保存します。</string>
+    <string name="dictate__history_export_audio_needs_retention">「音声を保持」をオンにしてください。</string>
+    <string name="dictate__history_export_all">すべて今すぐ書き出す</string>
+    <string name="dictate__history_export_all_summary">まだフォルダーにない音声入力をすべて書き出します。フォルダーを選ぶ前のものや、フォルダーに接続できず書き出せなかったものが対象です。</string>
+    <string name="dictate__history_export_all_result">{written} 件を書き出し、{skipped} 件は既存、{failed} 件が失敗</string>
+    <string name="dictate__history_export_last_failure">{when}に書き出しが失敗しました。「すべて今すぐ書き出す」で不足分を補えます。</string>
+    <string name="dictate__history_export_warning_title">そこに入るもの</string>
+    <string name="dictate__history_export_warning_message">このフォルダーには、これ以降のすべての音声入力の文字が保存されます。設定すれば録音も保存されます。クラウドクライアント、バックアップツール、他のアプリなど、このフォルダーを同期するものはすべて、その文字起こしを端末の外へ持ち出します。\n\n接続を解除するまで Dictate は書き出しを続け、フォルダーから削除することはありません。履歴から消えた項目もフォルダーには残ります。パスワード欄とシークレット入力は記録されないため、書き出されることもありません。</string>
+    <string name="dictate__history_export_needs_history">フォルダーへの書き出しは履歴に記録された内容を書き出すため、履歴をオンにする必要があります。</string>
+    <string name="dictate__history_export_enable_history">履歴をオンにする</string>
+    <string name="dictate__history_export_pick_failed">そのフォルダーへの書き込み権限を取得できませんでした</string>
     <string name="dictate__stats_empty">まだ音声入力がありません — 入力を始めると統計がここに表示されます。</string>
     <string name="dictate__stats_time_saved">節約した時間</string>
     <string name="dictate__stats_time_saved_sub">タイピングと比較</string>

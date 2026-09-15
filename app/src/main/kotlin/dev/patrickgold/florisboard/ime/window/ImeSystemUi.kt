@@ -278,7 +278,7 @@ private fun RowScope.NavigationPill() {
     }
 }
 
-private tailrec fun Context.findWindow(): Window? {
+internal tailrec fun Context.findWindow(): Window? {
     val context = this
     if (context is Activity) return context.window
     if (context is InputMethodService) return context.window?.window

@@ -360,6 +360,32 @@ object DictateLegacyMigrator {
     }
 
     /**
+     * One-time switch onto word learning (issues #318, #375), now the default.
+     *
+     * The same trade as the hold-to-record switch above, for the same reason: word learning shipped off,
+     * three screens deep, and a personal vocabulary that only the users who went looking for it ever get
+     * is most of the feature not existing. The reporter's words for it were that a core keyboard feature
+     * should not have to be discovered.
+     *
+     * This writes over a deliberate "off" — nothing distinguishes that from a default never touched — so
+     * the release carrying it **must** say so in its what's-new, with where to switch it back. What makes
+     * that defensible rather than merely noted: every learned word stays on the device, is listed one by
+     * one in Typing › User dictionaries › Learned words with a delete beside it, and nothing is learned in
+     * incognito mode, in password fields, or from anything that was not typed key by key.
+     *
+     * Deliberately does **not** also switch the internal user dictionary back on. Learning needs it —
+     * promotion writes there — but that dictionary changes which words are suggested, and reaching that
+     * far into someone's settings for a feature they did not ask for is a different thing from restoring
+     * a default. Where it is off, the Learned-words screen now says so and points at the switch.
+     */
+    suspend fun migrateWordLearningDefaultIfNeeded() {
+        val prefs by FlorisPreferenceStore
+        if (prefs.suggestion.learnTypedWordsDefaultMigrated.get()) return
+        prefs.suggestion.learnTypedWords.set(true)
+        prefs.suggestion.learnTypedWordsDefaultMigrated.set(true)
+    }
+
+    /**
      * Drops the Devanagari digit row (१२३…) from saved Hindi subtypes (issue #315). Hindi is written with
      * Western digits in practice, and the preset no longer asks for the localized row — but a subtype is
      * persisted with its full layout map, so the old choice would otherwise survive forever.

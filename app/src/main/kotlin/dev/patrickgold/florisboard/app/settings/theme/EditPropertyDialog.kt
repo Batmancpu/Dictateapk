@@ -123,7 +123,9 @@ import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
+import org.florisboard.lib.snygg.value.SnyggSheenValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
+import org.florisboard.lib.snygg.value.SnyggSquircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggTextAlignValue
 import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
@@ -518,6 +520,40 @@ private fun PropertyValueEditor(
 
         is SnyggShapeValue -> {
             ShapeValueEditor(value, onValueChange, modifier)
+        }
+
+        is SnyggSheenValue -> {
+            var topStr by remember { mutableStateOf(value.topLift.toString()) }
+            var bottomStr by remember { mutableStateOf(value.bottomShade.toString()) }
+            fun push() {
+                val top = topStr.toIntOrNull()?.coerceIn(0, 100)
+                val bottom = bottomStr.toIntOrNull()?.coerceIn(0, 100)
+                onValueChange(SnyggSheenValue(top ?: 0, bottom ?: 0))
+            }
+            Row(modifier, verticalAlignment = Alignment.CenterVertically) {
+                JetPrefTextField(
+                    modifier = Modifier.weight(1f),
+                    value = topStr,
+                    onValueChange = { topStr = it; push() },
+                    isError = topStr.toIntOrNull()?.let { it !in 0..100 } ?: true,
+                )
+                Text(
+                    modifier = Modifier.padding(start = 8.dp, end = 16.dp),
+                    text = "%",
+                    fontFamily = FontFamily.Monospace,
+                )
+                JetPrefTextField(
+                    modifier = Modifier.weight(1f),
+                    value = bottomStr,
+                    onValueChange = { bottomStr = it; push() },
+                    isError = bottomStr.toIntOrNull()?.let { it !in 0..100 } ?: true,
+                )
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = "%",
+                    fontFamily = FontFamily.Monospace,
+                )
+            }
         }
 
         is SnyggDpSizeValue -> {
@@ -980,6 +1016,10 @@ private fun ShapeValueEditor(
                     is SnyggRoundedCornerDpShapeValue -> {
                         RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart)
                     }
+
+                    is SnyggSquircleShapeValue -> {
+                        SnyggSquircleShapeValue(topStart, topEnd, bottomEnd, bottomStart).shape
+                    }
                 }
             }
             LaunchedEffect(shape) {
@@ -991,6 +1031,10 @@ private fun ShapeValueEditor(
 
                         is SnyggRoundedCornerDpShapeValue -> {
                             SnyggRoundedCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
+                        }
+
+                        is SnyggSquircleShapeValue -> {
+                            SnyggSquircleShapeValue(topStart, topEnd, bottomEnd, bottomStart)
                         }
                     }
                 )

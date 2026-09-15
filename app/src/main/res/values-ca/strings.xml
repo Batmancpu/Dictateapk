@@ -96,6 +96,8 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Obre el proveïdor d\'entrada de veu</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Amb una mà</string>
     <string name="quick_action__one_handed_mode__tooltip">Passa al mode d\'Amb una mà</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Dividit</string>
+    <string name="quick_action__split_layout__tooltip">Passa al teclat dividit</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Fila de números</string>
     <string name="quick_action__toggle_number_row__tooltip">Mostra o amaga la fila de números</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrossega</string>
@@ -130,6 +132,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">comptar paraules nombre de paraules caràcters longitud estadístiques</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">retallar espais eliminar netejar copiar tallar</string>
     <string name="settings__search__keywords__clear_cache">memòria cau espai emmagatzematge fitxers temporals alliberar esborrar netejar</string>
+    <string name="settings__search__keywords__momentary_layer">mantenir lliscar simbol capa puntuacio temporal momentani 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji fila barra recents utilitzats sobre teclat ràpid</string>
     <string name="settings__search__keywords__request_timeout">temps d\'espera timeout lent esperar connexió segons</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Llengües &amp; Disposicions</string>
@@ -346,6 +349,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador de la mida de la font</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposició</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada a pantalla completa apaïsada</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espai entre les tecles</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v} % vertical, {h} % horitzontal — un espai més gran fa les tecles més petites, no el teclat.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tecla premuda</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilitat de les tecles emergents</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra una finestra emergent quan premeu una tecla</string>
@@ -459,9 +464,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">En lliscar cap a l\'esquerra</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">En lliscar cap a la dreta</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Lliscar cap amunt a la barra espaiadora</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Lliscar cap avall a la barra espaiadora</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Lliscar cap a l\'esquerra a la barra espaiadora</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Lliscar cap a la dreta a la barra espaiadora</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Toc llarg a la barra espaiadora</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Mantén premut per obrir una capa</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Mantén ?123, llisca fins a un caràcter i deixa anar: s’insereix i tornen les lletres</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Lliscar cap a l\'esquerra a la tecla suprimeix</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Toc llarg a la tecla suprimeix</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Límit de velocitat del lliscament</string>
@@ -1584,6 +1592,26 @@
     <string name="dictate__history_clear_title">Voleu esborrar l\'historial?</string>
     <string name="dictate__history_clear_message">Això suprimeix permanentment totes les entrades de l\'historial i qualsevol àudio retingut.</string>
     <string name="dictate__history_clear_confirm">Esborra-ho tot</string>
+    <string name="dictate__history_export_title">Exporta a una carpeta</string>
+    <string name="dictate__history_export_summary">Cada nou dictat també s\'escriu en aquesta carpeta com a fitxer de text, tan bon punt acaba.</string>
+    <string name="dictate__history_export_folder">Carpeta</string>
+    <string name="dictate__history_export_folder_unset">Sense definir</string>
+    <string name="dictate__history_export_folder_unavailable">Carpeta no disponible — torna a triar-la</string>
+    <string name="dictate__history_export_choose">Tria una carpeta</string>
+    <string name="dictate__history_export_change">Canvia</string>
+    <string name="dictate__history_export_disconnect">Desconnecta</string>
+    <string name="dictate__history_export_audio_title">Exporta també l\'enregistrament</string>
+    <string name="dictate__history_export_audio_summary">Desa l\'àudio al costat de la transcripció.</string>
+    <string name="dictate__history_export_audio_needs_retention">Cal «Conserva l\'àudio».</string>
+    <string name="dictate__history_export_all">Exporta-ho tot ara</string>
+    <string name="dictate__history_export_all_summary">Escriu cada dictat que encara no és a la carpeta: els anteriors a triar-la i els que l\'aplicació no va poder escriure mentre la carpeta no era accessible.</string>
+    <string name="dictate__history_export_all_result">{written} escrits, {skipped} ja hi eren, {failed} fallits</string>
+    <string name="dictate__history_export_last_failure">Una escriptura ha fallat {when}. «Exporta-ho tot ara» recupera el que falta.</string>
+    <string name="dictate__history_export_warning_title">Què hi acaba</string>
+    <string name="dictate__history_export_warning_message">La carpeta contindrà el text de cada dictat que facis a partir d\'ara, i també els enregistraments si ho actives. Tot el que la sincronitzi — un client al núvol, una eina de còpia de seguretat, una altra aplicació — s\'emporta aquestes transcripcions fora d\'aquest dispositiu.\n\nDictate continua escrivint fins que desconnectis la carpeta i mai no hi esborra res: les entrades que surten de l\'historial es queden a la carpeta. Els camps de contrasenya i d\'incògnit no es registren mai i, per tant, no s\'exporten mai.</string>
+    <string name="dictate__history_export_needs_history">L\'exportació a carpeta escriu el que registra l\'historial, així que l\'historial ha d\'estar activat.</string>
+    <string name="dictate__history_export_enable_history">Activa l\'historial</string>
+    <string name="dictate__history_export_pick_failed">No s\'ha pogut obtenir accés d\'escriptura a aquesta carpeta</string>
     <string name="dictate__stats_empty">Encara no hi ha dictats — les estadístiques apareixeran aquí quan comencis a dictar.</string>
     <string name="dictate__stats_time_saved">Temps estalviat</string>
     <string name="dictate__stats_time_saved_sub">respecte a escriure</string>

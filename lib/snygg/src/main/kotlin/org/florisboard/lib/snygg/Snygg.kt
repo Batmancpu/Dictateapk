@@ -34,6 +34,8 @@ import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
+import org.florisboard.lib.snygg.value.SnyggSheenValue
+import org.florisboard.lib.snygg.value.SnyggSquircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggTextAlignValue
@@ -53,12 +55,15 @@ object Snygg {
     const val Background = "background"
     const val Foreground = "foreground"
 
+    const val BackgroundBlur = "background-blur"
+    const val BackgroundSheen = "background-sheen"
     const val BackgroundImage = "background-image"
     const val ContentScale = "content-scale"
 
     const val BorderColor = "border-color"
     const val BorderStyle = "border-style" // unsupported as of now
     const val BorderWidth = "border-width"
+    const val BorderSheen = "border-sheen"
 
     const val FontFamily = "font-family"
     const val FontSize = "font-size"
@@ -125,6 +130,12 @@ object SnyggSpec : SnyggSpecDecl({
             add(SnyggDynamicDarkColorValue)
         }
 
+        Snygg.BackgroundBlur {
+            add(SnyggDpSizeValue)
+        }
+        Snygg.BackgroundSheen {
+            add(SnyggSheenValue)
+        }
         Snygg.BackgroundImage {
             add(SnyggUriValue)
         }
@@ -142,6 +153,9 @@ object SnyggSpec : SnyggSpecDecl({
         }
         Snygg.BorderWidth {
             add(SnyggDpSizeValue)
+        }
+        Snygg.BorderSheen {
+            add(SnyggSheenValue)
         }
 
         Snygg.FontFamily {
@@ -193,6 +207,7 @@ object SnyggSpec : SnyggSpecDecl({
             add(SnyggRoundedCornerPercentShapeValue)
             add(SnyggCutCornerDpShapeValue)
             add(SnyggCutCornerPercentShapeValue)
+            add(SnyggSquircleShapeValue)
         }
         Snygg.Clip {
             add(SnyggYesValue)

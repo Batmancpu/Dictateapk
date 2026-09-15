@@ -40,6 +40,8 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.DpRect
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import android.view.WindowManager
 import androidx.lifecycle.lifecycleScope
@@ -54,9 +56,11 @@ import dev.patrickgold.florisboard.ime.input.InputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.isFullscreenInputRequired
 import dev.patrickgold.florisboard.ime.landscapeinput.ExtractedInputRootView
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
+import dev.patrickgold.florisboard.ime.landscapeinput.showsFullscreenInput
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
+import dev.patrickgold.florisboard.ime.window.ImeFormFactor
 import dev.patrickgold.florisboard.ime.window.ImeRootView
 import dev.patrickgold.florisboard.ime.window.ImeWindowController
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
@@ -540,11 +544,16 @@ class FlorisImeService : LifecycleInputMethodService() {
         if (config.orientation != Configuration.ORIENTATION_LANDSCAPE) {
             return false
         }
-        return when (prefs.keyboard.landscapeInputUiMode.get()) {
-            LandscapeInputUiMode.DYNAMICALLY_SHOW -> super.onEvaluateFullscreenMode()
-            LandscapeInputUiMode.NEVER_SHOW -> false
-            LandscapeInputUiMode.ALWAYS_SHOW -> true
-        }
+        // The window controller's root insets are measured by the keyboard view, which does not exist
+        // yet the first time the framework asks – so the window size comes from the configuration, the
+        // same source the platform reads the orientation from a few lines up.
+        val formFactor = ImeFormFactor.of(
+            DpRect(0.dp, 0.dp, config.screenWidthDp.dp, config.screenHeightDp.dp),
+        )
+        return prefs.keyboard.landscapeInputUiMode.get().showsFullscreenInput(
+            formFactor = formFactor,
+            platformWouldShow = super.onEvaluateFullscreenMode(),
+        )
     }
 
     override fun onUpdateExtractingVisibility(info: EditorInfo?) {

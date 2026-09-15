@@ -96,6 +96,8 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Apri fornitore d\'immissione di voce</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">A una mano</string>
     <string name="quick_action__one_handed_mode__tooltip">Attiva o disattiva modalità a una mano</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Diviso</string>
+    <string name="quick_action__split_layout__tooltip">Attiva o disattiva la tastiera divisa</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Riga numeri</string>
     <string name="quick_action__toggle_number_row__tooltip">Mostra o nascondi la riga dei numeri</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Trascina</string>
@@ -130,6 +132,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">conta parole numero di parole caratteri lunghezza statistiche</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">rifilare spazi rimuovere pulire copiare tagliare</string>
     <string name="settings__search__keywords__clear_cache">cache archiviazione spazio file temporanei liberare eliminare pulire</string>
+    <string name="settings__search__keywords__momentary_layer">tenere premuto scorrere simbolo livello punteggiatura temporaneo momentaneo 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji riga barra recenti usate sopra tastiera rapido</string>
     <string name="settings__search__keywords__request_timeout">timeout tempo scaduto lento attesa connessione secondi</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Lingue &amp; Layout</string>
@@ -349,6 +352,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Moltiplicatore dimensione carattere</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Inserimento a schermo intero orizzontale</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Spazio tra i tasti</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% verticale, {h}% orizzontale — uno spazio più ampio rimpicciolisce i tasti, non la tastiera.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressione tasti</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilità Popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra popup quando si preme un tasto</string>
@@ -462,9 +467,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Swipe a sinistra</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Swipe a destra</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Swipe della barra verso l\'alto</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Swipe della barra verso il basso</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Swipe della barra verso sinistra</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Swipe della barra verso destra</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Pressione prolungata sulla barra di spazio</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Tieni premuto per sbirciare un livello</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Tieni premuto ?123, scorri fino a un carattere e rilascia: viene inserito e tornano le lettere</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Swipe a sinistra sul tasto Elimina</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Pressione prolungata del tasto Elimina</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Soglia di velocità dello swipe</string>
@@ -1497,6 +1505,26 @@
     <string name="dictate__history_clear_title">Cancellare la cronologia?</string>
     <string name="dictate__history_clear_message">Questa operazione elimina definitivamente tutte le voci della cronologia e ogni audio conservato.</string>
     <string name="dictate__history_clear_confirm">Cancella tutto</string>
+    <string name="dictate__history_export_title">Esporta in una cartella</string>
+    <string name="dictate__history_export_summary">Ogni nuova dettatura viene scritta anche in questa cartella come file di testo, appena è pronta.</string>
+    <string name="dictate__history_export_folder">Cartella</string>
+    <string name="dictate__history_export_folder_unset">Non impostata</string>
+    <string name="dictate__history_export_folder_unavailable">Cartella non disponibile — selezionala di nuovo</string>
+    <string name="dictate__history_export_choose">Scegli cartella</string>
+    <string name="dictate__history_export_change">Cambia</string>
+    <string name="dictate__history_export_disconnect">Disconnetti</string>
+    <string name="dictate__history_export_audio_title">Esporta anche la registrazione</string>
+    <string name="dictate__history_export_audio_summary">Salva l\'audio accanto alla trascrizione.</string>
+    <string name="dictate__history_export_audio_needs_retention">Richiede «Conserva audio».</string>
+    <string name="dictate__history_export_all">Esporta tutto ora</string>
+    <string name="dictate__history_export_all_summary">Scrive ogni dettatura non ancora presente nella cartella: quelle precedenti alla scelta e quelle che l\'app non è riuscita a scrivere mentre la cartella non era raggiungibile.</string>
+    <string name="dictate__history_export_all_result">{written} scritte, {skipped} già presenti, {failed} non riuscite</string>
+    <string name="dictate__history_export_last_failure">Una scrittura non è riuscita {when}. «Esporta tutto ora» recupera ciò che manca.</string>
+    <string name="dictate__history_export_warning_title">Cosa finisce lì</string>
+    <string name="dictate__history_export_warning_message">La cartella conterrà il testo di ogni dettatura che farai da ora in poi, e anche le registrazioni se lo attivi. Tutto ciò che la sincronizza — un client cloud, uno strumento di backup, un\'altra app — porta quelle trascrizioni fuori da questo dispositivo.\n\nDictate continua a scrivere finché non disconnetti la cartella e non vi cancella mai nulla: le voci che escono dalla cronologia restano nella cartella. I campi password e in incognito non vengono mai registrati e quindi mai esportati.</string>
+    <string name="dictate__history_export_needs_history">L\'esportazione su cartella scrive ciò che la cronologia registra, quindi la cronologia deve essere attiva.</string>
+    <string name="dictate__history_export_enable_history">Attiva cronologia</string>
+    <string name="dictate__history_export_pick_failed">Impossibile ottenere l\'accesso in scrittura a quella cartella</string>
     <string name="dictate__stats_empty">Ancora nessuna dettatura — le statistiche appariranno qui quando inizi a dettare.</string>
     <string name="dictate__stats_time_saved">Tempo risparmiato</string>
     <string name="dictate__stats_time_saved_sub">rispetto alla digitazione</string>

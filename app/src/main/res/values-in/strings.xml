@@ -98,6 +98,8 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Buka penyedia masukan suara</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Satu tangan</string>
     <string name="quick_action__one_handed_mode__tooltip">Alih mode satu tangan</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Terbagi</string>
+    <string name="quick_action__split_layout__tooltip">Alih papan ketik terbagi</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Baris angka</string>
     <string name="quick_action__toggle_number_row__tooltip">Tampilkan atau sembunyikan baris angka</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Tarik marker</string>
@@ -133,6 +135,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">hitung kata jumlah kata karakter panjang statistik</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">pangkas spasi hapus bersihkan salin potong</string>
     <string name="settings__search__keywords__clear_cache">cache penyimpanan ruang berkas sementara mengosongkan hapus bersihkan</string>
+    <string name="settings__search__keywords__momentary_layer">tahan geser simbol lapisan tanda baca sementara sesaat 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji baris deret terbaru digunakan di atas papan ketik cepat</string>
     <string name="settings__search__keywords__request_timeout">batas waktu timeout lambat menunggu koneksi detik</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Tata letak Bahasa &amp;</string>
@@ -326,10 +329,13 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__rule_selector__disabled">Dinonaktifkan</string>
     <string name="snygg__property_name__background">Latar belakang</string>
     <string name="snygg__property_name__foreground">Latar depan</string>
+    <string name="snygg__property_name__background_blur">Buram latar belakang</string>
     <string name="snygg__property_name__background_image">Gambar latar belakang</string>
     <string name="snygg__property_name__content_scale">Skala konten</string>
     <string name="snygg__property_name__border_color">Warna tepian</string>
     <string name="snygg__property_name__border_style">Gaya tepian</string>
+    <string name="snygg__property_name__background_sheen">Kilau latar belakang</string>
+    <string name="snygg__property_name__border_sheen">Kilau tepi</string>
     <string name="snygg__property_name__border_width">Lebar tepian</string>
     <string name="snygg__property_name__font_family">Keluarga font</string>
     <string name="snygg__property_name__font_size">Ukuran font</string>
@@ -378,6 +384,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__property_value__circle_shape">Bentuk lingkaran</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Potong bentuk sudut (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Potong bentuk sudut (%)</string>
+    <string name="snygg__property_value__sheen">Kilau</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Pembulatan bentuk sudut (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Pembulatan bentuk sudut (%)</string>
     <string name="snygg__property_value__dp_size">Ukuran (dp)</string>
@@ -430,6 +438,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Pengganda ukuran font</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Tata letak</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Masukan layar penuh lanskap</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Jarak antartombol</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% vertikal, {h}% horizontal — jarak yang lebih lebar membuat tombol mengecil, bukan papan ketiknya.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tekanan tombol</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilitas munculan</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Tampilkan munculan ketika Anda menekan tombol</string>
@@ -543,9 +553,12 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Geser ke kiri</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Geser ke kanan</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Geser batang spasi ke atas</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Geser batang spasi ke bawah</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Geser batang spasi ke kiri</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Geser batang spasi ke kanan</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Tekan lama bilah spasi</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Tahan untuk mengintip lapisan</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Tahan ?123, geser ke sebuah karakter lalu lepaskan — karakter disisipkan dan huruf kembali</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Tombol hapus geser ke kiri</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Tekanan lama tombol hapus</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Ambang batas kecepatan geser</string>
@@ -1664,6 +1677,26 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__history_clear_title">Hapus riwayat?</string>
     <string name="dictate__history_clear_message">Ini akan menghapus permanen semua entri riwayat dan audio apa pun yang disimpan.</string>
     <string name="dictate__history_clear_confirm">Hapus semua</string>
+    <string name="dictate__history_export_title">Ekspor ke folder</string>
+    <string name="dictate__history_export_summary">Setiap dikte baru juga ditulis ke folder ini sebagai berkas teks biasa, begitu selesai.</string>
+    <string name="dictate__history_export_folder">Folder</string>
+    <string name="dictate__history_export_folder_unset">Belum diatur</string>
+    <string name="dictate__history_export_folder_unavailable">Folder tidak tersedia — pilih lagi</string>
+    <string name="dictate__history_export_choose">Pilih folder</string>
+    <string name="dictate__history_export_change">Ubah</string>
+    <string name="dictate__history_export_disconnect">Putuskan</string>
+    <string name="dictate__history_export_audio_title">Ekspor rekamannya juga</string>
+    <string name="dictate__history_export_audio_summary">Menyimpan audio di samping transkrip.</string>
+    <string name="dictate__history_export_audio_needs_retention">Perlu “Simpan audio” aktif.</string>
+    <string name="dictate__history_export_all">Ekspor semua sekarang</string>
+    <string name="dictate__history_export_all_summary">Menulis setiap dikte yang belum ada di folder: yang dibuat sebelum folder dipilih, dan yang gagal ditulis selama folder tidak dapat dijangkau.</string>
+    <string name="dictate__history_export_all_result">{written} ditulis, {skipped} sudah ada, {failed} gagal</string>
+    <string name="dictate__history_export_last_failure">Sebuah penulisan gagal {when}. “Ekspor semua sekarang” melengkapi yang hilang.</string>
+    <string name="dictate__history_export_warning_title">Apa yang masuk</string>
+    <string name="dictate__history_export_warning_message">Folder ini akan berisi teks dari setiap dikte yang kamu buat mulai sekarang, dan juga rekamannya jika kamu mengaktifkannya. Apa pun yang menyinkronkannya — klien cloud, alat pencadangan, aplikasi lain — membawa transkrip itu keluar dari perangkat ini.\n\nDictate terus menulis sampai kamu memutuskan folder itu, dan tidak pernah menghapus isinya: entri yang keluar dari riwayat tetap ada di folder. Kolom sandi dan mode samaran tidak pernah direkam, jadi tidak pernah diekspor.</string>
+    <string name="dictate__history_export_needs_history">Ekspor folder menulis apa yang dicatat riwayat, jadi riwayat harus aktif.</string>
+    <string name="dictate__history_export_enable_history">Aktifkan riwayat</string>
+    <string name="dictate__history_export_pick_failed">Tidak bisa mendapatkan akses tulis ke folder itu</string>
     <string name="dictate__stats_empty">Belum ada dikte — statistik akan muncul di sini setelah kamu mendikte.</string>
     <string name="dictate__stats_time_saved">Waktu hemat</string>
     <string name="dictate__stats_time_saved_sub">dibanding mengetik</string>

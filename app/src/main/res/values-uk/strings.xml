@@ -95,6 +95,8 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Відкрити постачальника голосового введення</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Однією рукою</string>
     <string name="quick_action__one_handed_mode__tooltip">Увімкнути режим роботи однією рукою</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Розділена</string>
+    <string name="quick_action__split_layout__tooltip">Увімкнути розділену клавіатуру</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Ряд цифр</string>
     <string name="quick_action__toggle_number_row__tooltip">Показати або приховати ряд цифр</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Курсор</string>
@@ -129,6 +131,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">кількість слів лічильник слів символи довжина статистика</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">обрізати пробіли видалити очистити копіювати вирізати</string>
     <string name="settings__search__keywords__clear_cache">кеш памʼять місце тимчасові файли звільнити видалити очистити</string>
+    <string name="settings__search__keywords__momentary_layer">утримати провести символ шар пунктуація тимчасово миттєво 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">емодзі ряд рядок панель нещодавні використані над клавіатурою швидкий</string>
     <string name="settings__search__keywords__request_timeout">час очікування таймаут повільно чекання зʼєднання секунди</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Мови &amp; Розкладки</string>
@@ -330,6 +333,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Множник шрифту</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Розкладка</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Ввід на цілий екран (пейзаж)</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Проміжок між клавішами</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% по вертикалі, {h}% по горизонталі — більший проміжок зменшує клавіші, а не клавіатуру.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Натискання клавіші</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Видимість спливних вікон</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показувати спливаючу підказку при натисканні клавіші</string>
@@ -444,9 +449,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Провести вліво</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Провести вправо</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Провести вгору на пробілі</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Провести вниз на пробілі</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Провести вліво на пробілі</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Провести вправо на пробілі</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Довге натискання пробілу</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Утримання для зазирання в шар</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Утримуйте ?123, проведіть до символу й відпустіть — його буде вставлено, а літери повернуться</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Провести вліво на кнопці видалення</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Довге натискання клавіші «Видалити»</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Поріг швидкості проведення</string>
@@ -1559,6 +1567,26 @@
     <string name="dictate__history_clear_title">Очистити історію?</string>
     <string name="dictate__history_clear_message">Це назавжди видалить усі записи історії та все збережене аудіо.</string>
     <string name="dictate__history_clear_confirm">Очистити все</string>
+    <string name="dictate__history_export_title">Експорт до теки</string>
+    <string name="dictate__history_export_summary">Кожне нове диктування додатково записується до цієї теки як звичайний текстовий файл, щойно воно завершиться.</string>
+    <string name="dictate__history_export_folder">Тека</string>
+    <string name="dictate__history_export_folder_unset">Не вибрано</string>
+    <string name="dictate__history_export_folder_unavailable">Тека недоступна — виберіть її знову</string>
+    <string name="dictate__history_export_choose">Вибрати теку</string>
+    <string name="dictate__history_export_change">Змінити</string>
+    <string name="dictate__history_export_disconnect">Відʼєднати</string>
+    <string name="dictate__history_export_audio_title">Експортувати й запис</string>
+    <string name="dictate__history_export_audio_summary">Зберігає аудіо поруч із розшифровкою.</string>
+    <string name="dictate__history_export_audio_needs_retention">Потребує «Зберігати аудіо».</string>
+    <string name="dictate__history_export_all">Експортувати все зараз</string>
+    <string name="dictate__history_export_all_summary">Записує кожне диктування, якого ще немає в теці: зроблені до вибору теки та ті, які не вдалося записати, поки тека була недоступна.</string>
+    <string name="dictate__history_export_all_result">Записано: {written}, уже було: {skipped}, не вдалося: {failed}</string>
+    <string name="dictate__history_export_last_failure">Запис не вдався {when}. «Експортувати все зараз» поверне те, чого бракує.</string>
+    <string name="dictate__history_export_warning_title">Що туди потрапляє</string>
+    <string name="dictate__history_export_warning_message">У теці зберігатиметься текст кожного вашого диктування відтепер, а якщо увімкнути — і записи. Усе, що синхронізує цю теку — хмарний клієнт, засіб резервного копіювання, інший застосунок — виносить ці розшифровки з пристрою.\n\nDictate продовжує записувати, доки ви не відʼєднаєте теку, і ніколи нічого з неї не вилучає: записи, що випали з історії, залишаються в теці. Поля паролів та режиму анонімного перегляду ніколи не зберігаються, тож ніколи не експортуються.</string>
+    <string name="dictate__history_export_needs_history">Експорт до теки записує те, що фіксує історія, тож історію потрібно увімкнути.</string>
+    <string name="dictate__history_export_enable_history">Увімкнути історію</string>
+    <string name="dictate__history_export_pick_failed">Не вдалося отримати доступ на запис до цієї теки</string>
     <string name="dictate__stats_empty">Ще немає диктувань — статистика з’явиться тут, щойно ви почнете диктувати.</string>
     <string name="dictate__stats_time_saved">Заощаджено часу</string>
     <string name="dictate__stats_time_saved_sub">порівняно з набором</string>

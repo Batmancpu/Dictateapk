@@ -96,6 +96,8 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Spraakinvoerprovider openen</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Met één hand</string>
     <string name="quick_action__one_handed_mode__tooltip">Bediening met één hand schakelen</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Gesplitst</string>
+    <string name="quick_action__split_layout__tooltip">Gesplitst toetsenbord schakelen</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Cijferrij</string>
     <string name="quick_action__toggle_number_row__tooltip">Cijferrij tonen of verbergen</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Sleepmarker</string>
@@ -130,6 +132,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">woorden tellen aantal woorden tekens lengte statistieken</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">bijsnijden spaties verwijderen opschonen kopiëren knippen</string>
     <string name="settings__search__keywords__clear_cache">cache opslag ruimte tijdelijke bestanden vrijmaken verwijderen opschonen</string>
+    <string name="settings__search__keywords__momentary_layer">vasthouden schuiven symbool laag leesteken tijdelijk kort 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji rij balk recent gebruikt boven toetsenbord snel</string>
     <string name="settings__search__keywords__request_timeout">time-out verlopen traag wachten verbinding seconden</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Talen &amp; Indelingen</string>
@@ -268,10 +271,13 @@
     <string name="snygg__rule_selector__disabled">Gehandicapt</string>
     <string name="snygg__property_name__background">Achtergrond</string>
     <string name="snygg__property_name__foreground">Voorgrond</string>
+    <string name="snygg__property_name__background_blur">Achtergrondvervaging</string>
     <string name="snygg__property_name__background_image">Achtergrondafbeelding</string>
     <string name="snygg__property_name__content_scale">Inhoudsschaal</string>
     <string name="snygg__property_name__border_color">Rand kleur</string>
     <string name="snygg__property_name__border_style">Randstijl</string>
+    <string name="snygg__property_name__background_sheen">Achtergrondglans</string>
+    <string name="snygg__property_name__border_sheen">Randglans</string>
     <string name="snygg__property_name__border_width">Grensbreedte</string>
     <string name="snygg__property_name__font_family">Lettertypefamilie</string>
     <string name="snygg__property_name__font_size">Lettertypegrootte</string>
@@ -317,6 +323,8 @@
     <string name="snygg__property_value__circle_shape">cirkelvorm</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Gesneden hoekvorm (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Gesneden hoekvorm (%)</string>
+    <string name="snygg__property_value__sheen">Glans</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Afgeronde hoekvorm (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Afgeronde hoekvorm (%)</string>
     <string name="snygg__property_value__dp_size">Maat (dp)</string>
@@ -366,6 +374,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Vermenigvuldigingsfactor tekengrootte</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Indeling</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landschapsmodus volledig scherm invoer</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Ruimte tussen toetsen</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% verticaal, {h}% horizontaal — meer ruimte maakt de toetsen kleiner, niet het toetsenbord.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Test druk</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Pop-up zichtbaarheid</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pop-up tonen als je op een toets drukt</string>
@@ -479,9 +489,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Naar links vegen</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Naar rechts vegen</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Omhoog vegen op de spatiebalk</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Omlaag vegen op de spatiebalk</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Naar links vegen op de spatiebalk</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Naar rechts vegen op de spatiebalk</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Spatiebalk lang indrukken</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Ingedrukt houden om een laag te openen</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Houd ?123 vast, schuif naar een teken en laat los — het wordt ingevoegd en de letters zijn terug</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Naar links vegen op de verwijdertoets</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Verwijdertoets lang indrukken</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Drempelwaarde voor veegsnelheid</string>
@@ -1609,6 +1622,26 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__history_clear_title">Geschiedenis wissen?</string>
     <string name="dictate__history_clear_message">Hiermee worden alle geschiedenisitems en alle bewaarde audio permanent verwijderd.</string>
     <string name="dictate__history_clear_confirm">Alles wissen</string>
+    <string name="dictate__history_export_title">Naar een map exporteren</string>
+    <string name="dictate__history_export_summary">Elk nieuw dictaat wordt ook als tekstbestand naar deze map geschreven, zodra het klaar is.</string>
+    <string name="dictate__history_export_folder">Map</string>
+    <string name="dictate__history_export_folder_unset">Niet ingesteld</string>
+    <string name="dictate__history_export_folder_unavailable">Map niet beschikbaar — kies hem opnieuw</string>
+    <string name="dictate__history_export_choose">Map kiezen</string>
+    <string name="dictate__history_export_change">Wijzigen</string>
+    <string name="dictate__history_export_disconnect">Loskoppelen</string>
+    <string name="dictate__history_export_audio_title">Ook de opname exporteren</string>
+    <string name="dictate__history_export_audio_summary">Bewaart de audio naast de transcriptie.</string>
+    <string name="dictate__history_export_audio_needs_retention">Vereist “Audio bewaren”.</string>
+    <string name="dictate__history_export_all">Nu alles exporteren</string>
+    <string name="dictate__history_export_all_summary">Schrijft elk dictaat dat nog niet in de map staat: die van vóór je keuze, en die de app niet kon schrijven terwijl de map onbereikbaar was.</string>
+    <string name="dictate__history_export_all_result">{written} geschreven, {skipped} al aanwezig, {failed} mislukt</string>
+    <string name="dictate__history_export_last_failure">Een schrijfpoging is {when} mislukt. “Nu alles exporteren” haalt het ontbrekende alsnog op.</string>
+    <string name="dictate__history_export_warning_title">Wat daar belandt</string>
+    <string name="dictate__history_export_warning_message">De map bevat vanaf nu de tekst van elk dictaat dat je maakt, en ook de opnamen als je dat inschakelt. Alles wat de map synchroniseert — een cloudclient, een back-uptool, een andere app — draagt die transcripties van dit apparaat af.\n\nDictate blijft schrijven tot je de map loskoppelt en verwijdert er nooit iets uit: items die uit de geschiedenis vallen, blijven in de map. Wachtwoord- en incognitovelden worden nooit vastgelegd en dus ook nooit geëxporteerd.</string>
+    <string name="dictate__history_export_needs_history">De mapexport schrijft wat de geschiedenis vastlegt, dus de geschiedenis moet ingeschakeld zijn.</string>
+    <string name="dictate__history_export_enable_history">Geschiedenis inschakelen</string>
+    <string name="dictate__history_export_pick_failed">Kon geen schrijftoegang tot die map krijgen</string>
     <string name="dictate__stats_empty">Nog geen dictaten — je statistieken verschijnen hier zodra je begint te dicteren.</string>
     <string name="dictate__stats_time_saved">Bespaarde tijd</string>
     <string name="dictate__stats_time_saved_sub">t.o.v. typen</string>

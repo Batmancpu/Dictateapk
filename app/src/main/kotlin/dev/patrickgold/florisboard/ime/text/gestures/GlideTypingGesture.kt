@@ -43,7 +43,18 @@ class GlideTypingGesture {
         companion object {
             private const val MAX_DETECT_TIME = 500
             private const val VELOCITY_THRESHOLD = 0.10 // dp per ms
-            private val SWIPE_GESTURE_KEYS = arrayOf(KeyCode.DELETE, KeyCode.SHIFT, KeyCode.SPACE, KeyCode.CJK_SPACE)
+            /**
+             * Keys whose own gesture starts here, so a fast slide off one of them is never a glide.
+             *
+             * The layer keys are in the list because holding one open and sliding onto the symbol you
+             * want (issue #366) starts in the character layer, which is exactly where glide is looking.
+             * Without them the same movement gets read as a swiped word.
+             */
+            private val SWIPE_GESTURE_KEYS = arrayOf(
+                KeyCode.DELETE, KeyCode.SHIFT, KeyCode.SPACE, KeyCode.CJK_SPACE,
+                KeyCode.VIEW_CHARACTERS, KeyCode.VIEW_SYMBOLS, KeyCode.VIEW_SYMBOLS2,
+                KeyCode.VIEW_NUMERIC_ADVANCED,
+            )
         }
 
         /**

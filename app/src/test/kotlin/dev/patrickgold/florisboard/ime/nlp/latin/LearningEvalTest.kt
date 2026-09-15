@@ -52,6 +52,9 @@ class LearningEvalTest {
     private companion object {
         const val SAMPLE_SIZE = 1500
         const val SEED = 20260905L
+
+        /** How often the same word is typed in the repetition measurement — enough to reach the strip. */
+        const val SIGHTINGS = 3
     }
 
     /** What the beam had to say about one word of either population. */
@@ -262,6 +265,141 @@ class LearningEvalTest {
             WordLearningGate.stageOf(1.0) == WordLearningGate.Stage.REMEMBERED,
             "one sighting must do nothing at all",
         )
+    }
+
+    /**
+     * What a *repeated* word does to the ladder, and whether remembering the refusals would help
+     * (issue #375, the "slip shadow").
+     *
+     * ### The question
+     *
+     * The entry test judges every sighting on its own and keeps no record of what it refused. The
+     * proposal is to count refusals per word and hide anything whose refusals match its sightings, so a
+     * typo that slips through twice never reaches the strip.
+     *
+     * That is only worth shipping if the gate's verdict actually *varies* between sightings of the same
+     * string. It does not vary for a clean neighbour slip or a transposition: those are dead-centre taps
+     * on the wrong keys, the same geometry every time, so the beam returns the same answer and a word is
+     * either always refused (and never learned anyway) or never refused (and the shadow stays empty).
+     * Only a genuinely noisy repetition can land on both sides.
+     *
+     * So this measures the delta rather than asserting it — and against both populations, because a rule
+     * that hides typos by also hiding names is not an improvement.
+     */
+    @Test
+    fun measureWhetherRememberingRefusalsWouldHelp() {
+        val en = EvalKeyboard.readDict("en.json").filterKeys { EvalKeyboard.typeable(it) }
+        val de = EvalKeyboard.readDict("de.json").filterKeys { EvalKeyboard.typeable(it) }
+        val index = TouchBeamDecoder.PrefixIndex(en.keys.sorted().toTypedArray())
+        val alphabet = EvalKeyboard.centres.keys
+        val nearestCache = HashMap<String, Int>()
+        nearestOf = { word -> nearestCache.getOrPut(word) { EditDistance.nearestKnownFrequency(word, alphabet, en) } }
+
+        val rng = Random(SEED)
+        val pool = en.entries.filter { it.value >= 150 }.map { it.key }
+        val corpus = List(SAMPLE_SIZE / 2) { pool[rng.nextInt(pool.size)] }
+
+        /** One word typed [SIGHTINGS] times: how often the gate took it, how often it refused. */
+        fun ladderOf(typed: String, noisy: Boolean): Pair<Int, Int> {
+            var taken = 0
+            var refused = 0
+            repeat(SIGHTINGS) {
+                val taps = if (noisy) jitterSpelling(typed, rng) else EvalKeyboard.tapsFor(typed)
+                val decision = EvalKeyboard.decide(taps, typed, index, en)
+                val slip = WordLearningGate.looksLikeASlip(
+                    typedWord = typed,
+                    hadTapEvidence = true,
+                    beamCorrection = decision?.word,
+                    beamCost = decision?.cost,
+                    nearestKnownFreq = nearestOf(typed),
+                )
+                if (slip) refused++ else taken++
+            }
+            return taken to refused
+        }
+
+        // Population 2 first: the typos this is meant to catch.
+        val typos = ArrayList<Triple<String, Int, Int>>()
+        for (word in corpus) {
+            val generators = listOf(
+                { EvalKeyboard.cleanNeighbourSlip(word, rng, slips = 1) },
+                { EvalKeyboard.cleanNeighbourSlip(word, rng, slips = 2) },
+                { EvalKeyboard.noisySlip(word, rng, sigma = 0.55f) },
+                { EvalKeyboard.transposition(word, rng) },
+            )
+            for (generate in generators) {
+                val (typed, _) = generate() ?: continue
+                if (en.containsKey(typed) || !WordLearningGate.isLearnableForm(typed)) continue
+                // Every repetition is typed with a real finger's scatter, including the ones the
+                // generators produce dead-centre. Reusing the generator's own taps would make the verdict
+                // deterministic *by construction* and the answer to this question would be "no" before
+                // anything was measured.
+                val (taken, refused) = ladderOf(typed, noisy = true)
+                typos.add(Triple(typed, taken, refused))
+            }
+        }
+
+        // Population 1: real words, typed carefully, repeated the same way.
+        val names = listOf(
+            "jannis", "sarahs", "pete", "dads", "linus", "mira", "tobi", "nadja", "lars", "svenja",
+        ).filter { it !in en }
+        val unknownToEn = de.keys.filter { it !in en }.sorted()
+        val wanted = (unknownToEn.shuffled(Random(SEED)).take(SAMPLE_SIZE / 2) + names)
+            .map { word ->
+                val (taken, refused) = ladderOf(word, noisy = true)
+                Triple(word, taken, refused)
+            }
+
+        fun reachesStripToday(taken: Int) = taken >= WordLearningGate.SIGHTINGS_FOR_SUGGESTIONS
+        fun reachesStripWithShadow(taken: Int, refused: Int) = reachesStripToday(taken) && refused < taken
+
+        val typosToday = typos.count { reachesStripToday(it.second) }
+        val typosShadow = typos.count { reachesStripWithShadow(it.second, it.third) }
+        val wantedToday = wanted.count { reachesStripToday(it.second) }
+        val wantedShadow = wanted.count { reachesStripWithShadow(it.second, it.third) }
+        val varied = typos.count { it.second > 0 && it.third > 0 }
+
+        println()
+        println("=== #375 · would remembering refusals help? ($SIGHTINGS sightings each) =====")
+        println("typos:  ${typos.size}, of which the gate judged inconsistently: $varied")
+        println(
+            "  reach the strip today:       %d (%.1f %%)".format(typosToday, typosToday * 100.0 / typos.size),
+        )
+        println(
+            "  reach the strip with shadow: %d (%.1f %%)".format(typosShadow, typosShadow * 100.0 / typos.size),
+        )
+        println("words we want:  ${wanted.size}")
+        println(
+            "  reach the strip today:       %d (%.1f %%)".format(wantedToday, wantedToday * 100.0 / wanted.size),
+        )
+        println(
+            "  reach the strip with shadow: %d (%.1f %%)".format(wantedShadow, wantedShadow * 100.0 / wanted.size),
+        )
+        println()
+        println("A shadow is worth shipping only if the first pair moves and the second does not.")
+        println()
+
+        // No assertion on the delta: this is a measuring stand, and what it measures is a decision.
+        // What must hold either way is that the rule never hides a word that was never refused.
+        assertTrue(
+            wanted.filter { it.third == 0 }.all { reachesStripToday(it.second) == reachesStripWithShadow(it.second, it.third) },
+            "a word the gate never refused must be unaffected by the shadow",
+        )
+    }
+
+    /**
+     * Taps that spell exactly [word] with a real finger's scatter — the same generator the noisy slips
+     * use, rejected until it lands on the letters we asked for.
+     *
+     * Falls back to dead-centre taps when the scatter will not cooperate, which is the honest reading of
+     * "typed it again": a repetition that cannot be produced noisily is one that was produced carefully.
+     */
+    private fun jitterSpelling(word: String, rng: Random): FloatArray {
+        repeat(24) {
+            val (typed, taps) = EvalKeyboard.noisySlip(word, rng, sigma = 0.55f) ?: return@repeat
+            if (typed == word) return taps
+        }
+        return EvalKeyboard.tapsFor(word)
     }
 
     /**

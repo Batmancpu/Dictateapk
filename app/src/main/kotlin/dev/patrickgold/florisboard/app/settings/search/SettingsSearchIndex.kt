@@ -239,10 +239,15 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__gestures__swipe_right__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__swipe_right__label"),
         SettingsSearchEntry(R.string.pref__gestures__space_bar_title, R.string.settings__gestures__title, Routes.Settings.Gestures),
         SettingsSearchEntry(R.string.pref__gestures__space_bar_swipe_up__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__space_bar_swipe_up__label"),
+        // Hand-added (issue #364) — the generator drops rows it did not write, so diff before keeping a rerun.
+        SettingsSearchEntry(R.string.pref__gestures__space_bar_swipe_down__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__space_bar_swipe_down__label"),
         SettingsSearchEntry(R.string.pref__gestures__space_bar_swipe_left__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__space_bar_swipe_left__label"),
         SettingsSearchEntry(R.string.pref__gestures__space_bar_swipe_right__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__space_bar_swipe_right__label"),
         SettingsSearchEntry(R.string.pref__gestures__space_bar_long_press__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__space_bar_long_press__label"),
         SettingsSearchEntry(R.string.pref__gestures__other_title, R.string.settings__gestures__title, Routes.Settings.Gestures),
+        // Hand-added (issue #366): the generator emits no keywordsRes, and nobody looking for this
+        // gesture searches for the word "layer" — they search for "symbols", "hold", "iPhone".
+        SettingsSearchEntry(R.string.pref__gestures__momentary_layer__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__momentary_layer__label", keywordsRes = R.string.settings__search__keywords__momentary_layer),
         SettingsSearchEntry(R.string.pref__gestures__delete_key_swipe_left__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__delete_key_swipe_left__label"),
         SettingsSearchEntry(R.string.pref__gestures__delete_key_long_press__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__delete_key_long_press__label"),
         SettingsSearchEntry(R.string.pref__gestures__swipe_velocity_threshold__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__gestures__swipe_velocity_threshold__label"),
@@ -271,10 +276,10 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__keyboard__utility_key_action__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__utility_key_action__label"),
         SettingsSearchEntry(R.string.pref__keyboard__space_bar_mode__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__space_bar_mode__label"),
         SettingsSearchEntry(R.string.pref__keyboard__capitalization_behavior__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__capitalization_behavior__label"),
-        SettingsSearchEntry(R.string.pref__keyboard__font_size_multiplier__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__font_size_multiplier__label"),
         SettingsSearchEntry(R.string.pref__keyboard__incognito_indicator__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__incognito_indicator__label"),
         SettingsSearchEntry(R.string.pref__keyboard__group_layout__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard),
         SettingsSearchEntry(R.string.pref__keyboard__landscape_input_ui_mode__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__landscape_input_ui_mode__label"),
+        SettingsSearchEntry(R.string.pref__keyboard__font_size_multiplier__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__font_size_multiplier__label"),
         SettingsSearchEntry(R.string.pref__keyboard__key_spacing__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__key_spacing__label"),
         SettingsSearchEntry(R.string.settings__input_feedback__title, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "settings__input_feedback__title"),
         SettingsSearchEntry(R.string.pref__keyboard__popup_enabled__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__popup_enabled__label"),

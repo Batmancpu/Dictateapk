@@ -47,6 +47,13 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
      */
     var suppressNumberHintLabel: Boolean = false
 
+    /**
+     * True for the first key of the right half of a split row, which overrides the automatic seam
+     * (issue #362). Set on the second of the two spacebars a split bottom row is given: by width alone
+     * the seam would fall before both of them and leave the left thumb without a space key.
+     */
+    var isSplitSeamStart: Boolean = false
+
     // This should exclusively be set and used by the TextKeyboardLayout
     var computedDataOnDown: KeyData = TextKeyData.UNSPECIFIED
 

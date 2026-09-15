@@ -99,6 +99,8 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Abrir proveedor de entrada de voz</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Con una mano</string>
     <string name="quick_action__one_handed_mode__tooltip">Activar el modo de una mano</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Dividido</string>
+    <string name="quick_action__split_layout__tooltip">Activar el teclado dividido</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Fila numérica</string>
     <string name="quick_action__toggle_number_row__tooltip">Mostrar u ocultar la fila numérica</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrastrar</string>
@@ -133,6 +135,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">contar palabras número de palabras caracteres longitud estadísticas</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">recortar espacios eliminar limpiar copiar cortar</string>
     <string name="settings__search__keywords__clear_cache">caché almacenamiento espacio archivos temporales liberar borrar limpiar</string>
+    <string name="settings__search__keywords__momentary_layer">mantener deslizar simbolo capa puntuacion temporal momentaneo 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji fila barra recientes usados encima teclado rápido</string>
     <string name="settings__search__keywords__request_timeout">tiempo de espera timeout lento esperar conexión segundos</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas &amp; Distribuciones</string>
@@ -330,10 +333,13 @@
     <string name="snygg__rule_selector__disabled">Deshabilitado</string>
     <string name="snygg__property_name__background">Fondo</string>
     <string name="snygg__property_name__foreground">Primer plano</string>
+    <string name="snygg__property_name__background_blur">Desenfoque del fondo</string>
     <string name="snygg__property_name__background_image">Imagen de fondo</string>
     <string name="snygg__property_name__content_scale">Escala de contenido</string>
     <string name="snygg__property_name__border_color">Color de borde</string>
     <string name="snygg__property_name__border_style">Estilo de borde</string>
+    <string name="snygg__property_name__background_sheen">Brillo del fondo</string>
+    <string name="snygg__property_name__border_sheen">Brillo del borde</string>
     <string name="snygg__property_name__border_width">Ancho de borde</string>
     <string name="snygg__property_name__font_family">Familia de fuente</string>
     <string name="snygg__property_name__font_size">Tamaño de fuente</string>
@@ -382,6 +388,8 @@
     <string name="snygg__property_value__circle_shape">Forma circular</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Forma de esquina recortada (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Forma de esquina recortada (%)</string>
+    <string name="snygg__property_value__sheen">Brillo</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Forma de esquina redondeada (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Forma de esquina redondeada (%)</string>
     <string name="snygg__property_value__dp_size">Tamaño (dp)</string>
@@ -434,6 +442,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador del tamaño de fuente</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Distribución</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada a pantalla completa horizontal</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espacio entre teclas</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v} % vertical, {h} % horizontal: un espacio mayor hace más pequeñas las teclas, no el teclado.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Presionar tecla</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidad de las teclas emergentes</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostrar emergente al pulsar una tecla</string>
@@ -547,9 +557,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Deslizar a la izquierda</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Deslizar a la derecha</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Deslizar arriba en la barra espaciadora</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Deslizar abajo en la barra espaciadora</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Deslizar a la izquierda en la barra espaciadora</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Deslizar a la derecha en la barra espaciadora</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Presionar por mucho tiempo la barra espaciadora</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Mantener para asomarse a una capa</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Mantén ?123, desliza hasta un carácter y suelta: se inserta y vuelven las letras</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Deslizar a la izquierda desde la tecla de borrar</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Pulsación larga de la tecla de borrado</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Velocidad del deslizamiento</string>
@@ -1691,6 +1704,26 @@
     <string name="dictate__history_clear_title">¿Borrar el historial?</string>
     <string name="dictate__history_clear_message">Esto elimina permanentemente todas las entradas del historial y cualquier audio guardado.</string>
     <string name="dictate__history_clear_confirm">Borrar todo</string>
+    <string name="dictate__history_export_title">Exportar a una carpeta</string>
+    <string name="dictate__history_export_summary">Cada nuevo dictado se escribe también en esta carpeta como archivo de texto, en cuanto termina.</string>
+    <string name="dictate__history_export_folder">Carpeta</string>
+    <string name="dictate__history_export_folder_unset">Sin definir</string>
+    <string name="dictate__history_export_folder_unavailable">Carpeta no disponible — vuelve a elegirla</string>
+    <string name="dictate__history_export_choose">Elegir carpeta</string>
+    <string name="dictate__history_export_change">Cambiar</string>
+    <string name="dictate__history_export_disconnect">Desconectar</string>
+    <string name="dictate__history_export_audio_title">Exportar también la grabación</string>
+    <string name="dictate__history_export_audio_summary">Guarda el audio junto a la transcripción.</string>
+    <string name="dictate__history_export_audio_needs_retention">Requiere «Conservar audio».</string>
+    <string name="dictate__history_export_all">Exportar todo ahora</string>
+    <string name="dictate__history_export_all_summary">Escribe cada dictado que aún no esté en la carpeta: los anteriores a elegirla y los que no se pudieron escribir mientras la carpeta no estaba disponible.</string>
+    <string name="dictate__history_export_all_result">{written} escritos, {skipped} ya presentes, {failed} fallidos</string>
+    <string name="dictate__history_export_last_failure">Una escritura falló {when}. «Exportar todo ahora» recupera lo que falta.</string>
+    <string name="dictate__history_export_warning_title">Qué acaba ahí</string>
+    <string name="dictate__history_export_warning_message">La carpeta contendrá el texto de cada dictado que hagas a partir de ahora, y también las grabaciones si lo activas. Todo lo que la sincronice — un cliente en la nube, una herramienta de copia de seguridad, otra aplicación — se lleva esas transcripciones fuera de este dispositivo.\n\nDictate sigue escribiendo hasta que desconectes la carpeta y nunca borra nada de ella: las entradas que salen del historial permanecen en la carpeta. Los campos de contraseña e incógnito nunca se registran y, por tanto, nunca se exportan.</string>
+    <string name="dictate__history_export_needs_history">La exportación a carpeta escribe lo que registra el historial, así que el historial debe estar activado.</string>
+    <string name="dictate__history_export_enable_history">Activar historial</string>
+    <string name="dictate__history_export_pick_failed">No se pudo obtener acceso de escritura a esa carpeta</string>
     <string name="dictate__stats_empty">Aún no hay dictados — tus estadísticas aparecerán aquí cuando empieces a dictar.</string>
     <string name="dictate__stats_time_saved">Tiempo ahorrado</string>
     <string name="dictate__stats_time_saved_sub">frente a escribir</string>

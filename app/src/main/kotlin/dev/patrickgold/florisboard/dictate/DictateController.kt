@@ -316,6 +316,8 @@ object DictateController {
     private val realtimeTranscript = StringBuilder()
     /** Hold the streamed words back until stop (`realtimeHidePreview`), instead of typing them live. */
     private var realtimeHidden = false
+    /** When the stream last produced text; the tail wait on stop measures the provider's silence from here (#372). */
+    @Volatile private var realtimeLastTextAt = 0L
     @Volatile private var realtimeCancelled = false   // block late stream callbacks from re-adding text
 
     // --- Long-form segmented dictation (issue #170) ---------------------------------------------
@@ -574,9 +576,18 @@ object DictateController {
         wavBytes > PACK_ABOVE_BYTES || (limitBytes > 0L && wavBytes > limitBytes / 4 * 3)
     /** Cache file for a recording taken back from a hanging cloud request to finish on-device (#270). */
     private const val RESCUED_AUDIO_NAME = "dictate_rescued.wav"
-    // Realtime (#128): after finish(), how long to wait for the provider to flush the last words before we
-    // commit the already-streamed text. Short — the text is already on screen; we only wait for the tail.
-    private const val REALTIME_FINALIZE_TIMEOUT_MS = 1_200L
+    // Realtime (#128, #372): after finish(), how long to wait for the provider to flush the last words
+    // before we commit the already-streamed text. Neither bound is normally reached — the session closes
+    // itself as soon as its end-of-stream marker arrives, measured at 0.27–0.37 s after `audioStreamEnd`
+    // for Gemini (2026-09-14). They bound the unhealthy case, and it takes two of them because one number
+    // cannot: a single fixed budget is either too short for a tail that is seconds behind the microphone
+    // (a mobile uplink that could not carry the audio in real time) or a delay everyone pays on every stop.
+    //
+    // [REALTIME_TAIL_IDLE_MS] is how long the provider may stay *silent* before we stop expecting anything
+    // more; every piece of text that arrives grants it anew, so a stream still catching up is never cut
+    // mid-sentence. [REALTIME_TAIL_MAX_MS] caps the whole wait even while text keeps coming.
+    private const val REALTIME_TAIL_IDLE_MS = 1_200L
+    private const val REALTIME_TAIL_MAX_MS = 8_000L
 
     /** 20 Hz is responsive for a voice indicator while avoiding a display-rate UI loop. */
     private const val AUDIO_LEVEL_SAMPLE_MS = 50L
@@ -2200,11 +2211,15 @@ object DictateController {
         val tightening = appContext.transcriptTighteningSymbols()
         val callbacks = object : RealtimeCallbacks {
             override fun onPartial(text: String) {
+                // Stamped here rather than in showLive: this is when the provider spoke, which is what the
+                // tail wait on stop is measuring — not when a queued coroutine got around to the field.
+                realtimeLastTextAt = SystemClock.elapsedRealtime()
                 scope.launch {
                     showLive(TranscriptJoin.join(realtimeFinal.toString(), text, tightening))
                 }
             }
             override fun onFinalSegment(text: String) {
+                realtimeLastTextAt = SystemClock.elapsedRealtime()
                 scope.launch {
                     TranscriptJoin.appendPiece(realtimeFinal, text, tightening)
                     showLive(realtimeFinal.toString())
@@ -2248,6 +2263,47 @@ object DictateController {
     }
 
     /**
+     * Waits out the tail of a finished stream (#372): returns as soon as [closed] completes, or once the
+     * provider has been silent for [REALTIME_TAIL_IDLE_MS], and in no case later than
+     * [REALTIME_TAIL_MAX_MS] after the stop.
+     *
+     * The silence is measured from the last text the stream produced, not from the stop, and the recording
+     * having just ended does not mean the provider is done: it is still transcribing whatever audio it has
+     * not caught up with. So an idle window that keeps being renewed is what tells the two apart — a
+     * provider with nothing left to say goes quiet and we commit, one that is still working keeps sending
+     * and we keep listening.
+     *
+     * Returns false in the one case where the stream was cut rather than finished: still producing text
+     * when the hard cap ran out. The transcript is then known to be missing its end, and the caller has a
+     * complete recording to transcribe instead.
+     */
+    private suspend fun awaitRealtimeTail(closed: CompletableDeferred<Unit>?): Boolean {
+        val startedAt = SystemClock.elapsedRealtime()
+        // Whatever the provider said while the microphone was open says nothing about how long its closing
+        // words will take, so the idle window starts fresh at the stop.
+        realtimeLastTextAt = startedAt
+        var endedBy = "cap"
+        while (true) {
+            val now = SystemClock.elapsedRealtime()
+            val idleUntil = realtimeLastTextAt + REALTIME_TAIL_IDLE_MS
+            val until = minOf(idleUntil, startedAt + REALTIME_TAIL_MAX_MS)
+            if (until <= now) {
+                if (idleUntil <= now) endedBy = "silence"
+                break
+            }
+            if (withTimeoutOrNull(until - now) { closed?.await(); true } != null) {
+                endedBy = "provider"
+                break
+            }
+        }
+        Log.i(
+            LATENCY_LOG_TAG,
+            "phase=realtimeTail endedBy=$endedBy phaseMs=${SystemClock.elapsedRealtime() - startedAt}",
+        )
+        return endedBy != "cap"
+    }
+
+    /**
      * Stops a realtime recording: finalizes the stream, then commits the accumulated transcript through the
      * shared [finalizeAndCommit]. Keeps the recorded WAV so any stream failure (or an empty transcript)
      * falls back to a normal batch [transcribe] of the audio — the user never loses their dictation.
@@ -2272,17 +2328,25 @@ object DictateController {
         transcribeJob = scope.launch {
             try {
                 runCatching { session?.finish() }
-                // Wait briefly for the provider to flush the last words (ends early if it closes), then
-                // force-close the socket — several providers keep it open after finish, which otherwise
-                // stalls us until the timeout and later trips a ping/pong failure.
-                withTimeoutOrNull(REALTIME_FINALIZE_TIMEOUT_MS) { closed?.await() }
+                // Wait for the provider to flush the last words, then force-close the socket — several
+                // providers keep it open after finish, which otherwise stalls us until the timeout and
+                // later trips a ping/pong failure.
+                //
+                // The wait ends the moment the session closes itself, which is the normal case and takes a
+                // fraction of a second. What it must not do is end while the tail is still arriving: the
+                // last word or two of a dictation only reach us in the closing segment, so a fixed budget
+                // committed a sentence one word short whenever the stream was running behind (#372). So
+                // the clock is restarted by every piece of text and only silence ends it early.
+                val tailComplete = awaitRealtimeTail(closed)
                 runCatching { session?.cancel() }
                 // The transcript is everything the stream produced (finals + last partial), which with a
                 // hidden preview (#345) is the only place it exists; fall back to the finalized-segments
                 // buffer only if the stream produced nothing at all.
                 val transcript = realtimeTranscript.toString().trim().ifEmpty { realtimeFinal.toString().trim() }
                 _interimText.value = ""
-                if (realtimeFailed || transcript.isEmpty()) {
+                // A stream still delivering when the tail cap ran out is missing its end, and half a
+                // dictation is worse than the wait: the recording is complete, so transcribe that instead.
+                if (realtimeFailed || !tailComplete || transcript.isEmpty()) {
                     // Drop the live provisional text; the batch path commits fresh from the WAV. With the
                     // preview hidden there is nothing in the field to take back, and realtimeShown says so.
                     runCatching { sink(appContext).clearDictationPreview(realtimeShown.toString()) }

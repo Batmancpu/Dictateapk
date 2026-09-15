@@ -15,8 +15,11 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.net.Uri
 import android.text.format.DateUtils
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,6 +46,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.DeleteSweep
+import androidx.compose.material.icons.filled.DriveFolderUpload
 import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.PushPin
@@ -57,6 +61,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -86,14 +91,17 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryEntry
+import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryExporter
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryStore
 import dev.patrickgold.florisboard.dictate.ui.formatHistoryDuration
 import dev.patrickgold.florisboard.dictate.ui.formatHistorySize
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
@@ -129,6 +137,43 @@ fun DictateHistoryScreen() = FlorisScreen {
     var showLimits by remember { mutableStateOf(false) }
     var searching by remember { mutableStateOf(false) }
     var query by remember { mutableStateOf("") }
+
+    // --- Folder export (issue #379) -------------------------------------------------------------
+    val exportFolderUri by prefs.dictate.historyExportFolderUri.collectAsState()
+    val exportFolderName by prefs.dictate.historyExportFolderName.collectAsState()
+    val exportAudio by prefs.dictate.historyExportAudio.collectAsState()
+    val exportLastFailure by prefs.dictate.historyExportLastFailure.collectAsState()
+    var showExport by remember { mutableStateOf(false) }
+    // Consent comes before the picker, never after: the folder is chosen knowing what will land in it.
+    var showExportWarning by remember { mutableStateOf(false) }
+    var showHistoryOffNotice by remember { mutableStateOf(false) }
+    var bulkProgress by remember { mutableStateOf<Pair<Int, Int>?>(null) }
+    var bulkResult by remember { mutableStateOf<DictateHistoryExporter.BulkResult?>(null) }
+    // Re-checked whenever the folder changes: a grant can be revoked, and a restored backup brings the
+    // preference to a device that never had one.
+    val exportFolderWritable = remember(exportFolderUri) {
+        exportFolderUri.isNotBlank() && DictateHistoryExporter.canWrite(context, Uri.parse(exportFolderUri))
+    }
+
+    val exportFolderPicker = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocumentTree()
+    ) { uri ->
+        if (uri == null) return@rememberLauncherForActivityResult
+        if (!DictateHistoryExporter.takeGrant(context, uri)) {
+            Toast.makeText(context, R.string.dictate__history_export_pick_failed, Toast.LENGTH_SHORT).show()
+            return@rememberLauncherForActivityResult
+        }
+        scope.launch {
+            // Give the old folder's grant back before taking the new one to the bank: persisted URI
+            // permissions are capped per app, and a user who re-picks often would eventually run out.
+            DictateHistoryExporter.releaseGrant(context, prefs.dictate.historyExportFolderUri.get(), uri.toString())
+            val name = withContext(Dispatchers.IO) { DictateHistoryExporter.folderName(context, uri) }
+            prefs.dictate.historyExportFolderUri.set(uri.toString())
+            prefs.dictate.historyExportFolderName.set(name)
+            prefs.dictate.historyExportLastFailure.set(0L)
+            bulkResult = null
+        }
+    }
     // Only the id is kept, never the entry itself: the row is an immutable snapshot, so holding it would
     // freeze the dialog at the state it had when opened — pinning from inside it did not light up the icon
     // until the dialog was closed and reopened. Resolved against the live list on every recomposition.
@@ -174,6 +219,16 @@ fun DictateHistoryScreen() = FlorisScreen {
             onClick = { searching = !searching; if (!searching) query = "" },
             icon = if (searching) Icons.Default.Close else Icons.Default.Search,
         )
+        // Stands down while searching: the search field takes the whole title, and a third icon beside it
+        // leaves too little of it to type in.
+        if (!searching) {
+            FlorisIconButton(
+                // Not greyed out when history is off — a dead icon explains nothing (see issue #297).
+                // It opens and offers to switch history on, which is the thing the user would go looking for.
+                onClick = { if (historyEnabled) showExport = true else showHistoryOffNotice = true },
+                icon = Icons.Default.DriveFolderUpload,
+            )
+        }
         FlorisIconButton(
             onClick = { if (entries.isNotEmpty()) confirmClear = true },
             icon = Icons.Default.DeleteSweep,
@@ -284,6 +339,77 @@ fun DictateHistoryScreen() = FlorisScreen {
             )
         }
 
+        if (showExport) {
+            ExportDialog(
+                folderName = exportFolderName,
+                folderSet = exportFolderUri.isNotBlank(),
+                folderWritable = exportFolderWritable,
+                exportAudio = exportAudio,
+                audioRetention = audioRetention,
+                lastFailure = exportLastFailure,
+                progress = bulkProgress,
+                result = bulkResult,
+                onPick = {
+                    // Already consented once; changing folders does not ask again.
+                    if (exportFolderUri.isBlank()) showExportWarning = true else exportFolderPicker.launch(null)
+                },
+                onDisconnect = {
+                    scope.launch {
+                        DictateHistoryExporter.releaseGrant(context, prefs.dictate.historyExportFolderUri.get())
+                        prefs.dictate.historyExportFolderUri.set("")
+                        prefs.dictate.historyExportFolderName.set("")
+                        prefs.dictate.historyExportLastFailure.set(0L)
+                        bulkResult = null
+                    }
+                },
+                onToggleAudio = { scope.launch { prefs.dictate.historyExportAudio.set(it) } },
+                onExportAll = {
+                    scope.launch {
+                        bulkResult = null
+                        bulkProgress = 0 to entries.size
+                        bulkResult = DictateHistoryExporter.exportAll(context, entries) { done, total ->
+                            bulkProgress = done to total
+                        }
+                        bulkProgress = null
+                    }
+                },
+                onDismiss = { showExport = false; bulkResult = null },
+            )
+        }
+
+        if (showExportWarning) {
+            JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
+                title = stringRes(R.string.dictate__history_export_warning_title),
+                confirmLabel = stringRes(R.string.dictate__history_export_choose),
+                onConfirm = {
+                    showExportWarning = false
+                    exportFolderPicker.launch(null)
+                },
+                dismissLabel = stringRes(android.R.string.cancel),
+                onDismiss = { showExportWarning = false },
+            ) {
+                Text(stringRes(R.string.dictate__history_export_warning_message))
+            }
+        }
+
+        if (showHistoryOffNotice) {
+            JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
+                title = stringRes(R.string.dictate__history_export_title),
+                confirmLabel = stringRes(R.string.dictate__history_export_enable_history),
+                onConfirm = {
+                    scope.launch { prefs.dictate.historyEnabled.set(true) }
+                    showHistoryOffNotice = false
+                    showExport = true
+                },
+                dismissLabel = stringRes(android.R.string.cancel),
+                onDismiss = { showHistoryOffNotice = false },
+            ) {
+                Text(stringRes(R.string.dictate__history_export_needs_history))
+            }
+        }
+
         if (confirmClear) {
             JetPrefAlertDialog(
                 scrollModifier = florisDialogScroll(),
@@ -331,6 +457,162 @@ private fun HistoryToggleRow(
         }
         Spacer(Modifier.width(16.dp))
         Switch(checked = checked, onCheckedChange = onToggle, enabled = enabled)
+    }
+}
+
+/**
+ * Everything the folder export (issue #379) needs, behind the one app-bar action: which folder, whether
+ * the audio goes with it, and the one-off pass that fills the folder.
+ *
+ * A dialog rather than rows in the screen, because this is set once and then never touched again — and
+ * the screen's job is the list of dictations, not a growing stack of switches above it.
+ */
+@Composable
+private fun ExportDialog(
+    folderName: String,
+    folderSet: Boolean,
+    folderWritable: Boolean,
+    exportAudio: Boolean,
+    audioRetention: Boolean,
+    lastFailure: Long,
+    progress: Pair<Int, Int>?,
+    result: DictateHistoryExporter.BulkResult?,
+    onPick: () -> Unit,
+    onDisconnect: () -> Unit,
+    onToggleAudio: (Boolean) -> Unit,
+    onExportAll: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
+        title = stringRes(R.string.dictate__history_export_title),
+        confirmLabel = stringRes(R.string.action__ok),
+        onConfirm = onDismiss,
+        onDismiss = onDismiss,
+        allowOutsideDismissal = true,
+    ) {
+        Column {
+            Text(
+                text = stringRes(R.string.dictate__history_export_summary),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(16.dp))
+
+            Text(
+                text = stringRes(R.string.dictate__history_export_folder),
+                style = MaterialTheme.typography.labelLarge,
+            )
+            Text(
+                text = when {
+                    !folderSet -> stringRes(R.string.dictate__history_export_folder_unset)
+                    !folderWritable -> stringRes(R.string.dictate__history_export_folder_unavailable)
+                    else -> folderName
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (folderSet && !folderWritable) {
+                    MaterialTheme.colorScheme.error
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                },
+            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                TextButton(onClick = onPick) {
+                    Text(
+                        stringRes(
+                            if (folderSet) {
+                                R.string.dictate__history_export_change
+                            } else {
+                                R.string.dictate__history_export_choose
+                            }
+                        )
+                    )
+                }
+                if (folderSet) {
+                    TextButton(onClick = onDisconnect) {
+                        Text(stringRes(R.string.dictate__history_export_disconnect))
+                    }
+                }
+            }
+
+            if (folderSet) {
+                Spacer(Modifier.height(8.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringRes(R.string.dictate__history_export_audio_title),
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                        Text(
+                            // Says why it is off rather than silently doing nothing: without retention the
+                            // recording is deleted the moment it has been transcribed, so there is no file
+                            // left to put beside the transcript.
+                            text = stringRes(
+                                if (audioRetention) {
+                                    R.string.dictate__history_export_audio_summary
+                                } else {
+                                    R.string.dictate__history_export_audio_needs_retention
+                                }
+                            ),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Spacer(Modifier.width(16.dp))
+                    Switch(
+                        checked = exportAudio && audioRetention,
+                        onCheckedChange = onToggleAudio,
+                        enabled = audioRetention,
+                    )
+                }
+
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = stringRes(R.string.dictate__history_export_all_summary),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                if (progress != null) {
+                    val (done, total) = progress
+                    Text(
+                        text = "$done / $total",
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                } else {
+                    TextButton(onClick = onExportAll, enabled = folderWritable) {
+                        Text(stringRes(R.string.dictate__history_export_all))
+                    }
+                }
+                result?.let {
+                    Text(
+                        text = stringRes(
+                            R.string.dictate__history_export_all_result,
+                            "written" to it.written.toString(),
+                            "skipped" to it.skipped.toString(),
+                            "failed" to it.failed.toString(),
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+
+                if (lastFailure > 0L) {
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        text = stringRes(
+                            R.string.dictate__history_export_last_failure,
+                            "when" to DateUtils.getRelativeTimeSpanString(
+                                lastFailure,
+                                System.currentTimeMillis(),
+                                DateUtils.MINUTE_IN_MILLIS,
+                            ).toString(),
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+            }
+        }
     }
 }
 

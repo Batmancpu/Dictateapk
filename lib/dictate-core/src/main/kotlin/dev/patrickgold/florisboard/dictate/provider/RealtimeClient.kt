@@ -613,9 +613,10 @@ private class GeminiRealtimeSession(
 
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
-    private val transcript = StringBuilder()
     /** The latest speculative text, cleared by every final. What is left at close was heard but never settled. */
     @Volatile private var pendingInterim = ""
+    /** Audio has been sent that no settled transcription covers yet — words are still owed to us. */
+    @Volatile private var audioSinceFinal = false
     private val audioGate = RealtimeAudioGate()
     @Volatile private var finishing = false
     @Volatile private var done = false
@@ -664,22 +665,28 @@ private class GeminiRealtimeSession(
         }
         val ended = server?.get("turnComplete")?.jsonPrimitive?.booleanOrNull == true ||
             server?.get("generationComplete")?.jsonPrimitive?.booleanOrNull == true
-        if (ended && finishing) finalizeAndClose(webSocket)
+        // Gemini ends a *turn* this way, not only the dictation: a pause in the middle closes one and
+        // opens the next (measured 2026-09-14, a 36 s dictation settled its first turn 4.4 s before the
+        // microphone closed). So an end marker can be the one for a turn before the stop, arriving just as
+        // the stop is sent — and closing on it would drop everything spoken since. Audio that no
+        // transcription has covered yet is the exact test: while some is outstanding this marker is not
+        // ours, and the one that answers our own end of stream is still to come.
+        if (ended && finishing && !audioSinceFinal) finalizeAndClose(webSocket)
     }
 
     /**
-     * Appends one finalized chunk, guarding against the one thing the protocol does not state: whether
-     * `inputTranscription` carries just the settled segment or everything settled so far. If it repeats
-     * what we already have, only the growth is passed on — otherwise every pause would duplicate the
-     * whole dictation.
+     * Hands one finalized chunk on. The protocol never stated whether `inputTranscription` carries just the
+     * settled segment or everything settled so far, so this used to forward only the growth over what was
+     * already seen. Measured against the endpoint on 2026-09-14 (#372): a dictation with a two-second
+     * pause in it produces one `inputTranscription` per turn, each carrying **only that turn's** words.
+     * The guard therefore never fired on real growth — the single thing it could match was a turn that
+     * repeated the whole transcript so far, and that one it deleted. Saying the same short sentence twice
+     * is exactly that shape, so the second one silently disappeared.
      */
     private fun emitFinal(chunk: String) {
-        val seen = transcript.toString()
-        val addition = if (seen.isNotEmpty() && chunk.startsWith(seen)) chunk.substring(seen.length) else chunk
         pendingInterim = ""
-        if (addition.isEmpty()) return
-        transcript.append(addition)
-        callbacks.onFinalSegment(addition)
+        audioSinceFinal = false
+        callbacks.onFinalSegment(chunk)
     }
 
     private fun setup(): String = buildJsonObject {
@@ -709,6 +716,7 @@ private class GeminiRealtimeSession(
     }
 
     private fun sendAudioFrame(socket: WebSocket, pcm16: ByteArray, len: Int) {
+        audioSinceFinal = true
         val msg = buildJsonObject {
             putJsonObject("realtimeInput") {
                 putJsonObject("audio") {

@@ -255,7 +255,9 @@ fun RestoreScreen() = FlorisScreen {
             val learnedFile = dictionaryDir.subFile(Backup.LEARNED_WORDS_JSON_NAME)
             val pairsFile = dictionaryDir.subFile(Backup.LEARNED_BIGRAMS_JSON_NAME)
             if (learnedFile.exists() || pairsFile.exists()) {
-                if (shouldReset) LearnedWordsStore.forgetAll(context)
+                // [wipeAll], not [forgetAll]: a reset restore replaces the vocabulary wholesale, and
+                // sparing promoted rows here would leave two vocabularies merged into one (issue #375).
+                if (shouldReset) LearnedWordsStore.wipeAll(context)
                 LearnedWordsStore.importAll(
                     context = context,
                     words = if (learnedFile.exists()) learnedFile.readJson<List<LearnedWordEntry>>() else emptyList(),

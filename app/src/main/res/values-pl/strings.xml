@@ -101,6 +101,8 @@
     <string name="quick_action__floating_window_mode__tooltip">Załącz tryb pływającego okna klawiatury</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Jednoręczny</string>
     <string name="quick_action__one_handed_mode__tooltip">Przełącz tryb jednoręczny</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Podzielona</string>
+    <string name="quick_action__split_layout__tooltip">Przełącz podzieloną klawiaturę</string>
     <string name="quick_action__resize_mode" comment="Please mind the limited available space for the quick action strings">Zmień rozmiar</string>
     <string name="quick_action__resize_mode__tooltip">Załącz tryb zmiany rozmiaru</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Rząd cyfr</string>
@@ -137,6 +139,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">liczba słów licznik słów znaki długość statystyki</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">przycinanie spacje usuwanie czyszczenie kopiowanie wycinanie</string>
     <string name="settings__search__keywords__clear_cache">pamięć podręczna cache miejsce pliki tymczasowe zwolnić usunąć wyczyścić</string>
+    <string name="settings__search__keywords__momentary_layer">przytrzymaj przesuń symbol warstwa interpunkcja tymczasowo chwilowo 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji rząd pasek ostatnio używane nad klawiaturą szybki</string>
     <string name="settings__search__keywords__request_timeout">limit czasu timeout wolno czekanie połączenie sekundy</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Język i układ</string>
@@ -340,10 +343,13 @@
     <string name="snygg__rule_selector__disabled">Wyłączony</string>
     <string name="snygg__property_name__background">Tło</string>
     <string name="snygg__property_name__foreground">Pierwszy plan</string>
+    <string name="snygg__property_name__background_blur">Rozmycie tła</string>
     <string name="snygg__property_name__background_image">Obraz tła</string>
     <string name="snygg__property_name__content_scale">Skala zawartości</string>
     <string name="snygg__property_name__border_color">Kolor obramowania</string>
     <string name="snygg__property_name__border_style">Styl ramki</string>
+    <string name="snygg__property_name__background_sheen">Połysk tła</string>
+    <string name="snygg__property_name__border_sheen">Połysk krawędzi</string>
     <string name="snygg__property_name__border_width">Szerokość obramowania</string>
     <string name="snygg__property_name__font_family">Rodzina czcionek</string>
     <string name="snygg__property_name__font_size">Rozmiar czcionki</string>
@@ -392,6 +398,8 @@
     <string name="snygg__property_value__circle_shape">Kształt koła</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Kształt ze ściętymi kątami (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Kształt ze ściętymi kątami (%)</string>
+    <string name="snygg__property_value__sheen">Połysk</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Kształt z zaokrąglonymi kątami (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Kształt z zaokrąglonymi kątami (%)</string>
     <string name="snygg__property_value__dp_size">Rozmiar (dp)</string>
@@ -444,7 +452,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Mnożnik rozmiaru czcionki</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Układ</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Wprowadzanie pełnoekranowe w poziomie</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Współczynnik odstępów między klawiszami</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Odstęp między klawiszami</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% w pionie, {h}% w poziomie — większy odstęp zmniejsza klawisze, a nie klawiaturę.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Naciśnięcie klawisza</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Widoczność Pop-Up</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pokaż Pop-Up po naciśnięciu klawiszów</string>
@@ -558,9 +567,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Przesuń w lewo</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Przesuń w prawo</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Spacja Przesuń palcem w górę</string>
-    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Spacja Przesuń palcem w dół</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Spacja Przesuń palcem w dół</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Spacja Przesuń palcem w lewo</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Spacja Przesuń palcem w prawo</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Spacja długie naciśnięcie</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Przytrzymaj, aby zajrzeć do warstwy</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Przytrzymaj ?123, przesuń na znak i puść — zostanie wstawiony, a litery wrócą</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Klawisz Delete przesuń w lewo</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Klawisz Delete przy długim przytrzymaniu</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Próg prędkości przesuwania</string>
@@ -1727,6 +1739,26 @@
     <string name="dictate__history_clear_title">Wyczyścić historię?</string>
     <string name="dictate__history_clear_message">Spowoduje to trwałe usunięcie wszystkich wpisów historii i wszelkiego zachowanego audio.</string>
     <string name="dictate__history_clear_confirm">Wyczyść wszystko</string>
+    <string name="dictate__history_export_title">Eksport do folderu</string>
+    <string name="dictate__history_export_summary">Każde nowe dyktowanie jest zapisywane także w tym folderze jako zwykły plik tekstowy, zaraz po zakończeniu.</string>
+    <string name="dictate__history_export_folder">Folder</string>
+    <string name="dictate__history_export_folder_unset">Nie ustawiono</string>
+    <string name="dictate__history_export_folder_unavailable">Folder niedostępny — wybierz go ponownie</string>
+    <string name="dictate__history_export_choose">Wybierz folder</string>
+    <string name="dictate__history_export_change">Zmień</string>
+    <string name="dictate__history_export_disconnect">Odłącz</string>
+    <string name="dictate__history_export_audio_title">Eksportuj także nagranie</string>
+    <string name="dictate__history_export_audio_summary">Zapisuje dźwięk obok transkrypcji.</string>
+    <string name="dictate__history_export_audio_needs_retention">Wymaga „Zachowaj dźwięk”.</string>
+    <string name="dictate__history_export_all">Eksportuj teraz wszystko</string>
+    <string name="dictate__history_export_all_summary">Zapisuje każde dyktowanie, którego jeszcze nie ma w folderze: te sprzed wyboru folderu oraz te, których nie udało się zapisać, gdy folder był niedostępny.</string>
+    <string name="dictate__history_export_all_result">Zapisano: {written}, już były: {skipped}, niepowodzenia: {failed}</string>
+    <string name="dictate__history_export_last_failure">Zapis nie powiódł się {when}. „Eksportuj teraz wszystko” uzupełni brakujące pliki.</string>
+    <string name="dictate__history_export_warning_title">Co tam trafia</string>
+    <string name="dictate__history_export_warning_message">Folder będzie zawierał tekst każdego dyktowania od teraz, a także nagrania, jeśli to włączysz. Wszystko, co go synchronizuje — klient chmury, narzędzie kopii zapasowych, inna aplikacja — wynosi te transkrypcje poza to urządzenie.\n\nDictate zapisuje, dopóki nie odłączysz folderu, i nigdy niczego z niego nie usuwa: wpisy, które wypadną z historii, zostają w folderze. Pola haseł i trybu incognito nigdy nie są zapisywane, więc nigdy nie są eksportowane.</string>
+    <string name="dictate__history_export_needs_history">Eksport do folderu zapisuje to, co rejestruje historia, więc historia musi być włączona.</string>
+    <string name="dictate__history_export_enable_history">Włącz historię</string>
+    <string name="dictate__history_export_pick_failed">Nie udało się uzyskać dostępu do zapisu w tym folderze</string>
     <string name="dictate__stats_empty">Brak dyktowań — statystyki pojawią się tutaj, gdy zaczniesz dyktować.</string>
     <string name="dictate__stats_time_saved">Zaoszczędzony czas</string>
     <string name="dictate__stats_time_saved_sub">w porównaniu z pisaniem</string>

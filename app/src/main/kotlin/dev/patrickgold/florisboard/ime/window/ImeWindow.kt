@@ -137,6 +137,7 @@ fun ImeRootWindow() {
         ImeWindow()
         BottomSheetWindow()
         ImeSystemUi()
+        ImeWindowBlur()
     }
 }
 

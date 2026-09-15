@@ -31,6 +31,10 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <!-- FFS -->
         <item name="android:navigationBarColor">@android:color/transparent</item>
+        <!-- The platform only blurs behind a window it considers translucent (DecorView reads
+             android.R.attr.windowIsTranslucent, not the surface format), so the frosted themes of issue
+             #378 need this on the IME window itself. -->
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="FlorisAppTheme.Transparent" parent="android:style/Theme.Material.NoActionBar">

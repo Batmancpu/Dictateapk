@@ -57,6 +57,19 @@ object LearnedWordsStore {
     /** …and "recent" is this many days. */
     private const val PRUNE_MAX_AGE_DAYS = 90
 
+    /**
+     * How long a word seen exactly **once** is kept (issue #375).
+     *
+     * Stated as its own rule rather than left to emerge from the decay: with a 60-day half-life and a
+     * 90-day staleness cutoff, the honest answer to "how long does a one-off word live?" was a quarter of
+     * a year and could only be worked out with a calculator. A single sighting is the weakest evidence
+     * this store has — invisible in the strip by design — so it is also the cheapest thing to drop.
+     *
+     * Two sightings keep the old rule: that is a word the user came back to, and provisional is not the
+     * same as noise. Promoted rows are never pruned at all.
+     */
+    const val UNPROMOTED_TTL_DAYS = 30
+
     @Volatile
     private var instance: LearnedWordsDatabase? = null
 
@@ -150,7 +163,41 @@ object LearnedWordsStore {
         return removed
     }
 
+    /**
+     * Clears the observations — every un-promoted word and every learned pair — and leaves the words the
+     * user ended up with alone (issue #375).
+     *
+     * It used to delete promoted rows too. The personal-dictionary entry survived that (it lives in the
+     * other database), so the word kept working while the row explaining it was gone: no provenance, no
+     * usage count, and therefore no order among the user's own words in the strip. A button that says
+     * "forget what you picked up" should not reach into what it was told.
+     *
+     * Deleting a *specific* promoted word is a different instruction and still does exactly what it
+     * says — see [forgetWord] and the settings screen's per-row delete.
+     */
     suspend fun forgetAll(context: Context) {
+        db(context).dao().deleteUnpromotedWords()
+        db(context).dao().deleteAllBigrams()
+        invalidate()
+    }
+
+    /** Forgets the given rows (one language, one stage) — the per-tier "forget" on the settings screen. */
+    suspend fun forgetAll(context: Context, lang: String, entries: List<LearnedWordEntry>) {
+        if (entries.isEmpty()) return
+        db(context).dao().deleteWords(lang, entries.map { it.id })
+        invalidate(lang)
+    }
+
+    /**
+     * Empties the store completely, promoted rows included — for a restore that was asked to *replace*
+     * rather than merge.
+     *
+     * Separate from [forgetAll] since issue #375, and the distinction matters: "forget what you picked
+     * up" is a request about observations, while "replace everything with this backup" is a request
+     * about the whole store. Sparing promoted rows here would leave a restored device holding two
+     * vocabularies at once.
+     */
+    suspend fun wipeAll(context: Context) {
         db(context).dao().deleteAllWords()
         db(context).dao().deleteAllBigrams()
         invalidate()
@@ -169,19 +216,22 @@ object LearnedWordsStore {
         val dao = db(context).dao()
         val now = nowSeconds()
         val cutoff = now - PRUNE_MAX_AGE_DAYS * 86_400L
+        val onceCutoff = now - UNPROMOTED_TTL_DAYS * 86_400L
         val words = dao.wordsFor(lang)
         val scored = words.filterNot { it.promoted }
             .map { it to WordLearningGate.decayedScore(it.count, it.lastUsed, now) }
+        /** A single sighting this old is noise; anything else waits for the decay. */
+        fun expired(entry: LearnedWordEntry, score: Double): Boolean =
+            (entry.count <= 1 && entry.lastUsed < onceCutoff) ||
+                (score < PRUNE_MIN_SCORE && entry.lastUsed < cutoff)
         var removed = 0
         for ((entry, score) in scored) {
-            if (score < PRUNE_MIN_SCORE && entry.lastUsed < cutoff) {
+            if (expired(entry, score)) {
                 dao.deleteWord(entry.id)
                 removed++
             }
         }
-        val survivors = scored.filterNot { (entry, score) ->
-            score < PRUNE_MIN_SCORE && entry.lastUsed < cutoff
-        }
+        val survivors = scored.filterNot { (entry, score) -> expired(entry, score) }
         val excess = survivors.size - MAX_WORDS_PER_LANG
         if (excess > 0) {
             for ((entry, _) in survivors.sortedBy { it.second }.take(excess)) {
@@ -221,7 +271,10 @@ object LearnedWordsStore {
     ) {
         val dao = db(context).dao()
         for (entry in words) {
-            val existing = dao.findWord(entry.lang, entry.word)
+            // Matched on the folded key, like every other write since issue #375 — a backup taken before
+            // that change still holds `Prateek` and `prateek` as separate rows, and looking them up by
+            // spelling would file them apart again on the way back in.
+            val existing = dao.findWordByKey(entry.lang, entry.key)
             if (existing == null) {
                 dao.insertWord(entry.copy(id = 0))
             } else {
@@ -230,6 +283,11 @@ object LearnedWordsStore {
                     maxOf(existing.count, entry.count),
                     maxOf(existing.lastUsed, entry.lastUsed),
                 )
+                // The newer sighting also decides the spelling, for the same reason the migration keeps
+                // the most recent one: it is what the user is writing now.
+                if (entry.lastUsed > existing.lastUsed && entry.word != existing.word) {
+                    dao.retitleWord(existing.id, entry.word)
+                }
                 if (entry.promoted && !existing.promoted) dao.setPromoted(existing.id, true)
             }
         }

@@ -322,6 +322,32 @@ class ImeWindowController(
             }
         }
 
+        /**
+         * Splits the keyboard into two halves under the thumbs, or merges it back together (issue #362).
+         *
+         * Like the one-handed toggle it pulls a floating window back to fixed first: one-handed, split
+         * and floating are three answers to the same question and only one of them can be on.
+         */
+        fun toggleSplitLayout() {
+            updateWindowConfig { config ->
+                when (config.mode) {
+                    ImeWindowMode.FIXED -> {
+                        val newFixedMode = when (config.fixedMode) {
+                            ImeWindowMode.Fixed.THUMBS -> ImeWindowMode.Fixed.NORMAL
+                            else -> ImeWindowMode.Fixed.THUMBS
+                        }
+                        config.copy(fixedMode = newFixedMode)
+                    }
+                    ImeWindowMode.FLOATING -> {
+                        config.copy(
+                            mode = ImeWindowMode.FIXED,
+                            fixedMode = ImeWindowMode.Fixed.THUMBS,
+                        )
+                    }
+                }
+            }
+        }
+
         private inline fun doCompactLayout(
             crossinline updateProps: (ImeWindowProps.Fixed) -> ImeWindowProps.Fixed,
         ) {

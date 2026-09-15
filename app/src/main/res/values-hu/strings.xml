@@ -101,6 +101,8 @@
     <string name="quick_action__floating_window_mode__tooltip">Legebő billentyűzetablak mód</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Egykezes</string>
     <string name="quick_action__one_handed_mode__tooltip">Egykezes mód be/ki</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Osztott</string>
+    <string name="quick_action__split_layout__tooltip">Osztott billentyűzet be/ki</string>
     <string name="quick_action__resize_mode" comment="Please mind the limited available space for the quick action strings">Átméretezés</string>
     <string name="quick_action__resize_mode__tooltip">Átméretezési mód be/ki</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Számsor</string>
@@ -137,6 +139,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">szavak száma karakterszám hossz statisztika</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">vágás szóköz eltávolítás tisztítás másolás kivágás</string>
     <string name="settings__search__keywords__clear_cache">gyorsítótár tárhely hely ideiglenes fájlok felszabadítás törlés takarítás</string>
+    <string name="settings__search__keywords__momentary_layer">nyomva tartás húzás szimbólum réteg írásjel ideiglenes 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emodzsi emoji sor sáv nemrég használt billentyűzet felett gyors</string>
     <string name="settings__search__keywords__request_timeout">időkorlát időtúllépés lassú várakozás kapcsolat másodperc</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Nyelvek és elrendezések</string>
@@ -339,10 +342,13 @@
     <string name="snygg__rule_selector__disabled">Letiltott</string>
     <string name="snygg__property_name__background">Háttér</string>
     <string name="snygg__property_name__foreground">Előtér</string>
+    <string name="snygg__property_name__background_blur">Háttér elmosása</string>
     <string name="snygg__property_name__background_image">Háttérkép</string>
     <string name="snygg__property_name__content_scale">Tartalomméretezés</string>
     <string name="snygg__property_name__border_color">Szegélyszín</string>
     <string name="snygg__property_name__border_style">Szegélystílus</string>
+    <string name="snygg__property_name__background_sheen">Felület csillanása</string>
+    <string name="snygg__property_name__border_sheen">Szegély csillanása</string>
     <string name="snygg__property_name__border_width">Szegélyszélesség</string>
     <string name="snygg__property_name__font_family">Betűkészlet</string>
     <string name="snygg__property_name__font_size">Betűméret</string>
@@ -391,6 +397,8 @@
     <string name="snygg__property_value__circle_shape">Kör</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Levágott sarok (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Levágott sarok (%)</string>
+    <string name="snygg__property_value__sheen">Csillanás</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Lekerekített sarok (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Lekerekített sarok (%)</string>
     <string name="snygg__property_value__dp_size">Méret (dp)</string>
@@ -443,6 +451,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Betűméret szorzó</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Elrendezés</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Teljes képernyős fekvő elrendezés bemenet</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Billentyűk közötti térköz</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% függőlegesen, {h}% vízszintesen — a nagyobb térköz a billentyűket teszi kisebbé, nem a billentyűzetet.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Gombnyomás</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Felugró gomb megjelenítése</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Felugró gomb megjelenítése gombnyomáskor</string>
@@ -556,9 +566,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Balra húzás</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Jobbra húzás</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Szóköz felhúzása</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Szóköz lehúzása</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Szóköz balra húzása</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Szóköz jobbra húzása</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Szóköz hosszú lenyomása</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Nyomva tartva belenézhet egy rétegbe</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Tartsa nyomva a ?123 gombot, húzza egy karakterre, majd engedje el — bekerül, és visszajönnek a betűk</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Törlés gomb balra húzása</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Törlés gomb hosszan nyomása</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Húzási sebesség küszöbe</string>
@@ -1708,6 +1721,26 @@
     <string name="dictate__history_clear_title">Előzmények törlése?</string>
     <string name="dictate__history_clear_message">Ez véglegesen törli az összes előzménybejegyzést és minden megtartott hangot.</string>
     <string name="dictate__history_clear_confirm">Összes törlése</string>
+    <string name="dictate__history_export_title">Exportálás mappába</string>
+    <string name="dictate__history_export_summary">Minden új diktálás szövege ebbe a mappába is bekerül egyszerű szövegfájlként, amint elkészül.</string>
+    <string name="dictate__history_export_folder">Mappa</string>
+    <string name="dictate__history_export_folder_unset">Nincs beállítva</string>
+    <string name="dictate__history_export_folder_unavailable">A mappa nem érhető el — válaszd ki újra</string>
+    <string name="dictate__history_export_choose">Mappa kiválasztása</string>
+    <string name="dictate__history_export_change">Módosítás</string>
+    <string name="dictate__history_export_disconnect">Leválasztás</string>
+    <string name="dictate__history_export_audio_title">A felvétel exportálása is</string>
+    <string name="dictate__history_export_audio_summary">A hangot az átirat mellé menti.</string>
+    <string name="dictate__history_export_audio_needs_retention">Ehhez a „Hang megtartása” szükséges.</string>
+    <string name="dictate__history_export_all">Minden exportálása most</string>
+    <string name="dictate__history_export_all_summary">Kiírja az összes diktálást, amely még nincs a mappában: a mappa kiválasztása előttieket, és azokat, amelyeket az alkalmazás nem tudott kiírni, amíg a mappa elérhetetlen volt.</string>
+    <string name="dictate__history_export_all_result">{written} kiírva, {skipped} már megvolt, {failed} sikertelen</string>
+    <string name="dictate__history_export_last_failure">Egy írás {when} meghiúsult. A „Minden exportálása most” pótolja a hiányzókat.</string>
+    <string name="dictate__history_export_warning_title">Mi kerül oda</string>
+    <string name="dictate__history_export_warning_message">A mappa mostantól minden diktálásod szövegét tartalmazza, és a felvételeket is, ha bekapcsolod. Bármi, ami szinkronizálja — felhőkliens, biztonsági mentési eszköz, másik alkalmazás — kiviszi ezeket az átiratokat az eszközről.\n\nA Dictate addig ír, amíg le nem választod a mappát, és soha nem töröl belőle: az előzményekből kieső bejegyzések a mappában maradnak. A jelszó- és inkognitómezők soha nem kerülnek rögzítésre, így exportálásra sem.</string>
+    <string name="dictate__history_export_needs_history">A mappaexport azt írja ki, amit az előzmények rögzítenek, ezért az előzményeknek bekapcsolva kell lenniük.</string>
+    <string name="dictate__history_export_enable_history">Előzmények bekapcsolása</string>
+    <string name="dictate__history_export_pick_failed">Nem sikerült írási hozzáférést szerezni ehhez a mappához</string>
     <string name="dictate__stats_empty">Még nincs diktálás — a statisztikák itt jelennek meg, ha diktálni kezdesz.</string>
     <string name="dictate__stats_time_saved">Megspórolt idő</string>
     <string name="dictate__stats_time_saved_sub">gépeléshez képest</string>

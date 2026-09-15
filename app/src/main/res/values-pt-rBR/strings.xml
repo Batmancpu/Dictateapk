@@ -94,6 +94,8 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Abrir provedor de entrada de voz</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Modo uma mão</string>
     <string name="quick_action__one_handed_mode__tooltip">Ativar/desativar modo uma mão</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Dividido</string>
+    <string name="quick_action__split_layout__tooltip">Ativar/desativar teclado dividido</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Linha numérica</string>
     <string name="quick_action__toggle_number_row__tooltip">Mostrar ou ocultar a linha numérica</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrastar</string>
@@ -128,6 +130,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">contar palavras número de palavras caracteres comprimento estatísticas</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">cortar espaços remover limpar copiar recortar</string>
     <string name="settings__search__keywords__clear_cache">cache armazenamento espaço arquivos temporários liberar excluir limpar</string>
+    <string name="settings__search__keywords__momentary_layer">segurar deslizar simbolo camada pontuacao temporario momentaneo 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji linha barra recentes usados acima teclado rápido</string>
     <string name="settings__search__keywords__request_timeout">tempo limite timeout lento espera conexão segundos</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas e Layouts</string>
@@ -337,6 +340,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador do tamanho de fonte</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada do modo paisagem em tela cheia</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espaço entre as teclas</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% vertical, {h}% horizontal — um espaço maior deixa as teclas menores, não o teclado.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressionar tecla</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidade do popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostrar popup quando você pressionar uma tecla</string>
@@ -451,9 +456,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Deslizar para esquerda</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Deslizar para direita</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Deslizar barra de espaço para cima</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Deslizar barra de espaço para baixo</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Deslizar barra de espaço para esquerda</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Deslizar barra de espaço para direita</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Pressionar e segurar barra de espaço</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Segurar para espiar uma camada</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Segure ?123, deslize até um caractere e solte: ele é inserido e as letras voltam</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Deslizar tecla excluir para esquerda</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Apertar e segurar tecla de excluir</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Limite de velocidade do deslizamento</string>
@@ -1518,6 +1526,26 @@
     <string name="dictate__history_clear_title">Limpar histórico?</string>
     <string name="dictate__history_clear_message">Isso exclui permanentemente todas as entradas do histórico e qualquer áudio armazenado.</string>
     <string name="dictate__history_clear_confirm">Limpar tudo</string>
+    <string name="dictate__history_export_title">Exportar para uma pasta</string>
+    <string name="dictate__history_export_summary">Cada novo ditado também é gravado nesta pasta como arquivo de texto, assim que termina.</string>
+    <string name="dictate__history_export_folder">Pasta</string>
+    <string name="dictate__history_export_folder_unset">Não definida</string>
+    <string name="dictate__history_export_folder_unavailable">Pasta indisponível — escolha-a novamente</string>
+    <string name="dictate__history_export_choose">Escolher pasta</string>
+    <string name="dictate__history_export_change">Alterar</string>
+    <string name="dictate__history_export_disconnect">Desconectar</string>
+    <string name="dictate__history_export_audio_title">Exportar também a gravação</string>
+    <string name="dictate__history_export_audio_summary">Salva o áudio junto da transcrição.</string>
+    <string name="dictate__history_export_audio_needs_retention">Requer “Manter áudio”.</string>
+    <string name="dictate__history_export_all">Exportar tudo agora</string>
+    <string name="dictate__history_export_all_summary">Grava todos os ditados que ainda não estão na pasta: os anteriores à escolha e os que não puderam ser gravados enquanto a pasta estava inacessível.</string>
+    <string name="dictate__history_export_all_result">{written} gravados, {skipped} já existentes, {failed} com falha</string>
+    <string name="dictate__history_export_last_failure">Uma gravação falhou {when}. “Exportar tudo agora” repõe o que falta.</string>
+    <string name="dictate__history_export_warning_title">O que vai para lá</string>
+    <string name="dictate__history_export_warning_message">A pasta passará a conter o texto de cada ditado que você fizer, e também as gravações se você ativar isso. Tudo o que a sincronizar — um cliente de nuvem, uma ferramenta de backup, outro aplicativo — leva essas transcrições para fora deste dispositivo.\n\nO Dictate continua gravando até você desconectar a pasta e nunca apaga nada dela: as entradas que saem do histórico permanecem na pasta. Campos de senha e de navegação anônima nunca são registrados e, portanto, nunca são exportados.</string>
+    <string name="dictate__history_export_needs_history">A exportação para pasta grava o que o histórico registra, então o histórico precisa estar ativado.</string>
+    <string name="dictate__history_export_enable_history">Ativar histórico</string>
+    <string name="dictate__history_export_pick_failed">Não foi possível obter acesso de escrita a essa pasta</string>
     <string name="dictate__stats_empty">Ainda sem ditados — suas estatísticas aparecerão aqui quando você começar a ditar.</string>
     <string name="dictate__stats_time_saved">Tempo economizado</string>
     <string name="dictate__stats_time_saved_sub">vs. digitar</string>

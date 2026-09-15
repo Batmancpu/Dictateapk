@@ -264,6 +264,9 @@ object DictateHistoryStore {
                 .onSuccess { dao.setAudio(id, dest.absolutePath, dest.length()) }
         }
         prune(context, prefs)
+        // A failed row is a placeholder — either the "sent, no transcript yet" one from #358 or a genuine
+        // failure — and neither is something to hand a folder watcher (issue #379).
+        if (!failed) DictateHistoryExporter.enqueue(context, id)
         return id
     }
 
@@ -271,6 +274,8 @@ object DictateHistoryStore {
     suspend fun updateText(context: Context, id: Long, text: String, originalText: String = "") {
         if (text.isBlank()) return
         db(context).dao().updateText(id, text, originalText)
+        // The file already in the export folder now says something this entry no longer does.
+        DictateHistoryExporter.enqueue(context, id)
     }
 
     /**
@@ -292,9 +297,14 @@ object DictateHistoryStore {
         if (text.isBlank()) return
         val dao = db(context).dao()
         dao.updateText(id, text, originalText)
-        if (keepAudio) return
-        dao.getById(id)?.audioPath?.let { runCatching { File(it).delete() } }
-        dao.clearAudio(id)
+        if (!keepAudio) {
+            dao.getById(id)?.audioPath?.let { runCatching { File(it).delete() } }
+            dao.clearAudio(id)
+        }
+        // Only now is there a transcript to export (issue #379) — the placeholder written when the audio
+        // was sent carried a caption, not a dictation. Queued after the audio decision above, so an entry
+        // whose recording is about to be dropped cannot have it copied into the folder on the way out.
+        DictateHistoryExporter.enqueue(context, id)
     }
 
     /**
@@ -334,6 +344,10 @@ object DictateHistoryStore {
      * [backupAudioDir] contains a WAV named by the entry's ORIGINAL id (as written by the backup), it is
      * copied into the history audio dir and linked, otherwise the entry restores text-only. [replace]
      * clears the store first (the Erase restore strategy); otherwise entries are appended (Merge).
+     *
+     * Writes to the DAO directly and **never** notifies the folder export (issue #379): a restore puts a
+     * whole history back at once, and going through [record] would spray hundreds of files into a folder
+     * someone has synced. Getting them there is what "export everything" is for, on purpose and once.
      */
     suspend fun importEntries(
         context: Context,

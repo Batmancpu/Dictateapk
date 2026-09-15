@@ -233,6 +233,8 @@
     <string name="quick_action__floating_window_mode__tooltip">Toggle floating keyboard window mode</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">One-handed</string>
     <string name="quick_action__one_handed_mode__tooltip">Toggle one-handed mode</string>
+    <string name="quick_action__split_layout" comment="Please mind the limited available space for the quick action strings">Split</string>
+    <string name="quick_action__split_layout__tooltip">Toggle split keyboard</string>
     <string name="quick_action__resize_mode" comment="Please mind the limited available space for the quick action strings">Resize</string>
     <string name="quick_action__resize_mode__tooltip">Toggle resize mode</string>
     <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Number row</string>
@@ -272,6 +274,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">text expansion expander snippet abbreviation macro autotext boilerplate canned response</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">word count character counter length statistics how many words</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">trim whitespace strip spaces clean copy cut trailing leading</string>
+    <string name="settings__search__keywords__momentary_layer" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which lets you hold the ?123 key, slide onto a symbol and have the letters come back when you let go. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">hold slide symbol layer peek shift momentary temporary 123 punctuation iphone</string>
     <string name="settings__search__keywords__emoji_row" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows a row of recent emojis above the keyboard. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">emoji row recent used strip bar above keyboard smiley quick</string>
     <string name="settings__search__keywords__clear_cache" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which empties the app\'s temporary files. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">cache storage space temporary files free up delete clean</string>
     <string name="settings__search__keywords__request_timeout" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting for how long a request may take. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">timeout timed out slow waiting connection seconds gave up</string>
@@ -504,10 +507,13 @@
 
     <string name="snygg__property_name__background">Background</string>
     <string name="snygg__property_name__foreground">Foreground</string>
+    <string name="snygg__property_name__background_blur">Background blur</string>
     <string name="snygg__property_name__background_image">Background image</string>
     <string name="snygg__property_name__content_scale">Content scale</string>
     <string name="snygg__property_name__border_color">Border color</string>
     <string name="snygg__property_name__border_style">Border style</string>
+    <string name="snygg__property_name__background_sheen">Background sheen</string>
+    <string name="snygg__property_name__border_sheen">Border sheen</string>
     <string name="snygg__property_name__border_width">Border width</string>
     <string name="snygg__property_name__font_family">Font family</string>
     <string name="snygg__property_name__font_size">Font size</string>
@@ -557,6 +563,8 @@
     <string name="snygg__property_value__circle_shape">Circle shape</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Cut corner shape (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Cut corner shape (%)</string>
+    <string name="snygg__property_value__sheen">Sheen</string>
+    <string name="snygg__property_value__squircle_shape">Squircle</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Rounded corner shape (dp)</string>
     <string name="snygg__property_value__rounded_corner_shape_percent">Rounded corner shape (%)</string>
     <string name="snygg__property_value__dp_size">Size (dp)</string>
@@ -613,7 +621,8 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Font size multiplier</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landscape fullscreen input</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Key spacing factor</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Gap between keys</string>
+    <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% vertical, {h}% horizontal — a wider gap makes the keys smaller, not the keyboard.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Key press</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup Visibility</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Show popup when you press a key</string>
@@ -711,7 +720,9 @@
 
     <string name="settings__learned__title" comment="Title of the learned words screen">Learned words</string>
     <string name="settings__learned__empty" comment="Shown when nothing has been learned yet">Nothing learned yet. Words you type that no dictionary knows will appear here.</string>
+    <string name="settings__learned__empty_stage" comment="Shown when one learning stage holds no words, while others do">Nothing at this stage.</string>
     <string name="settings__learned__disabled" comment="Shown when the learning feature is switched off">Learning words as you type is switched off, so nothing new is being remembered.</string>
+    <string name="settings__learned__disabled_dictionary" comment="Shown when learning is on but the internal user dictionary it writes into is off">The internal user dictionary is switched off, so nothing can be learned — a word that is picked up has nowhere to graduate to. Switch it on under User dictionaries.</string>
     <string name="settings__learned__stage_remembered" comment="Ladder stage: seen once, no effect yet">Noticed — not suggested yet</string>
     <string name="settings__learned__stage_suggested" comment="Ladder stage: appears in the suggestion strip">Suggested while you type</string>
     <string name="settings__learned__stage_promoted" comment="Ladder stage: in the personal dictionary">In your dictionary — autocorrect leaves it alone</string>
@@ -719,6 +730,12 @@
     <string name="settings__learned__forget" comment="Button that removes one learned word">Forget</string>
     <string name="settings__learned__forget_all" comment="Button that removes every learned word">Forget everything</string>
     <string name="settings__learned__forget_all_confirm" comment="Confirmation question before deleting all learned words">Forget every learned word? Words already added to your dictionary stay there.</string>
+    <string name="settings__learned__tier_remembered" comment="Short name of the first learning stage, used as a folder title">Noticed</string>
+    <string name="settings__learned__tier_suggested" comment="Short name of the second learning stage, used as a folder title">Suggested</string>
+    <string name="settings__learned__tier_promoted" comment="Short name of the third learning stage, used as a folder title">In your dictionary</string>
+    <string name="settings__learned__forget_tier" comment="Button that removes every word at one learning stage">Forget these</string>
+    <string name="settings__learned__forget_tier_confirm" comment="Confirmation question before deleting the words at one stage. The placeholder inserts a already-pluralised word count, e.g. &quot;3 words&quot;.">Forget {words}? Nothing else is touched.</string>
+    <string name="settings__learned__forget_promoted_confirm" comment="Stronger confirmation before deleting words that reached the personal dictionary. The placeholder inserts an already-pluralised word count, e.g. &quot;3 words&quot;.">Forget {words}? What is at this stage is part of your dictionary — autocorrect leaves it alone, and forgetting it takes it out of the dictionary too.</string>
     <string name="settings__learned__add_now" comment="Button that promotes a learned word into the personal dictionary immediately">Add to dictionary</string>
     <string name="settings__learned__how_it_works" comment="Explanation shown at the top of the learned words screen">A word is only remembered once it looks deliberate rather than mistyped. It is suggested from the second time you type it, and added to your dictionary at the third — from then on autocorrect leaves it alone.\n\nEverything stays on this device. Nothing is learned in incognito mode, in password fields, or from dictation — only from what you actually typed.</string>
     <string name="suggestion__forgot_word" comment="Toast after forgetting a learned word. The placeholder inserts the word.">Forgot “{word}”</string>
@@ -773,9 +790,12 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Swipe left</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Swipe right</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Space bar swipe up</string>
+    <string name="pref__gestures__space_bar_swipe_down__label" comment="Preference title">Space bar swipe down</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Space bar swipe left</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Space bar swipe right</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Space bar long press</string>
+    <string name="pref__gestures__momentary_layer__label" comment="Preference title, keep short">Hold to peek at a layer</string>
+    <string name="pref__gestures__momentary_layer__summary" comment="Preference summary, keep short (one line)">Hold ?123, slide onto a character and let go — it is inserted and the letters come back</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Delete key swipe left</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Delete key long press</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Swipe velocity threshold</string>
@@ -2224,6 +2244,26 @@
     <string name="dictate__history_clear_title" comment="Title of the clear-history confirmation dialog">Clear history?</string>
     <string name="dictate__history_clear_message" comment="Body of the clear-history confirmation dialog">This permanently deletes all history entries and any retained audio.</string>
     <string name="dictate__history_clear_confirm" comment="Confirm button that clears the whole history">Clear all</string>
+    <string name="dictate__history_export_title" comment="Title of the folder-export dialog on the history screen">Export to a folder</string>
+    <string name="dictate__history_export_summary" comment="Intro line of the folder-export dialog">Every new dictation is also written into this folder as a plain text file, the moment it is finished.</string>
+    <string name="dictate__history_export_folder" comment="Label above the chosen export folder">Folder</string>
+    <string name="dictate__history_export_folder_unset" comment="Shown in place of the folder name when no export folder has been chosen">Not set</string>
+    <string name="dictate__history_export_folder_unavailable" comment="Shown when the export folder can no longer be written to (permission revoked, storage removed, restored backup)">Folder unavailable — pick it again</string>
+    <string name="dictate__history_export_choose" comment="Button that opens the folder picker for the first time">Choose folder</string>
+    <string name="dictate__history_export_change" comment="Button that opens the folder picker to swap the export folder">Change</string>
+    <string name="dictate__history_export_disconnect" comment="Button that stops the folder export and gives up access to the folder">Disconnect</string>
+    <string name="dictate__history_export_audio_title" comment="Toggle: also write the recording next to the exported transcript">Also export the recording</string>
+    <string name="dictate__history_export_audio_summary" comment="Summary of the export-the-recording toggle when it can be used">Saves the audio next to the transcript.</string>
+    <string name="dictate__history_export_audio_needs_retention" comment="Summary of the export-the-recording toggle while Keep audio is off, which leaves no recording to export">Needs “Keep audio” to be switched on.</string>
+    <string name="dictate__history_export_all" comment="Button that writes the whole history into the export folder in one pass">Export everything now</string>
+    <string name="dictate__history_export_all_summary" comment="Explains what the export-everything button is for">Writes every dictation that is not in the folder yet — the ones from before you picked it, and any the app could not write while the folder was unreachable.</string>
+    <string name="dictate__history_export_all_result" comment="Summary after an export-everything run. {written}, {skipped} and {failed} are counts">{written} written, {skipped} already there, {failed} failed</string>
+    <string name="dictate__history_export_last_failure" comment="Warning that a dictation could not be written to the folder. {when} is a relative time like 5 minutes ago">A write failed {when}. “Export everything now” puts what is missing back.</string>
+    <string name="dictate__history_export_warning_title" comment="Title of the dialog shown before the export folder is picked for the first time">What lands there</string>
+    <string name="dictate__history_export_warning_message" comment="Body of the dialog shown before the export folder is picked for the first time">The folder will hold the text of every dictation you make from now on, and the recordings too if you switch that on. Anything that syncs it — a cloud client, a backup tool, another app — carries those transcripts off this device.\n\nDictate keeps writing until you disconnect the folder, and it never deletes from it: entries that drop out of the history stay in the folder. Password and incognito fields are never recorded, and so are never exported.</string>
+    <string name="dictate__history_export_needs_history" comment="Shown when the export is opened while the history is switched off">Folder export writes what the history records, so the history has to be switched on for it.</string>
+    <string name="dictate__history_export_enable_history" comment="Button that switches the history on from the export dialog">Turn on history</string>
+    <string name="dictate__history_export_pick_failed" comment="Toast shown when Android refused write access to the picked folder">Could not get write access to that folder</string>
     <string name="dictate__stats_empty" comment="Shown on the statistics screen before any dictation exists">No dictations yet — your stats will appear here once you start dictating.</string>
     <string name="dictate__stats_time_saved" comment="Label of the hero time-saved statistic">Time saved</string>
     <string name="dictate__stats_time_saved_sub" comment="Subtitle under the time-saved figure">vs. typing on a keyboard</string>

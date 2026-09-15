@@ -466,7 +466,7 @@ class NlpManager(context: Context) {
         weight: Int = 1,
         trustedByUser: Boolean = false,
     ) {
-        if (word.isBlank() || !prefs.suggestion.learnTypedWords.get()) return
+        if (word.isBlank() || !prefs.wordLearningIsOn) return
         val subtype = subtypeManager.activeSubtype
         val isPrivate = keyboardManager.activeState.isIncognitoMode || !wordSuggestionsWanted()
         scope.launch {
@@ -485,6 +485,25 @@ class NlpManager(context: Context) {
             // From the second sighting the word may appear in the strip, so the suggestions standing on
             // screen are now out of date for the word that is about to be typed next.
             suggest(subtype, editorInstance.activeContent)
+        }
+    }
+
+    /**
+     * Counts a tap on the suggestion strip as a use of that word (issue #375).
+     *
+     * Same tail as [learnFinishedWord] — promote when the ladder says so, then refresh the strip — but
+     * no origin and no tap points, because there was no typing to judge. The provider only bumps words
+     * it already holds; see [LearningProvider.learnPickedWord].
+     */
+    fun learnPickedWord(word: String) {
+        if (word.isBlank() || !prefs.wordLearningIsOn) return
+        if (keyboardManager.activeState.isIncognitoMode || !wordSuggestionsWanted()) return
+        val subtype = subtypeManager.activeSubtype
+        scope.launch {
+            val provider = getSuggestionProvider(subtype) as? LearningProvider ?: return@launch
+            val outcome = provider.learnPickedWord(subtype, word)
+            if (!outcome.learned) return@launch
+            if (outcome.readyForPromotion) promoteLearnedWord(subtype, outcome)
         }
     }
 
@@ -553,7 +572,7 @@ class NlpManager(context: Context) {
 
     /** Records that [word] followed [previousWord], for the personal half of next-word prediction. */
     fun learnWordPair(previousWord: String, word: String) {
-        if (previousWord.isBlank() || word.isBlank() || !prefs.suggestion.learnTypedWords.get()) return
+        if (previousWord.isBlank() || word.isBlank() || !prefs.wordLearningIsOn) return
         if (keyboardManager.activeState.isIncognitoMode) return
         val subtype = subtypeManager.activeSubtype
         scope.launch {
